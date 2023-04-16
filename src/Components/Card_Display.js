@@ -3,7 +3,6 @@ import { useCallback, useState, useMemo } from "react";
 import { CreateDelayer } from "utils/Delayer";
 export const Get_Card_Display = ({ data }) => {
     const id = '95f19c4d-2710-41ee-9e48-9eb0314eedb3'
-    const id_find = data
     const selected_group = Get_Group_Data(data, id)
     console.log('selected group info')
     console.log(selected_group)
@@ -21,74 +20,9 @@ export const Get_Card_Display = ({ data }) => {
                     Components of the group:
                     <Table_Display component={selected_group_components} />
                 </div>
-
-            </div>
-            <div>
-                <SearchBar id={id_find} />
             </div>
         </main>
     )
-}
-
-const SearchBar = ({ id }) => {
-    const [searchId, setSearchId] = useState('');
-    const [member, setMember] = useState(null);
-    const [group, setGroup] = useState(null);
-    const [errorMessage, setErrorMessage] = useState('');
-
-    const handleSearch = () => {
-        if (searchId === '') {
-            setErrorMessage('Please enter an ID');
-            setMember(null);
-            return;
-        }
-
-        const foundMember = id.members.find(member => member.id === searchId);
-        const foundGroup = id.groups.find(group => group.id === searchId);
-
-        if (foundMember) {
-            setMember(foundMember);
-            setErrorMessage('');
-        } else if (foundGroup) {
-            setGroup(foundGroup);
-            setErrorMessage('');
-        } else if (!foundMember) {
-            setErrorMessage('Member not found');
-            setMember(null);
-        } else if (!foundGroup) {
-            setErrorMessage('Group not found');
-            setGroup(null);
-        }
-    };
-
-    return (
-        <div>
-            <input
-                type="text"
-                placeholder="Enter member ID"
-                value={searchId}
-                onChange={e => setSearchId(e.target.value)}
-            />
-            <button onClick={handleSearch}>Search</button>
-            {errorMessage && <p>{errorMessage}</p>}
-            {member && (
-                <div>
-                    <p>Name: {member.name}</p>
-                    <p>Surname: {member.surname}</p>
-                    <p>Email: {member.email}</p>
-                    <p>Owner ID: {member.owner_id}</p>
-                    <p>Role: {member.role}</p>
-                </div>
-            )}
-            {group && (
-                <div>
-                    <p>Name: {group.name}</p>
-                    <p>Goal: {group.goal}</p>
-                    <p>Date of creation: {group.date_of_creation}</p>
-                </div>
-            )}
-        </div>
-    );
 }
 
 const Get_Card_Header = ({ group }) => {
