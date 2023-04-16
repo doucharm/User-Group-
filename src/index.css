@@ -14,5 +14,5 @@ code {
 
 #change {
   position: relative;
-  left: 600px; 
+  display: inline-block;
 }
