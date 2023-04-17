@@ -1,17 +1,16 @@
 import { useState } from "react";
-
+import { Get_Card_Display } from "./Card_Display";
 export const Search_Bar_Display = ({ data }) => {
-    const id_find = data
     return (
         <main>
             <div>
-                <SearchBar id={id_find} />
+                <SearchBar data={data} />
             </div>
         </main>
     )
 }
 
-const SearchBar = ({ id }) => {
+const SearchBar = ({ data }) => {
     const [searchId, setSearchId] = useState('');
     const [member, setMember] = useState(null);
     const [group, setGroup] = useState(null);
@@ -24,8 +23,8 @@ const SearchBar = ({ id }) => {
             return;
         }
 
-        const foundMember = id.members.find(member => member.id === searchId);
-        const foundGroup = id.groups.find(group => group.id === searchId);
+        const foundMember = data.members.find(member => member.id === searchId);
+        const foundGroup = data.groups.find(group => group.id === searchId);
 
         if (foundMember && !foundGroup) {
             setMember(foundMember);
@@ -62,11 +61,7 @@ const SearchBar = ({ id }) => {
                 </div>
             )}
             {group && (
-                <div>
-                    <p>Name: {group.name}</p>
-                    <p>Goal: {group.goal}</p>
-                    <p>Date of creation: {group.date_of_creation}</p>
-                </div>
+                <Get_Card_Display id={group.id} data={data}/>
             )}
         </div>
     );

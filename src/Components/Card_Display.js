@@ -1,8 +1,9 @@
 import { Table_Display } from "./Component_Display";
 import { useCallback, useState, useMemo } from "react";
 import { CreateDelayer } from "utils/Delayer";
-export const Get_Card_Display = ({ data }) => {
-    const id = '95f19c4d-2710-41ee-9e48-9eb0314eedb3'
+import {data} from 'Data/data'
+export const Get_Card_Display = ({id,data}) => {
+    
     const selected_group = Get_Group_Data(data, id)
     console.log('selected group info')
     console.log(selected_group)
