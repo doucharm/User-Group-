@@ -1,4 +1,7 @@
-export const Table_Display = ({component}) =>
+import { useCallback } from "react"
+import { EnvelopeOpen } from "react-bootstrap-icons"
+
+export const Table_Display = ({component,set_display_id}) =>
 {
     const Get_Member_Row =({item}) =>
     {
@@ -12,7 +15,7 @@ export const Table_Display = ({component}) =>
             </tr>
         )
     }
-    const Get_Sub_Group_Row =({item}) =>
+    const Get_Sub_Group_Row =({item,set_display_id}) =>
     {
         return (
             <tr>
@@ -20,6 +23,7 @@ export const Table_Display = ({component}) =>
                 <td>{item.name}</td>
                 <td>{item.goal}</td>
                 <td>{item.date_of_creation}</td>
+                <Open_Sub_Group id={item.id} set_display_id={set_display_id} />
             </tr>
         )
     }
@@ -59,11 +63,28 @@ export const Table_Display = ({component}) =>
                 </tr>
             </thead>
             <tbody>
-                {component.sub_groups.map(item => <Get_Sub_Group_Row item={item}/>)}
+                {component.sub_groups.map(item => <Get_Sub_Group_Row item={item} set_display_id={set_display_id}/>)}
             </tbody>
         </table>
         </div>
     )
     
 
+}
+const Open_Sub_Group = ({id,set_display_id}) =>
+{
+   
+    function onOpen_SubGroup () 
+    {
+        set_display_id(id)
+    }
+    return (
+        
+        <div>
+          <button onClick={event => set_display_id(id)}>
+            <EnvelopeOpen></EnvelopeOpen>
+          </button>
+        </div>
+      );
+    
 }

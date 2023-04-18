@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Get_Card_Display } from "./Card_Display";
+import { Search } from "react-bootstrap-icons";
 export const Search_Bar_Display = ({ data }) => {
     return (
         <main>
@@ -20,6 +21,7 @@ const SearchBar = ({ data }) => {
         if (searchId === '') {
             setErrorMessage('Please enter an ID');
             setMember(null);
+            setGroup(null);
             return;
         }
 
@@ -35,7 +37,7 @@ const SearchBar = ({ data }) => {
             setMember(null);
             setErrorMessage('');
         } else {
-            setErrorMessage('not found');
+            setErrorMessage('No ID match');
             setMember(null);
             setGroup(null);
         }
@@ -45,11 +47,11 @@ const SearchBar = ({ data }) => {
         <div>
             <input
                 type="text"
-                placeholder="Enter member ID"
+                placeholder="Enter ID"
                 value={searchId}
                 onChange={e => setSearchId(e.target.value)}
             />
-            <button onClick={handleSearch}>Search</button>
+            <button onClick={handleSearch}><Search></Search></button>
             {errorMessage && <p>{errorMessage}</p>}
             {member && (
                 <div>
