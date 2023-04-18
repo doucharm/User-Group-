@@ -6,7 +6,14 @@ export const Display = ({id}) => {
     if(id)
     {
         return (
-            <Get_Card_Display data={data} id = {id}/>
+            <main>
+            <div>
+                <Search_Bar_Display data={data} />
+                <Get_Card_Display data={data} id = {id}/>
+            </div>
+            
+        </main>
+            
         )
     } else {
     return (

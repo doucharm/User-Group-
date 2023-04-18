@@ -25,6 +25,8 @@ const SearchBar = ({ data }) => {
             return;
         }
 
+        setGroup(null);
+
         const foundMember = data.members.find(member => member.id === searchId);
         const foundGroup = data.groups.find(group => group.id === searchId);
 
@@ -63,7 +65,7 @@ const SearchBar = ({ data }) => {
                 </div>
             )}
             {group && (
-                <Get_Card_Display id={group.id} data={data}/>
+                <Get_Card_Display key={group.id} id={group.id} data={data}/>
             )}
         </div>
     );
