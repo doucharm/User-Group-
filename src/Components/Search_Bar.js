@@ -65,7 +65,7 @@ const SearchBar = ({ data }) => {
                 </div>
             )}
             {group && (
-                <Get_Card_Display key={group.id} id={group.id} data={data}/>
+                <Get_Card_Display key={group.id} id={group.id} data={data} />
             )}
         </div>
     );
