@@ -1,12 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
-import './index.css'
-import { Display } from './Components/Display'
+import {Display} from './Components/Display'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { AppProvider } from 'pages/Redux Store';
+
 function App() {
   return (
-    <div className="App">
-      <Display />
+    <div className="App">   
+    <AppProvider>
+    <Display id='2d9dcd22-a4a2-11ed-b9df-0242ac120003' />
+    </AppProvider>
+      
     </div>
   );
 }

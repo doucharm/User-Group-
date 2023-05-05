@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Get_Card_Display } from "./Card_Display";
 import { Search } from "react-bootstrap-icons";
-export const Search_Bar_Display = ({ data }) => {
+import {data} from 'Data/data'
+export const Search_Bar_Display = () => {
     return (
         <main>
             <div>
-                <SearchBar data={data} />
+                <SearchBar data={data.data} />
             </div>
         </main>
     )

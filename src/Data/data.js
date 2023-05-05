@@ -1,152 +1,189 @@
 
-export const data =
-{
-  groups:
-    [
+ export const data= 
+ {
+    data:
+    {
+    groupPage: [
       {
-        id: '95f19c4d-2710-41ee-9e48-9eb0314eedb3',
-        name: "The blue betta",
-        goal: "Make 10000$ net profit",
-        owner_id: null,
-        date_of_creation: '12/1/2023',
-        properties:
-          [
-            'b6f81c1a-4x5e-4c47-87v1-4817931456a3',
-            '4be4fa2c-4f46-4c4d-9b8c-9c85df4a7de4',
-            '24c8e3f3-267f-4c2a-b4db-4c7e682ba68e'
-          ]
+        id: "2d9dcd22-a4a2-11ed-b9df-0242ac120003",
+        name: "Uni",
+        lastchange: "2023-04-19T17:27:12",
+        grouptype: {
+          id: "cd49e152-610c-11ed-9f29-001a7dda7110",
+          name: "univerzita"
+        },
+        subgroups: [
+          {
+            id: "2d9dced0-a4a2-11ed-b9df-0242ac120003",
+            name: "Fac"
+          }
+        ],
+        memberships: [
+          {
+            id: "7cea8596-a4a2-11ed-b9df-0242ac120003",
+            user: {
+              id: "2d9dc5ca-a4a2-11ed-b9df-0242ac120003",
+              name: "John",
+              surname: "Newbie",
+              email: "john.newbie@world.com",
+              lastchange: "2023-05-03T19:23:58.994556"
+            }
+          }
+          
+        ]
       },
       {
-        id: '981537f4-13bb-45d7-9e9f-c0eb3af22f69',
-        name: 'Healthy Meal Delivery',
-        goal: 'Provide 500 nutritious meals per week',
-        owner_id: null,
-        date_of_creation: '04/01/2023',
-        properties:
-          [
-            '5f1f9690-f8b3-452f-92ab-2c6dca18b9de',
-            'd36c6d8e-7b07-49d5-b5b5-5e9fa125a5f4',
-            'bdaeb2f3-c784-4649-89b3-fa105e0dab50',
-            '211d8bfa-2cf3-48a3-9d9c-ccbef6071d7d'
-
-          ]
+        id: "2d9dced0-a4a2-11ed-b9df-0242ac120003",
+        name: "Fac",
+        lastchange: "2023-04-19T17:27:12",
+        grouptype: {
+          id: "cd49e153-610c-11ed-bf19-001a7dda7110",
+          name: "fakulta"
+        },
+        subgroups: [
+          {
+            id: "2d9dd1c8-a4a2-11ed-b9df-0242ac120003",
+            name: "Dep"
+          },
+          {
+            id: "2d9dd2ea-a4a2-11ed-b9df-0242ac120003",
+            name: "St"
+          },
+          {
+            id: "9baf3b54-ae0f-11ed-9bd8-0242ac110002",
+            name: "22-5KB-A"
+          },
+          {
+            id: "9baf3d70-ae0f-11ed-9bd8-0242ac110002",
+            name: "22-5KB-B"
+          },
+          {
+            id: "9baf3de8-ae0f-11ed-9bd8-0242ac110002",
+            name: "22-5KB-C"
+          },
+          {
+            id: "9baf3e42-ae0f-11ed-9bd8-0242ac110002",
+            name: "22-5KB-D"
+          },
+          {
+            id: "9baf3e92-ae0f-11ed-9bd8-0242ac110002",
+            name: "22-5KB-E"
+          },
+          {
+            id: "9baf3eec-ae0f-11ed-9bd8-0242ac110002",
+            name: "22-5KB-F"
+          },
+          {
+            id: "9baf3f3c-ae0f-11ed-9bd8-0242ac110002",
+            name: "22-5KB-G"
+          },
+          {
+            id: "9baf3f96-ae0f-11ed-9bd8-0242ac110002",
+            name: "22-5KB-H"
+          },
+          {
+            id: "9baf3fe6-ae0f-11ed-9bd8-0242ac110002",
+            name: "22-5KB-I"
+          },
+          {
+            id: "9baf4040-ae0f-11ed-9bd8-0242ac110002",
+            name: "22-5KB-J"
+          },
+          {
+            id: "480f2802-a869-11ed-924c-0242ac110002",
+            name: "správa"
+          }
+        ],
+        memberships: []
       },
       {
-        id: '6be7a6c5-cc92-4f2e-98bb-bb5f7b08c753',
-        name: 'Sustainable Energy Project',
-        goal: 'Reduce energy consumption by 25%',
-        owner_id: null,
-        date_of_creation: '03/01/2023',
-        properties:
-          [
-            'ff2f2c46-95af-4161-816e-585f79153c6d',
-            '7e98d4b8-4f9a-437a-92e3-0e0c2c3653d3',
-            'd84e79e6-822a-4977-ae10-1b2c99dc05e8'
-          ]
+        id: "2d9dd1c8-a4a2-11ed-b9df-0242ac120003",
+        name: "Dep",
+        lastchange: "2023-04-19T17:27:12",
+        grouptype: {
+          id: "cd49e155-610c-11ed-844e-001a7dda7110",
+          name: "katedra"
+        },
+        subgroups: [],
+        memberships: []
       },
       {
-        id: 'ff2f2c46-95af-4161-816e-585f79153c6d',
-        name: 'Online Tutoring Service',
-        goal: 'Help 1000 students improve their grades',
-        owner_id: '6be7a6c5-cc92-4f2e-98bb-bb5f7b08c753',
-        date_of_creation: '02/05/2022',
-        properties:
-          [
-            'f86b32a6-4c61-4a6a-8be9-3e1c7d12844d',
-            'b70c3128-3e9b-4d89-ae5f-ee8f6486e59a',
-          ]
+        id: "2d9dd2ea-a4a2-11ed-b9df-0242ac120003",
+        name: "St",
+        lastchange: "2023-04-19T17:27:12",
+        grouptype: {
+          id: "cd49e157-610c-11ed-9312-001a7dda7110",
+          name: "studijní skupina"
+        },
+        subgroups: [],
+        memberships: []
       },
-
-    ],
-  members: [
-    {
-      id: 'b6f81c1a-4x5e-4c47-87v1-4817931456a3',
-      name: 'Snorlax',
-      surname: 'Lorrynde',
-      email: 'snorlax_deluxe12@seznam.cz',
-      owner_id: '95f19c4d-2710-41ee-9e48-9eb0314eedb3',
-      role: 'Leader'
-    },
-    {
-      id: '4be4fa2c-4f46-4c4d-9b8c-9c85df4a7de4',
-      name: 'Pikachu',
-      surname: 'Ketchum',
-      email: 'pikachu.ketchum@gmail.com',
-      owner_id: '95f19c4d-2710-41ee-9e48-9eb0314eedb3',
-      role: 'Pokemon Trainer'
-    },
-    {
-      id: '24c8e3f3-267f-4c2a-b4db-4c7e682ba68e',
-      name: 'Squirtle',
-      surname: 'Turtle',
-      email: 'squirtle.turtle@gmail.com',
-      owner_id: '95f19c4d-2710-41ee-9e48-9eb0314eedb3',
-      role: 'Water Pokemon'
-    },
-    {
-      id: '5f1f9690-f8b3-452f-92ab-2c6dca18b9de',
-      name: 'Bulbasaur',
-      surname: 'Seed',
-      email: 'bulbasaur.seed@gmail.com',
-      owner_id: '981537f4-13bb-45d7-9e9f-c0eb3af22f69',
-      role: 'Grass Pokemon'
-    },
-    {
-      id: 'd36c6d8e-7b07-49d5-b5b5-5e9fa125a5f4',
-      name: 'Charmander',
-      surname: 'Lizard',
-      email: 'charmander.lizard@gmail.com',
-      owner_id: '981537f4-13bb-45d7-9e9f-c0eb3af22f69',
-      role: 'Fire Pokemon'
-    },
-    {
-      id: 'bdaeb2f3-c784-4649-89b3-fa105e0dab50',
-      name: 'Jigglypuff',
-      surname: 'Puff',
-      email: 'jigglypuff.puff@gmail.com',
-      owner_id: '981537f4-13bb-45d7-9e9f-c0eb3af22f69',
-      role: 'Fairy Pokemon'
-    },
-    {
-      id: '211d8bfa-2cf3-48a3-9d9c-ccbef6071d7d',
-      name: 'Mewtwo',
-      surname: 'Two',
-      email: 'mewtwo.two@gmail.com',
-      owner_id: '981537f4-13bb-45d7-9e9f-c0eb3af22f69',
-      role: 'Psychic Pokemon'
-    },
-    {
-      id: '7e98d4b8-4f9a-437a-92e3-0e0c2c3653d3',
-      name: 'Eevee',
-      surname: 'Evolution',
-      email: 'eevee.evolution@gmail.com',
-      owner_id: '6be7a6c5-cc92-4f2e-98bb-bb5f7b08c753',
-      role: 'Normal Pokemon'
-    },
-    {
-      id: 'd84e79e6-822a-4977-ae10-1b2c99dc05e8',
-      name: 'Chikorita',
-      surname: 'Leaf',
-      email: 'chikorita.leaf@gmail.com',
-      owner_id: '6be7a6c5-cc92-4f2e-98bb-bb5f7b08c753',
-      role: 'Grass Pokemon'
-    },
-    {
-      id: 'f86b32a6-4c61-4a6a-8be9-3e1c7d12844d',
-      name: 'Cyndaquil',
-      surname: 'Quil',
-      email: 'cyndaquil.quil@gmail.com',
-      owner_id: 'ff2f2c46-95af-4161-816e-585f79153c6d',
-      role: 'Fire Pokemon'
-    },
-    {
-      id: 'b70c3128-3e9b-4d89-ae5f-ee8f6486e59a',
-      name: 'Totodile',
-      surname: 'Crocodile',
-      email: 'totodile.crocodile@gmail.com',
-      owner_id: 'ff2f2c46-95af-4161-816e-585f79153c6d',
-      role: 'Water Pokemon'
-    }
-
-  ],
+      {
+        id: "9baf3b54-ae0f-11ed-9bd8-0242ac110002",
+        name: "22-5KB-A",
+        lastchange: "2023-04-19T17:27:12",
+        grouptype: {
+          id: "cd49e157-610c-11ed-9312-001a7dda7110",
+          name: "studijní skupina"
+        },
+        subgroups: [],
+        memberships: []
+      },
+      {
+        id: "9baf3d70-ae0f-11ed-9bd8-0242ac110002",
+        name: "22-5KB-B",
+        lastchange: "2023-04-19T17:27:12",
+        grouptype: {
+          id: "cd49e157-610c-11ed-9312-001a7dda7110",
+          name: "studijní skupina"
+        },
+        subgroups: [],
+        memberships: []
+      },
+      {
+        id: "9baf3de8-ae0f-11ed-9bd8-0242ac110002",
+        name: "22-5KB-C",
+        lastchange: "2023-04-19T17:27:12",
+        grouptype: {
+          id: "cd49e157-610c-11ed-9312-001a7dda7110",
+          name: "studijní skupina"
+        },
+        subgroups: [],
+        memberships: []
+      },
+      {
+        id: "9baf3e42-ae0f-11ed-9bd8-0242ac110002",
+        name: "22-5KB-D",
+        lastchange: "2023-04-19T17:27:12",
+        grouptype: {
+          id: "cd49e157-610c-11ed-9312-001a7dda7110",
+          name: "studijní skupina"
+        },
+        subgroups: [],
+        memberships: []
+      },
+      {
+        id: "9baf3e92-ae0f-11ed-9bd8-0242ac110002",
+        name: "22-5KB-E",
+        lastchange: "2023-04-19T17:27:12",
+        grouptype: {
+          id: "cd49e157-610c-11ed-9312-001a7dda7110",
+          name: "studijní skupina"
+        },
+        subgroups: [],
+        memberships: []
+      },
+      {
+        id: "9baf3eec-ae0f-11ed-9bd8-0242ac110002",
+        name: "22-5KB-F",
+        lastchange: "2023-04-19T17:27:12",
+        grouptype: {
+          id: "cd49e157-610c-11ed-9312-001a7dda7110",
+          name: "studijní skupina"
+        },
+        subgroups: [],
+        memberships: []
+      }
+    ]
+  }
 }
