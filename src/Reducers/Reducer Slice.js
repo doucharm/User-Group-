@@ -1,5 +1,6 @@
 import { Create_Group,Delete_Group,Update_Group,Adding_Subgroup } from "./Group Reducer";
 import { Adding_Member,Remove_Member,Update_Member,Moving_Member } from "./Member Reducer";
+import { GroupAsyncUpdate, GroupFetch } from "./GroupAsyncAction";
 import { createSlice } from '@reduxjs/toolkit'
 export const GroupSlice = createSlice({
     name: 'groups',
@@ -29,5 +30,8 @@ export const bindGroupActions = (dispatch) => {
         onMemberRemove: ({group,user}) => dispatch(GroupActions.memberRemove({group,user})),
         onMemberUpdate: ({group,user}) => dispatch(GroupActions.memberUpdate({group,user})),
         onMemberMoving: ({old_group,new_group,moving_member}) => dispatch(GroupActions.memberMoving({old_group,new_group,moving_member})),
+
+        groupFetch: (id) => dispatch(GroupFetch(id)),
+        groupAsyncUpdate: (group) => dispatch(GroupAsyncUpdate(group))
     }
 }

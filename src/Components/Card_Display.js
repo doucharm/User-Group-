@@ -1,12 +1,15 @@
 import { EnvelopeOpen } from "react-bootstrap-icons"
+import { HeaderTextInput } from "./Header_Text_Input"
+import { actions } from "pages/Redux Store"
 
 export const Card_Display = ({group,set_display_id}) =>
 {
+    console.log(group)
     return (
         <main>
             <div class="card  border-success  bg-info mb-3" >
                 <div class="card-header">
-                    <Get_Card_Header group={group} set_display_id={set_display_id} />
+                    <Get_Card_Header group={group} />
                 </div>
                 <div class="card-body">
                     Components of the group:
@@ -16,18 +19,18 @@ export const Card_Display = ({group,set_display_id}) =>
         </main>
     )
 }
-export const Get_Card_Header = ({group,set_display_id}) =>
-{
+
+export const Get_Card_Header = ({group}) => {
     return (
-        <div>
-            <tr>ID: {group.id} </tr>
-            <tr>Group name:{group.name}</tr>
-            <tr>Last change:{group.lastchange}</tr>
-            <tr>Group type: {group.grouptype.name}</tr>
-            <br />
-        </div>
-     )
+        <tr>
+            ID: {group.id} <br />
+            groupname: {group.name} <br />
+            Last change:{group.lastchange} <br />
+            Group type: {group.grouptype.name} <br />
+        </tr>
+    )
 }
+
 const Table_Display =({group,set_display_id}) =>
 {
     const Get_Member_Row =({item}) =>

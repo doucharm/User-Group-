@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Get_Card_Display } from "./Card_Display";
+import { Card_Display } from "./Card_Display";
 import { Search } from "react-bootstrap-icons";
 import {data} from 'Data/data'
 export const Search_Bar_Display = () => {
@@ -214,7 +214,7 @@ const SearchBar = ({ data }) => {
                 </table>
             )}
             {group && (
-                <Get_Card_Display key={group.id} id={group.id} data={data} />
+                <Card_Display key={group.id} id={group.id} data={data} />
             )}
         </div>
     );

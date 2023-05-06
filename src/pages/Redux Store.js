@@ -8,7 +8,7 @@ export const store = configureStore(
             groups: GroupReducer
         }, 
         preloadedState: {
-            groups: data.data
+            groups: {}
         }
 })
 export const dispatch=store.dispatch
