@@ -1,6 +1,7 @@
 import { EnvelopeOpen } from "react-bootstrap-icons"
 import { TextInput } from "./Text_Input"
 import { GroupMemberRemoveButton } from "./Delete_Button"
+import { Adding_Member_Button } from "./Adding Member Button"
 export const Table_Display =({group,set_display_id,actions}) =>
 {
 
@@ -72,13 +73,16 @@ export const Table_Display =({group,set_display_id,actions}) =>
                 </tr>
             </thead>
             <tbody>
-        
+                <>
                 {group?.memberships?.map(item => <Get_Member_Row group={group} user={item.user} gid ={group.id} actions={actions}/>)}
+                <br/>
+                <Adding_Member_Button group={group} actions={actions} />
+                </>
             </tbody>
         </table>
         <br />
         <br />
-         List of sub-groups:
+         List of sub-groups:y
         <br />
         <table className="table table-hover table-bordered table-blue table-stripped">
     

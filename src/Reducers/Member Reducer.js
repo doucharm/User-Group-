@@ -1,9 +1,10 @@
 export const Adding_Member = (state,action) =>
 {
-    const group=action.payload.group
-    const user=action.payload.user
-    group.memberships={...group.memberships,user}
-    state[group.id]=group
+    console.log('reducer adding member called')
+    const group = action.payload.group
+    const user = action.payload.user
+    const grouptake = state[group.id]
+    grouptake.memberships.push(user)
     return state
 }
 export const Moving_Member = (state,action) =>

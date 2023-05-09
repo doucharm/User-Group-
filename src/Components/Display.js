@@ -8,6 +8,7 @@ export const Display = ({id}) =>
 {
     const [display_id,set_display_id]=useState(id)
     const data=useSelector(state => state.groups)
+    console.log(data)
     const group = data[display_id]
     useEffect(
         () => {
