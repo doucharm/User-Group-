@@ -33,19 +33,3 @@ export const Adding_Subgroup = (state, action) =>
     return state
 }
 
-export const GroupMemberUpdate = (state, action) => {
-    const g = action.payload.group
-    const u = action.payload.user
-    const group = state[g.id]
-    group.memberships = group.memberships.map(user => user.id === u.id ? {...user, ...u} : user)
-    return state
-}
-
-export const GroupMemberRemove = (state, action) => {
-    const g = action.payload.group
-    const u = action.payload.user
-    console.log(u)
-    const group = state[g.id]
-    group.memberships = group.memberships.filter(m => m.user.id !== u.id)
-    return state
-}

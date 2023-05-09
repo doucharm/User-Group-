@@ -1,31 +1,30 @@
 import { Card_Display } from './Card_Display'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector} from 'react-redux';
 import { actions } from 'pages/Redux Store';
 
 
 export const Display = ({id}) =>
 {
+    const [display_id,set_display_id]=useState(id)
     const data=useSelector(state => state.groups)
-    console.log(data)
-    const selectedId = useSelector(state => state.groups.selectedId)
-    console.log(selectedId)
-    const group = data[id]
-    console.log(group)
-    const roles =useSelector(state => state.roles)  
-    console.log(roles)
+    const group = data[display_id]
     useEffect(
         () => {
-            console.log('GroupPageProvider refetch ' + id)
+            if(!data[display_id])
+            {
+            console.log('GroupPageProvider refetch ' + display_id)
             actions.roleFetch()
-            actions.groupFetch(id)           
-        }, [id, selectedId]
+            actions.groupFetch(display_id)    
+            } 
+                  
+        }, [display_id]
     )
 
 
     if (group) {
         return (
-            <Card_Display group={group} set_display_id={selectedId} actions={actions}/>
+            <Card_Display group={group} set_display_id={set_display_id} actions={actions}/>
         )
     } else {
         return (

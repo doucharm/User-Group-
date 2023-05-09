@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-
+import { Trash } from 'react-bootstrap-icons';
 /**
  * This is Delete Button with confirmation (two state button).
  * @param {*} children
@@ -35,10 +35,9 @@ export const DeleteButton = ({children, onClick}) => {
 
 export const GroupMemberRemoveButton = ({group, user, actions}) => {
   const onClick = () => {
-      console.log('Delete user')
-      actions.onGroupMemberRemove({group: group, user: user})
+      actions.onMemberRemove({group: group, user: user})
   }
   return (
-      <DeleteButton onClick={onClick}>Del</DeleteButton>
+      <DeleteButton onClick={onClick}><Trash></Trash></DeleteButton>
   )
 }

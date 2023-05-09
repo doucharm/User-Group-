@@ -11,8 +11,6 @@ export const GroupSlice = createSlice({
         group_delete: Delete_Group,
         group_update: Update_Group,
         group_add_sub:Adding_Subgroup,
-        group_memberUpdate: GroupMemberUpdate,
-        group_memberRemove: GroupMemberRemove,
 
         memberAdd:Adding_Member,
         memberRemove: Remove_Member,
@@ -28,8 +26,6 @@ export const bindGroupActions = (dispatch) => {
         onGroupAdd: (g) => dispatch(GroupActions.group_add(g)),
         onGroupDelete: (g) => dispatch(GroupActions.group_delete(g)),
         onAddSubGroup:({group,new_subgroup}) =>dispatch(GroupActions.group_add_sub({group,new_subgroup})),
-        onGroupMemberUpdate: (payload) => dispatch(GroupActions.group_memberUpdate(payload)),
-        onGroupMemberRemove: ({user, group}) => dispatch(GroupActions.group_memberRemove({user, group})),
         
         onMemberAdd: ({user, group}) => dispatch(GroupActions.memberAdd({user, group})),
         onMemberRemove: ({group,user}) => dispatch(GroupActions.memberRemove({group,user})),
