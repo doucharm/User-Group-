@@ -62,7 +62,7 @@ export const Table_Display =({group,set_display_id,actions}) =>
         <div>
                         List of members:
                         <br/>
-        <table className="table table-hover table-bordered table-dark table-stripped">
+        <table className="table table-hover table-bordered table-light table-stripped">
             <thead>
                 <tr>
                     <th>ID</th>
