@@ -140,3 +140,55 @@ export const GroupAsyncUpdate = (group) => (dispatch, getState) => {
             }
         )   
 }
+
+export const MembershipAsyncUpdate = (group,membership) => (dispatch, getState) => {
+    const membershipMutationJSON = ({membership}) => {
+        return {
+            query: `mutation ($userId: ID!, $groupId: ID!, $name: String!, $surname: String!,$email: String!) {
+                membershipInsert(membership: {id: $groupID) {
+                  msg
+                  membership {
+                    id
+                    user (name: $name, surname: $surname,email: $email, id: $userId) {
+                        id
+                        name
+                        surname
+                        email
+                    }
+                  }
+                }
+              }`,
+            variables: membership
+            }
+        }
+
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(membershipMutationJSON(membership))
+    }
+
+
+    return fetch('/api/gql', params)
+    //return authorizedFetch('/api/gql', params)
+        .then(
+            resp => resp.json()
+        )
+        .then(
+            json => {
+                const msg = json.data.membershipInsert.msg
+                if (msg === "fail") {
+                    console.log("Update selhalo")
+                } else {
+                    //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
+                    
+                    dispatch(GroupActions.group_update({group}))
+                }
+                return json
+            }
+        )   
+}
