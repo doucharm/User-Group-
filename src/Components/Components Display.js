@@ -2,6 +2,7 @@ import { EnvelopeOpen } from "react-bootstrap-icons"
 import { TextInput } from "./Text_Input"
 import { GroupMemberRemoveButton } from "./Delete_Button"
 import { Adding_Member_Button } from "./Adding Member Button"
+import {  Role_Select } from "./Role Dropdown"
 export const Table_Display =({group,set_display_id,actions}) =>
 {
 
@@ -41,6 +42,7 @@ export const Table_Display =({group,set_display_id,actions}) =>
             <td>
                 <TextInput placeholder={"email"} id={user.id} value={user.email} onChange={onChangeEmail}/>
             </td>
+            <td><Role_Select user={user}/></td>
            <td> <GroupMemberRemoveButton user={user} group={group} actions={actions}/></td>
                 
         </tr>
@@ -69,6 +71,7 @@ export const Table_Display =({group,set_display_id,actions}) =>
                     <th>Name</th>
                     <th>Surname</th>
                     <th>Email</th>
+                    <th>Role</th>
                     <th>    </th>
                 </tr>
             </thead>

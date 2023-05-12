@@ -28,6 +28,15 @@ export const GroupQueryJSON = (id) => ({
                         surname
                         email
                         lastchange
+                        roles {
+                            id
+                            startdate
+                            enddate
+                            roletype {
+                              name
+                              nameEn
+                            }
+                          }
                     }
                 }
             }

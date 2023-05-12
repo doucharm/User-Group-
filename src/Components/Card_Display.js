@@ -26,7 +26,7 @@ export const Get_Card_Header = ({group,set_display_id,actions}) => {
     if (group.mastergroup)
     {
         return (
-            <button onClick={event => set_display_id(group.mastergroup)}>Master group </button>
+            <button onClick={event => set_display_id(group.mastergroup.id)}>Master group </button>
         )
     } else return;
     }
