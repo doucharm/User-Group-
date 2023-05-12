@@ -1,13 +1,15 @@
 import { useState, useCallback } from 'react';
-import { PersonAdd, Save, Trash } from 'react-bootstrap-icons';
+import { PersonAdd, Save, Trash, X } from 'react-bootstrap-icons';
 import { v1 } from 'uuid';
+import { Role_Select } from './Role Dropdown';
 
 export const Adding_Member = ({new_user,set_new_user, onClick,setState0,setState1,state}) =>{ 
 
-    if (state === 0) {
+    if ( state === 0 ) 
+    {
         return (
             <button className='btn btn-sm btn-primary' onClick={setState1}><PersonAdd></PersonAdd></button>
-        )
+             )
     } else {
 
             
@@ -20,14 +22,14 @@ export const Adding_Member = ({new_user,set_new_user, onClick,setState0,setState
                 });
                
             }
+            
         return (
             <>
             <label>User's first name:<input type="text" name="name" value={new_user.name} placeholder='Enter user first name' onChange={handleChange} /> </label>
             <label>User's surname:<input type="text" name="surname" value={new_user.lastName} placeholder='Enter user surname' onChange={handleChange} /> </label>  
             <label>User's email address:<input type="text" name="email" value={new_user.email} placeholder='Enter user email' onChange={handleChange} /> </label>
-            
-         
-                <button className='btn btn-sm btn-warning' onClick={setState0}><Trash></Trash></button>
+           
+                <button className='btn btn-sm btn-warning' onClick={setState0}><X></X></button>
                 <button className='btn btn-sm btn-success' onClick={onClick}><Save></Save></button>
             </>
         )
@@ -41,7 +43,8 @@ export const Adding_Member_Button = ({group,  actions}) => {
         name: "",
         surname: "",
         email:"", 
-        })
+        
+    })
   const onClick = () => 
   {
     set_new_user({...new_user,id:v1()})
