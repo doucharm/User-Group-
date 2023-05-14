@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
-import { GroupReducer,RoleReducer,bindGroupActions } from 'Reducers/Reducer Slice'; 
+import { GroupReducer,MembershipReducer,RoleReducer,UserReducer,bindGroupActions } from 'Reducers/Reducer Slice'; 
 import {data} from 'Data/data'
 
 
@@ -8,11 +8,15 @@ export const store = configureStore(
     { 
         reducer: {
             groups: GroupReducer,
-            roles: RoleReducer
+            roles: RoleReducer,
+            users: UserReducer
+            
         }, 
         preloadedState: {
             groups: {},
-            roles: {}
+            roles: {},
+            users: {}
+            
         }
 })
 

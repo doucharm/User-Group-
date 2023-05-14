@@ -3,11 +3,14 @@ import { TextInput } from "./Text_Input"
 import { GroupMemberRemoveButton } from "./Delete_Button"
 import { Adding_Member_Button } from "./Adding Member Button"
 import {  Role_Select } from "./Role Dropdown"
+import { useSelector } from "react-redux"
 export const Table_Display =({group,set_display_id,actions}) =>
 {
 
     const Get_Member_Row =({group,user,gid,actions}) =>
     {
+        
+
         const onChangeEmail = (value) => {
             if (actions.onGroupMemberUpdate) {
                 const payload = {group: {id: gid}, user: {...user, email: value}}

@@ -7,7 +7,6 @@ export const GroupQueryJSON = (id) => ({
             groupById(id: $id) {
                 id
                 name
-                valid
                 lastchange
                 mastergroup {
                     id

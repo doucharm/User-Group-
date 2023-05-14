@@ -7,12 +7,12 @@ import { actions } from 'pages/Redux Store';
 export const Display = ({id}) =>
 {
     const [display_id,set_display_id]=useState(id)
-    const data=useSelector(state => state.groups)
-    console.log(data)
-    const group = data[display_id]
+    const groups=useSelector(state => state.groups)
+    console.log(groups)
+    const group = groups[display_id]
     useEffect(
         () => {
-            if(!data[display_id])
+            if(!groups[display_id])
             {
             console.log('GroupPageProvider refetch ' + display_id)
             actions.roleFetch()
