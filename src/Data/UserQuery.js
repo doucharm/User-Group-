@@ -8,14 +8,16 @@ export const UserQueryJSON = (id) => ({
                 id
                 name
                 surname
+                email
                 membership {
                   group {
+                    name
                     id
                   }
                 }
             }
         }`,
-    "variables": {"id": id}
+    "variables": { "id": id }
 })
 
 export const UserQuery = (id) =>

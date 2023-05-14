@@ -1,36 +1,44 @@
-import { Card_Display } from './Card_Display'
-import { useEffect, useState } from 'react'
-import { useSelector} from 'react-redux';
+import { Card_Display } from './Card_Display';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { actions } from 'pages/Redux Store';
+import { SearchBar } from './Search_Bar';
+import { UserDisplay } from './User_Display';
 
+export const Display = ({ gid, uid }) => {
+    const [displayGroupId, setDisplayGroupId] = useState(gid);
+    const [displayUserId, setDisplayUserId] = useState(uid);
+    const groups = useSelector((state) => state.groups);
+    const users = useSelector((state) => state.users);
+    const group = groups[displayGroupId];
+    const user = users[displayUserId];
+    console.log(users);
+    console.log(user);
 
-export const Display = ({id}) =>
-{
-    const [display_id,set_display_id]=useState(id)
-    const groups=useSelector(state => state.groups)
-    console.log(groups)
-    const group = groups[display_id]
-    useEffect(
-        () => {
-            if(!groups[display_id])
-            {
-            console.log('GroupPageProvider refetch ' + display_id)
-            actions.roleFetch()
-            actions.groupFetch(display_id)    
-            } 
-                  
-        }, [display_id]
-    )
+    useEffect(() => {
+        if (!group) {
+            console.log('GroupPageProvider refetch ' + displayGroupId);
+            actions.roleFetch();
+            actions.groupFetch(displayGroupId);
+        }
+    }, [displayGroupId, group]);
 
+    useEffect(() => {
+        if (!user) {
+            console.log('UserPageProvider refetch ' + displayUserId);
+            actions.userFetch(displayUserId);
+        }
+    }, [displayUserId, user]);
 
     if (group) {
         return (
-            <Card_Display group={group} set_display_id={set_display_id} actions={actions}/>
-        )
+            <>
+                <SearchBar setDisplayId={setDisplayGroupId} />
+                <Card_Display group={group} set_display_id={setDisplayGroupId} actions={actions} />
+                <UserDisplay user={user} setUserId={setDisplayUserId} />
+            </>
+        );
     } else {
-        return (
-            <div>Loading... {id}</div>
-        )
+        return <div>Loading... {gid}</div>;
     }
-    
-}
+};
