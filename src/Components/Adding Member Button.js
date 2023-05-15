@@ -2,6 +2,8 @@ import { useState, useCallback } from 'react';
 import { PersonAdd, Save, Trash, X } from 'react-bootstrap-icons';
 import { v1 } from 'uuid';
 import { Role_Select } from './Role Dropdown';
+import { useSelector } from 'react-redux';
+import { UserFetch } from 'Reducers/GroupAsyncAction';
 
 export const Adding_Member = ({new_user,set_new_user, onClick,setState0,setState1,state}) =>{ 
 
@@ -54,6 +56,9 @@ export const Adding_Member_Button = ({group,  actions}) => {
         ]
         
     })
+
+    
+    
   const onClick = () => 
   {
     set_new_user({...new_user,id:v1()})
@@ -62,8 +67,20 @@ export const Adding_Member_Button = ({group,  actions}) => {
         id:v1(),
         user:{...new_user,id:v1()}
     }
-
-    actions.onMemberAdd({group: group, user: user})
+    console.log(user)
+    console.log(user.user)
+    const membership = {
+        user_id: user.user.id, group_id: group.id
+    }
+    console.log(user.user.id)
+    console.log(membership)
+    
+    actions.userAsyncUpdate({...user.user})
+    actions.onMemberAdd({user, group})
+    
+    
+    
+    
     setState0()
 
   }

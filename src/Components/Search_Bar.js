@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+/*import React, { useState } from "react";
 import { Card_Display } from "./Card_Display";
 import { Search } from "react-bootstrap-icons";
 import {data} from 'Data/data'
@@ -217,5 +217,34 @@ const SearchBar = ({ data }) => {
                 <Card_Display key={group.id} id={group.id} data={data} />
             )}
         </div>
+    );
+};
+*/
+
+import { useState } from 'react';
+
+export const SearchBar = ({ setDisplayId }) => {
+    const [inputId, setInputId] = useState('');
+
+    const handleInputChange = (event) => {
+        setInputId(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setDisplayId(inputId);
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="inputId">Enter ID:</label>
+            <input
+                id="inputId"
+                type="text"
+                value={inputId}
+                onChange={handleInputChange}
+            />
+            <button type="submit">Submit</button>
+        </form>
     );
 };

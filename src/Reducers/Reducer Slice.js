@@ -1,8 +1,11 @@
 import { Create_Group,Delete_Group,Update_Group,Adding_Subgroup,GroupMemberUpdate, GroupMemberRemove } from "./Group Reducer";
 import { Adding_Member,Remove_Member,Update_Member,Moving_Member } from "./Member Reducer";
-import { GroupAsyncUpdate, GroupFetch, RoleFetch } from "./GroupAsyncAction";
+import { GroupAsyncUpdate, GroupFetch, RoleFetch,UserAsyncUpdate,UserFetch } from "./GroupAsyncAction";
+import { MembershipAsyncUpdate } from "./MembershipAsyncActions";
 import { Update_Role } from "./Role Reducer";
 import { createSlice } from '@reduxjs/toolkit'
+import { Update_User } from "./User Reducer";
+import { Update_Membership } from "./Membership Reducer";
 export const GroupSlice = createSlice({
     name: 'groups',
     initialState: {},
@@ -34,7 +37,10 @@ export const bindGroupActions = (dispatch) => {
 
         groupFetch: (id) => dispatch(GroupFetch(id)),
         groupAsyncUpdate: (group) => dispatch(GroupAsyncUpdate(group)),
-        roleFetch: () => dispatch(RoleFetch())
+        userAsyncUpdate: (user) => dispatch(UserAsyncUpdate(user)),
+        roleFetch: () => dispatch(RoleFetch()),
+        membershipAsyncUpdate: ({group_id,user_id}) => dispatch(MembershipAsyncUpdate({group_id,user_id})),
+        userFetch: (id) => dispatch(UserFetch(id))
     }
 }
 
@@ -51,3 +57,18 @@ export const RoleSlice = createSlice(
 
 export const RoleActions = RoleSlice.actions
 export const RoleReducer = RoleSlice.reducer
+
+export const UserSlice = createSlice(
+    {
+        name: 'users',
+        initialState: {},
+        reducers: {
+            users_update: Update_User
+        }
+
+    }
+)
+
+export const UserActions = UserSlice.actions
+export const UserReducer = UserSlice.reducer
+
