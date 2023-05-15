@@ -25,7 +25,10 @@ export const Display = ({id}) =>
 
     if (group) {
         return (
+            <>
+            <button onClick={event=>console.log(data)} >Get store </button>
             <Card_Display group={group} set_display_id={set_display_id} actions={actions}/>
+            </>
         )
     } else {
         return (

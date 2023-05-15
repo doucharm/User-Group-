@@ -43,6 +43,15 @@ export const Adding_Member_Button = ({group,  actions}) => {
         name: "",
         surname: "",
         email:"", 
+        roles:
+        [
+            {
+                roletype:
+                {
+                    nameEn:''
+                }
+            }
+        ]
         
     })
   const onClick = () => 

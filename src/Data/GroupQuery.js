@@ -23,6 +23,10 @@ export const GroupQueryJSON = (id) => ({
                 memberships {
                     id
                     user {
+                        membership 
+                        {
+                            id
+                        }
                         id
                         name
                         surname

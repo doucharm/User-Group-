@@ -42,7 +42,7 @@ export const Table_Display =({group,set_display_id,actions}) =>
             <td>
                 <TextInput placeholder={"email"} id={user.id} value={user.email} onChange={onChangeEmail}/>
             </td>
-            <td><Role_Select user={user}/></td>
+            <td><Role_Select user={user} group={group} actions={actions}/></td>
            <td> <GroupMemberRemoveButton user={user} group={group} actions={actions}/></td>
                 
         </tr>

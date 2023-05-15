@@ -30,6 +30,9 @@ export const Update_Member = (state,action) =>
 {
     const g = action.payload.group
     const u = action.payload.user
+    console.log('inside the reducer update member')
+    console.log(g)
+    console.log(u)
     const group = state[g.id]
     group.memberships = group.memberships.map(user => user.id === u.id ? {...user, ...u} : user)
     return state
