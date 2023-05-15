@@ -53,34 +53,25 @@ export const Adding_Member_Button = ({group,  actions}) => {
                     nameEn:''
                 }
             }
+        ],
+        membership:
+        [
+            {
+                id:v1()
+            }
         ]
         
     })
-
-    
-    
   const onClick = () => 
   {
     set_new_user({...new_user,id:v1()})
     const user=
     {
-        id:v1(),
+        id:new_user.membership[0].id,
         user:{...new_user,id:v1()}
     }
-    console.log(user)
-    console.log(user.user)
-    const membership = {
-        user_id: user.user.id, group_id: group.id
-    }
-    console.log(user.user.id)
-    console.log(membership)
-    
     actions.userAsyncUpdate({...user.user})
     actions.onMemberAdd({user, group})
-    
-    
-    
-    
     setState0()
 
   }

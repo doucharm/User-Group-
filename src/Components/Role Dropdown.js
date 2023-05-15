@@ -6,7 +6,7 @@ import { v1 } from 'uuid'
 
 export const Role_Select = ({user,group,actions}) =>
 {
-  const [role,set_role] = useState('hh')
+  const [role,set_role] = useState(user.roles[0].roletype.nameEn)
   const roles=useSelector(state =>state.roles)
   const role_list=Object.values(roles)
   function onRoleChange(role)

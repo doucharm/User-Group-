@@ -21,11 +21,6 @@ export const GroupFetchHelper = (id, query, resultselector, dispatch, getState) 
       .then(
           (i) => log('incomming')(i)
       )
-      // .then(
-      //     response => log('received')(response.json()),
-      //     error => error
-      //     //error
-      //     )
       .then(
           json => log('converted')(resultselector(json)),
           error => error
@@ -107,7 +102,7 @@ export const GroupFetch = (id) => (dispatch, getState) => {
   const groupSelector = (json) => json.data.groupById
   const bodyfunc = async () => {
       let groupData = await GroupFetchHelper(id, GroupQuery, groupSelector, dispatch, getState)
-      console.log(groupData)
+    
       return groupData
   }
   return bodyfunc()

@@ -6,8 +6,8 @@ import { SearchBar } from './Search_Bar';
 import { UserDisplay } from './User_Display';
 
 export const Display = ({gid,uid}) => {
-    const [displayGroupId, setDisplayGroupId] = useState(id);
-    const [displayUserId, setDisplayUserId] = useState(id);
+    const [displayGroupId, setDisplayGroupId] = useState(gid);
+    const [displayUserId, setDisplayUserId] = useState(uid);
     const groups = useSelector((state) => state.groups);
     const users = useSelector((state) => state.users);
     const group = groups[displayGroupId];
