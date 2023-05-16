@@ -12,17 +12,11 @@ export const Display = ({gid,uid}) => {
     const users = useSelector((state) => state.users);
     const group = groups[displayGroupId];
     const user = users[displayUserId];
-    let displaying_group=true;
     useEffect(() => {
         if (!group) 
         {
             actions.roleFetch();
-            actions.groupFetch(displayGroupId) 
-            if (!group)
-            {
-                displaying_group=false;
-                actions.userFetch(displayUserId);
-            }
+            const foundGroup=actions.groupFetch(displayGroupId) 
         }
     }, [displayGroupId, group]);
     useEffect(() => {
@@ -31,9 +25,8 @@ export const Display = ({gid,uid}) => {
             actions.userFetch(displayUserId);
         }
     }, [displayUserId, user]);
-
-    
-    if (group && displaying_group) {
+    if (group) 
+    {
         return (
             <>
 
@@ -44,7 +37,8 @@ export const Display = ({gid,uid}) => {
             </>
         );
 
-    } else if(user)
+    } 
+    else if(user)
     {
         return(
         <>
