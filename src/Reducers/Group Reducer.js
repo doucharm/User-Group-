@@ -1,4 +1,4 @@
-import { v1 } from 'uuid';
+import { v1,validate } from 'uuid';
 
 
 export const Create_Group = (state , action) =>
@@ -26,10 +26,17 @@ export const Update_Group =(state,action) =>
 }
 export const Adding_Subgroup = (state, action) =>
 {
-    const new_subgroup=action.payload.new_subgroup
+    console.log('pay load of sub')
+    console.log(action.payload)
+    let new_subgroup=action.payload.new_subgroup
+    if(!validate(new_subgroup.id))
+    {
+        new_subgroup.id=v1()
+    }
     const g=action.payload.group 
     const group=state[g.id]
-    state[g.id]={...group,subgroups:{...group.subgroups,new_subgroup}}
+    group.subgroups.push(new_subgroup)
+
     return state
 }
 

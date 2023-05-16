@@ -4,6 +4,7 @@ import { GroupMemberRemoveButton } from "./Delete_Button"
 import { Adding_Member_Button } from "./Adding Member Button"
 import {  Role_Select } from "./Role Dropdown"
 import { useSelector } from "react-redux"
+import { Adding_Subgroup_Button } from "./Adding Subgroup"
 export const Table_Display =({group,set_display_id,actions}) =>
 {
 
@@ -88,10 +89,9 @@ export const Table_Display =({group,set_display_id,actions}) =>
         </table>
         <br />
         <br />
-         List of sub-groups:y
+         List of sub-groups:
         <br />
         <table className="table table-hover table-bordered table-blue table-stripped">
-    
             <thead>
                 <tr>
                     <th>ID</th>
@@ -99,8 +99,10 @@ export const Table_Display =({group,set_display_id,actions}) =>
                 </tr>
             </thead>
             <tbody>
-
+        <>
                 {group?.subgroups?.map(item => <Get_Sub_Group_Row item={item}/>)}
+                <Adding_Subgroup_Button group={group} actions = {actions}/>
+                </>
             </tbody>
         </table>
         </div>
