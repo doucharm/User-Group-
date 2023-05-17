@@ -1,21 +1,14 @@
-export const MembershipAsyncUpdate = (memberships) => (dispatch, getState) => {
-  const membershipMutationJSON = ({memberships}) => {
+export const MembershipAsyncUpdate = ({group_id,user_id}) => (dispatch, getState) => {
+  const membershipMutationJSON = (membership) => {
       return {
           query: `mutation($group_id: ID!, $user_id: ID!) {
               membershipInsert(membership: {
               groupId: $group_id,
               userId: $user_id
           }){
-              id
               msg
-              membership {
-                  id
-                  group { id }
-                  user { id }
-                  lastchange
-              }
           }
-          }`, variables: {memberships}
+          }`, variables: membership
           }
       }
   const params = {
@@ -25,7 +18,7 @@ export const MembershipAsyncUpdate = (memberships) => (dispatch, getState) => {
       },
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       redirect: 'follow', // manual, *follow, error
-      body: JSON.stringify(membershipMutationJSON({memberships}))
+      body: JSON.stringify(membershipMutationJSON({group_id,user_id}))
   }
 
 

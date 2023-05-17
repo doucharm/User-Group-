@@ -39,7 +39,11 @@ export const bindGroupActions = (dispatch) => {
         groupAsyncUpdate: (group) => dispatch(GroupAsyncUpdate(group)),
         userAsyncUpdate: (user) => dispatch(UserAsyncUpdate(user)),
         roleFetch: () => dispatch(RoleFetch()),
-        membershipAsyncUpdate: ({group_id,user_id}) => dispatch(MembershipAsyncUpdate({group_id,user_id})),
+        membershipAsyncUpdate: ({group_id,user_id}) => {
+            console.log("work")
+            console.log(group_id,user_id)
+            dispatch(MembershipAsyncUpdate({group_id,user_id}))
+        },
         userFetch: (id) => dispatch(UserFetch(id))
     }
 }
