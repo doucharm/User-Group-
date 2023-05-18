@@ -70,19 +70,13 @@ export const Adding_Member_Button = ({group,  actions}) => {
         id:new_user.membership[0].id,
         user:{...new_user,id:v1()}
     }
+    const membership = {
+        user_id: user.user.id,
+        group_id: group.id
+    }
     actions.userAsyncUpdate({...user.user})
-    actions.onMemberAdd({user, group})
-    /*
-    const membership = {userId = user.user.id, groupId = group.id}
-    */
-   const membership=
-   {
-    user_id:user.user.id,
-    group_id:group.id
-   }
-   console.log('membership inor')
-   console.log(membership)
-   actions.membershipAsyncUpdate(membership)
+    actions.membershipAsyncInsert(membership)
+    actions.onMemberAdd({group: group, user: user.user})
     setState0()
 
   }

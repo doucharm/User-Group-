@@ -1,7 +1,7 @@
 import { Create_Group,Delete_Group,Update_Group,Adding_Subgroup,GroupMemberUpdate, GroupMemberRemove } from "./Group Reducer";
 import { Adding_Member,Remove_Member,Update_Member,Moving_Member } from "./Member Reducer";
 import { GroupAsyncUpdate, GroupFetch, RoleFetch,UserAsyncUpdate,UserFetch } from "./GroupAsyncAction";
-import { MembershipAsyncUpdate } from "./MembershipAsyncActions";
+import { MembershipAsyncUpdate,MembershipAsyncInsert } from "./MembershipAsyncActions";
 import { Update_Role } from "./Role Reducer";
 import { createSlice } from '@reduxjs/toolkit'
 import { Update_User } from "./User Reducer";
@@ -39,10 +39,11 @@ export const bindGroupActions = (dispatch) => {
         groupAsyncUpdate: (group) => dispatch(GroupAsyncUpdate(group)),
         userAsyncUpdate: (user) => dispatch(UserAsyncUpdate(user)),
         roleFetch: () => dispatch(RoleFetch()),
-        membershipAsyncUpdate: ({group_id,user_id}) => {
-            console.log("work")
-            console.log(group_id,user_id)
-            dispatch(MembershipAsyncUpdate({group_id,user_id}))
+        membershipAsyncInsert: ({group_id,user_id}) => {
+            dispatch(MembershipAsyncInsert({group_id,user_id}))
+        },
+        membershipAsyncUpdate: ({group,id,lastchange}) => {
+            dispatch(MembershipAsyncUpdate({group,id,lastchange}))
         },
         userFetch: (id) => dispatch(UserFetch(id))
     }

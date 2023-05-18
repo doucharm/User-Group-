@@ -5,12 +5,20 @@ import { Adding_Member_Button } from "./Adding Member Button"
 import {  Role_Select } from "./Role Dropdown"
 import { useSelector } from "react-redux"
 import { Adding_Subgroup_Button } from "./Adding Subgroup"
+import { DeleteButton } from "./Delete_Button"
+import { Trash } from "react-bootstrap-icons"
 export const Table_Display =({group,set_display_id,actions}) =>
 {
 
     const Get_Member_Row =({group,user,gid,actions}) =>
     {
-        
+        const onclick= () => {
+            console.log(group)
+            const membership = {group: group,id:group.memberships[3].id,lastchange: group.memberships[3].lastchange}
+            const memberships = {...membership,valid: false}
+            console.log(memberships)    
+            actions.membershipAsyncUpdate(memberships)
+        }
 
         const onChangeEmail = (value) => {
             if (actions.onGroupMemberUpdate) {
@@ -47,8 +55,7 @@ export const Table_Display =({group,set_display_id,actions}) =>
                 <TextInput placeholder={"email"} id={user.id} value={user.email} onChange={onChangeEmail}/>
             </td>
             <td><Role_Select user={user} group={group} actions={actions}/></td>
-           <td> <GroupMemberRemoveButton user={user} group={group} actions={actions}/></td>
-                
+            <DeleteButton onClick={onclick}><Trash></Trash></DeleteButton>
         </tr>
         )
     }

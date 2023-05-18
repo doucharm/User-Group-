@@ -13,3 +13,4 @@ Process:
 Possible improvement:
 + More functional search bar : return result based on name or goal
 + Changes to data using redux store
+

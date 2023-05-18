@@ -21,6 +21,7 @@ export const GroupQueryJSON = (id) => ({
                 }
                 memberships {
                     id
+                    lastchange
                     user {
                         membership 
                         {
