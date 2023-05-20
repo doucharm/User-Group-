@@ -37,7 +37,8 @@ export const Adding_Subgroup_Button = ({group,  actions}) =>
 {
     const [new_sub, set_new_sub] = useState({
         id:"",
-        name: "" 
+        name: "",
+        mastergroupId: group.id
     })
     const onClick = () => 
     {
@@ -46,7 +47,9 @@ export const Adding_Subgroup_Button = ({group,  actions}) =>
             group:group,
             new_subgroup:new_sub
         }
+        console.log(new_sub)
         actions.onAddSubGroup(payload)
+        actions.groupAsyncInsert(new_sub)
         setState0()
 
     }
