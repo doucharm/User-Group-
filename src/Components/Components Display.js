@@ -55,7 +55,7 @@ export const Table_Display =({group,set_display_id,actions}) =>
                 <TextInput placeholder={"email"} id={user.id} value={user.email} onChange={onChangeEmail}/>
             </td>
             <td><Role_Select user={user} group={group} actions={actions}/></td>
-            <DeleteButton onClick={onclick}><Trash></Trash></DeleteButton>
+            <td><DeleteButton onClick={onclick}><Trash></Trash></DeleteButton></td>
         </tr>
         )
     }

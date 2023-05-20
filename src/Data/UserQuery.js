@@ -15,6 +15,9 @@ export const UserQueryJSON = (id) => ({
                     id
                   }
                 }
+                roles {
+                    lastchange
+                }
             }
         }`,
     "variables": { "id": id }

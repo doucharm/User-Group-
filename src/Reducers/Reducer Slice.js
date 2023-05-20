@@ -5,7 +5,7 @@ import { MembershipAsyncUpdate,MembershipAsyncInsert } from "./MembershipAsyncAc
 import { Update_Role } from "./Role Reducer";
 import { createSlice } from '@reduxjs/toolkit'
 import { Update_User } from "./User Reducer";
-import { Update_Membership } from "./Membership Reducer";
+import { RoleAsyncInsert,RoleAsyncUpdate } from "./RoleAsyncActions";
 export const GroupSlice = createSlice({
     name: 'groups',
     initialState: {},
@@ -45,8 +45,14 @@ export const bindGroupActions = (dispatch) => {
         },
         membershipAsyncUpdate: ({group,id,lastchange}) => {
             dispatch(MembershipAsyncUpdate({group,id,lastchange}))
+        }, 
+        userFetch: (id) => dispatch(UserFetch(id)),
+        roleAsyncInsert: ({group_id,user_id,roletype_id}) => {
+            dispatch(RoleAsyncInsert({group_id,user_id,roletype_id}))
         },
-        userFetch: (id) => dispatch(UserFetch(id))
+        roleAsyncUpdate: (role) => {
+            dispatch(RoleAsyncUpdate(role))
+        }
     }
 }
 

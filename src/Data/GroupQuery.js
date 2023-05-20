@@ -33,6 +33,7 @@ export const GroupQueryJSON = (id) => ({
                         email
                         lastchange
                         roles {
+                            lastchange
                             id
                             startdate
                             enddate
