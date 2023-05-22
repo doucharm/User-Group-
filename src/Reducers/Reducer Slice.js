@@ -28,21 +28,12 @@ export const bindGroupActions = (dispatch) => {
         onGroupUpdate: (g) => dispatch(GroupActions.group_update(g)),
         onGroupAdd: (g) => dispatch(GroupActions.group_add(g)),
         onGroupDelete: (g) => dispatch(GroupActions.group_delete(g)),
-<<<<<<< HEAD
         onAddSubGroup: ({ group, new_subgroup }) => dispatch(GroupActions.group_add_sub({ group, new_subgroup })),
 
         onMemberAdd: ({ user, group }) => dispatch(GroupActions.memberAdd({ user, group })),
         onMemberRemove: ({ group, user }) => dispatch(GroupActions.memberRemove({ group, user })),
         onMemberUpdate: ({ group, user }) => dispatch(GroupActions.memberUpdate({ group, user })),
         onMemberMoving: ({ old_group, new_group, moving_member }) => dispatch(GroupActions.memberMoving({ old_group, new_group, moving_member })),
-=======
-        onAddSubGroup:({group,new_subgroup}) =>dispatch(GroupActions.group_add_sub({group,new_subgroup})),
-        
-        onMemberAdd: ({membership, group}) => dispatch(GroupActions.memberAdd({membership, group})),
-        onMemberRemove: ({group,membership}) => dispatch(GroupActions.memberRemove({group,membership})),
-        onMemberUpdate: ({group,user}) => dispatch(GroupActions.memberUpdate({group,user})),
-        onMemberMoving: ({old_group,new_group,moving_member}) => dispatch(GroupActions.memberMoving({old_group,new_group,moving_member})),
->>>>>>> 207b418c91fdee5a94276cfcebc5102f75690f15
 
         groupFetch: (id) => dispatch(GroupFetch(id)),
         groupAsyncUpdate: (group) => dispatch(GroupAsyncUpdate(group)),
@@ -55,11 +46,6 @@ export const bindGroupActions = (dispatch) => {
         membershipAsyncUpdate: ({ group, id, lastchange }) => {
             dispatch(MembershipAsyncUpdate({ group, id, lastchange }))
         },
-<<<<<<< HEAD
-=======
-        membershipAsyncUpdate: ({id,lastchange}) => {dispatch(MembershipAsyncUpdate({id,lastchange}))},
-        userFetch: (id) => dispatch(UserFetch(id)),
->>>>>>> 207b418c91fdee5a94276cfcebc5102f75690f15
         userFetch: (id) => dispatch(UserFetch(id)),
         userByLetterFetch: (letter) => dispatch(UserByLetterFetch(letter)),
         roleAsyncInsert: ({ group_id, user_id, roletype_id }) => {
