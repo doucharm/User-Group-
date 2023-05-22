@@ -40,3 +40,14 @@ export const Adding_Subgroup = (state, action) =>
     return state
 }
 
+export const GroupMemberAdd = (state, action) => {
+    const membership = action.payload;
+
+    const gtochange = state.find(g => g.id === membership.group.id)
+    gtochange.memberships.push(membership)
+    return state 
+}
+
+export const GroupMemberRemove = (state, action) => {
+
+}
