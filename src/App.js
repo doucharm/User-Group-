@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <AppProvider>
-        <Display id='' />
+        <Display />
       </AppProvider>
 
     </div>
