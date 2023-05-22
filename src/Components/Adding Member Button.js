@@ -1,10 +1,6 @@
 import { useState, useCallback } from 'react';
 import { PersonAdd, Save, Trash, X } from 'react-bootstrap-icons';
 import { v1 } from 'uuid';
-import { Role_Select } from './Role Dropdown';
-import { useSelector } from 'react-redux';
-import { UserFetch } from 'Reducers/GroupAsyncAction';
-
 export const Adding_Member = ({new_user,set_new_user, onClick,setState0,setState1,state}) =>{ 
 
     if ( state === 0 ) 
@@ -12,19 +8,15 @@ export const Adding_Member = ({new_user,set_new_user, onClick,setState0,setState
         return (
             <button className='btn btn-sm btn-primary' onClick={setState1}><PersonAdd></PersonAdd></button>
              )
-    } else {
-
-            
+    } else {    
             function handleChange(evt) 
             {
                 const value = evt.target.value;
                 set_new_user({
                   ...new_user,
                   [evt.target.name]: value
-                });
-               
+                });    
             }
-            
         return (
             <>
             <label>User's first name:<input type="text" name="name" value={new_user.name} placeholder='Enter user first name' onChange={handleChange} /> </label>
@@ -40,45 +32,38 @@ export const Adding_Member = ({new_user,set_new_user, onClick,setState0,setState
 
 
 export const Adding_Member_Button = ({group,  actions}) => {
+    const membership_id=v1()
     const [new_user, set_new_user] = useState({
         id:"",
         name: "",
         surname: "",
         email:"", 
-        roles:
-        [
-            {
-                roletype:
-                {
-                    nameEn:''
-                }
-            }
-        ],
+        roles:[],
         membership:
         [
             {
-                id:v1()
+                id:membership_id
             }
         ]
         
     })
   const onClick = () => 
   {
-    set_new_user({...new_user,id:v1()})
-    const user=
+    new_user.id=v1()
+    const membership=
     {
-        id:new_user.membership[0].id,
-        user:{...new_user,id:v1()}
+        id:membership_id,
+        valid:true,
+        user:new_user
     }
-    const membership = {
-        user_id: user.user.id,
+    const payload = {
+        user_id: new_user.id,
         group_id: group.id
     }
-    actions.userAsyncUpdate({...user.user})
-    actions.membershipAsyncInsert(membership)
-    actions.onMemberAdd({group: group, user: user.user})
+    actions.userAsyncUpdate(new_user)
+    actions.membershipAsyncInsert(payload)
+    actions.onMemberAdd({group: group, membership: membership})
     setState0()
-
   }
   const [ state, setState ] = useState(0)
   const setState0 = useCallback(() => setState(0))

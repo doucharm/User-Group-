@@ -1,4 +1,3 @@
-import { GroupActions } from "./Reducer Slice"
 export const MembershipAsyncInsert = ({group_id,user_id}) => (dispatch, getState) => {
   const membershipMutationJSON = (membership) => {
       return {
@@ -6,6 +5,7 @@ export const MembershipAsyncInsert = ({group_id,user_id}) => (dispatch, getState
               membershipInsert(membership: {
               groupId: $group_id,
               userId: $user_id
+              valid: true
           }){
               msg
           }
@@ -27,7 +27,7 @@ export const MembershipAsyncInsert = ({group_id,user_id}) => (dispatch, getState
 }
 
 
-export const MembershipAsyncUpdate = ({group,id,lastchange}) => (dispatch, getState) => {
+export const MembershipAsyncUpdate = ({id,lastchange}) => (dispatch, getState) => {
     const membershipMutationJSON = (membership) => {
         return {
             query: `mutation($id: ID!, $lastchange: DateTime!) {
@@ -55,23 +55,5 @@ export const MembershipAsyncUpdate = ({group,id,lastchange}) => (dispatch, getSt
         redirect: 'follow', // manual, *follow, error
         body: JSON.stringify(membershipMutationJSON({id,lastchange}))
     }
-  
-  
     return fetch('/api/gql', params)
-    .then(
-        resp => resp.json()
-    )
-    .then(
-        json => {
-            const msg = json.data.membershipUpdate.msg
-            if (msg === "fail") {
-                console.log("Update selhalo")
-            } else {
-                //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
-                const lastchange = json.data.membershipUpdate.membership.lastchange
-                dispatch(GroupActions.group_update({...group, lastchange: lastchange}))
-            }
-            return json
-        }
-    )   
   }

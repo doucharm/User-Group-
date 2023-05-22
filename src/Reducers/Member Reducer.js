@@ -1,29 +1,36 @@
 export const Adding_Member = (state,action) =>
 {
-    console.log('reducer adding member called')
+    console.log(action.payload)
     const group = action.payload.group
-    const user = action.payload.user
+    const membership = action.payload.membership
     const grouptake = state[group.id]
-    grouptake.memberships.push(user)
+    grouptake.memberships.push(membership)
     return state
 }
+
 export const Moving_Member = (state,action) =>
 {
-    const old_group=action.payload.old_group
-    const new_group=action.payload.new_group
-    const moving_member=action.payload.user
-    const old_group1=old_group.memberships?.filter((user) => user.id!==moving_member.id )
-    const new_group1 = { ...new_group, memberships: [...new_group.memberships, moving_member] }
-    state[old_group.id]=old_group1
-    state[new_group.id]=new_group1
+    const {user, fromg, tog } = action.payload
+
+    const old_group= state[fromg.id] //action.payload.old_group
+    const new_group=    state[fromg.id] //action.payload.old_group
+
+    //const moving_member=action.payload.user
+    
+    old_group.memberships = old_group.memberships?.filter((m) => m.user.id!==user.id )
+    new_group.memberships.push({})// = { ...new_group, memberships: [...new_group.memberships, moving_member] }
+    // state[old_group.id]=old_group1
+    // state[new_group.id]=new_group1
     return state
 }
 export const Remove_Member = (state, action) =>
 {
+    console.log('reducer called',action.payload)
     const g = action.payload.group
-    const u = action.payload.user
+    const membership = action.payload.membership
     const group = state[g.id]
-    group.memberships = group.memberships.filter(m => m.user.id !== u.id)
+    console.log("group membership", group)
+    group.memberships = group.memberships.map((item) => item.id===membership.id? {...item,valid:false}: item  )
     return state
 }
 export const Update_Member = (state,action) =>

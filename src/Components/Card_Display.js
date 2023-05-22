@@ -4,7 +4,6 @@ import { Table_Display } from "./Components Display"
 
 export const Card_Display = ({group,set_display_id,actions}) =>
 {
-    
     return (
         <main>
             <div class="card  border-success  bg-info mb-3" >

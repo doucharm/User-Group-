@@ -2,62 +2,40 @@ import { EnvelopeOpen } from "react-bootstrap-icons"
 import { TextInput } from "./Text_Input"
 import { GroupMemberRemoveButton } from "./Delete_Button"
 import { Adding_Member_Button } from "./Adding Member Button"
-import {  Role_Select } from "./Role Dropdown"
-import { useSelector } from "react-redux"
+
 import { Adding_Subgroup_Button } from "./Adding Subgroup"
 import { DeleteButton } from "./Delete_Button"
 import { Trash } from "react-bootstrap-icons"
+import { Role_Select } from "./Role Dropdown"
 export const Table_Display =({group,set_display_id,actions}) =>
 {
-
-    const Get_Member_Row =({group,user,gid,actions}) =>
+    const Get_Member_Row =({group,membership,actions}) =>
     {
         const onclick= () => {
-            console.log(group)
-            const membership = {group: group,id:group.memberships[3].id,lastchange: group.memberships[3].lastchange}
-            const memberships = {...membership,valid: false}
-            console.log(memberships)    
-            actions.membershipAsyncUpdate(memberships)
-        }
-
-        const onChangeEmail = (value) => {
-            if (actions.onGroupMemberUpdate) {
-                const payload = {group: {id: gid}, user: {...user, email: value}}
-                actions.onGroupMemberUpdate(payload)
+            const payload = 
+            {
+                id:membership.id,
+                lastchange: membership.lastchange
             }
+            actions.membershipAsyncUpdate(payload)
+            actions.onMemberRemove({group,membership})
+            
         }
-        
-        
-         const onChangeSurname = (value) => {
-            if (actions.onGroupMemberUpdate) {
-                const payload = {group: {id: gid}, user: {...user, surname: value}}
-                actions.onGroupMemberUpdate(payload)
-            }
+        if( membership.valid )
+        {
+            return (
+                <tr>
+                <td>{membership.user.id}</td>
+                <td>{membership.user.name}</td>
+                <td>{membership.user.surname}</td>
+                <td>{membership.user.email}</td>
+                <Role_Select user={membership.user} group={group} actions={actions}/>
+                <DeleteButton onClick={onclick}><Trash></Trash></DeleteButton>
+            </tr>
+            )
         }
+       
         
-         const onChangeName = (value) => {
-            if (actions.onGroupMemberUpdate) {
-                console.log(user, value)
-                const payload = {group: {id: gid}, user: {...user, name: value}}
-                actions.onGroupMemberUpdate(payload)
-            }
-        }
-        return (
-            <tr>
-            <td>{user.id}</td>
-            <td>
-                <TextInput placeholder={"name"} id={user.id} value={user.name} onChange={onChangeName}/>
-            </td>
-            <td>
-                <TextInput placeholder={"surname"} id={user.id} value={user.surname} onChange={onChangeSurname}/>
-            </td>
-            <td>
-                <TextInput placeholder={"email"} id={user.id} value={user.email} onChange={onChangeEmail}/>
-            </td>
-            <td><Role_Select user={user} group={group} actions={actions}/></td>
-            <td><DeleteButton onClick={onclick}><Trash></Trash></DeleteButton></td>
-        </tr>
-        )
     }
 
     const Get_Sub_Group_Row =({item}) =>
@@ -88,7 +66,7 @@ export const Table_Display =({group,set_display_id,actions}) =>
             </thead>
             <tbody>
                 <>
-                {group?.memberships?.map(item => <Get_Member_Row group={group} user={item.user} gid ={group.id} actions={actions}/>)}
+                {group?.memberships?.map(item => <Get_Member_Row group={group} membership={item} actions={actions}/>)}
                 <br/>
                 <Adding_Member_Button group={group} actions={actions} />
                 </>

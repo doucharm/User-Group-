@@ -18,14 +18,17 @@ export const GroupQueryJSON = (id) => ({
                 subgroups {
                     id
                     name
+                    valid
                 }
                 memberships {
                     id
                     lastchange
+                    valid
                     user {
                         membership 
                         {
                             id
+                            
                         }
                         id
                         name

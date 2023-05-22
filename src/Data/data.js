@@ -1,189 +1,136 @@
 
  export const data= 
- {
-    data:
-    {
-    groupPage: [
-      {
+ 
+  {
+    data: {
+      groupById: {
         id: "2d9dcd22-a4a2-11ed-b9df-0242ac120003",
         name: "Uni",
         lastchange: "2023-04-19T17:27:12",
-        grouptype: {
-          id: "cd49e152-610c-11ed-9f29-001a7dda7110",
-          name: "univerzita"
-        },
         subgroups: [
           {
             id: "2d9dced0-a4a2-11ed-b9df-0242ac120003",
-            name: "Fac"
+            name: "Fac",
+            valid: true
           }
         ],
         memberships: [
           {
             id: "7cea8596-a4a2-11ed-b9df-0242ac120003",
+            lastchange: "2023-05-16T20:42:06.268940",
+            valid: false,
             user: {
+              membership: [
+                {
+                  id: "7cea8596-a4a2-11ed-b9df-0242ac120003"
+                }
+              ],
               id: "2d9dc5ca-a4a2-11ed-b9df-0242ac120003",
               name: "John",
               surname: "Newbie",
               email: "john.newbie@world.com",
-              lastchange: "2023-05-03T19:23:58.994556"
+              lastchange: "2023-05-16T20:37:56.558192",
+              roles: [
+                {
+                  id: "7cea8802-a4a2-11ed-b9df-0242ac120003",
+                  group: {
+                    id: "2d9dcd22-a4a2-11ed-b9df-0242ac120003",
+                    name: "Uni"
+                  },
+                  lastchange: "2023-05-12 08:23:34.609878",
+                  startdate: "2023-04-19 17:27:12",
+                  enddate: "2023-04-19 17:27:12",
+                  roletype: {
+                    name: "rektor",
+                    nameEn: "rector"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            id: "fd3f72a0-f426-11ed-acbe-0242ac120012",
+            lastchange: "2023-05-16T20:19:41.301672",
+            valid: true,
+            user: {
+              membership: [
+                {
+                  id: "fd3f72a0-f426-11ed-acbe-0242ac120012"
+                }
+              ],
+              id: "1234",
+              name: "d",
+              surname: "d",
+              email: "d",
+              lastchange: "2023-05-16T20:18:44.812543",
+              roles: []
+            }
+          },
+          {
+            id: "23b81c38-f428-11ed-acbe-0242ac120012",
+            lastchange: "2023-05-16T20:34:33.078956",
+            valid: true,
+            user: {
+              membership: [
+                {
+                  id: "23b81c38-f428-11ed-acbe-0242ac120012"
+                },
+                {
+                  id: "b884d672-f4b3-11ed-823d-0242ac120012"
+                },
+                {
+                  id: "3a66f5c0-f4b5-11ed-823d-0242ac120012"
+                },
+                {
+                  id: "bcd9a822-f4b5-11ed-823d-0242ac120012"
+                }
+              ],
+              id: "123",
+              name: "f",
+              surname: "g",
+              email: "h",
+              lastchange: "2023-05-16T20:26:30.296485",
+              roles: []
+            }
+          },
+          {
+            id: "506a89bc-f4bb-11ed-823d-0242ac120012",
+            lastchange: "2023-05-17T14:01:26.354224",
+            valid: true,
+            user: {
+              membership: [
+                {
+                  id: "506a89bc-f4bb-11ed-823d-0242ac120012"
+                }
+              ],
+              id: "50305581-f4bb-11ed-b93e-2d1aae1f3b67",
+              name: "Ludv",
+              surname: "Petrak",
+              email: "ludvikpetrakov@gmail.com",
+              lastchange: "2023-05-17T14:01:26.024789",
+              roles: []
+            }
+          },
+          {
+            id: "5ea9cca4-f4bb-11ed-823d-0242ac120012",
+            lastchange: "2023-05-17T14:01:50.258762",
+            valid: true,
+            user: {
+              membership: [
+                {
+                  id: "5ea9cca4-f4bb-11ed-823d-0242ac120012"
+                }
+              ],
+              id: "5e7522b1-f4bb-11ed-b93e-2d1aae1f3b67",
+              name: "The",
+              surname: "bettas",
+              email: "ludvikpetrakov@gmail.com",
+              lastchange: "2023-05-17T14:01:49.954591",
+              roles: []
             }
           }
-          
         ]
-      },
-      {
-        id: "2d9dced0-a4a2-11ed-b9df-0242ac120003",
-        name: "Fac",
-        lastchange: "2023-04-19T17:27:12",
-        grouptype: {
-          id: "cd49e153-610c-11ed-bf19-001a7dda7110",
-          name: "fakulta"
-        },
-        subgroups: [
-          {
-            id: "2d9dd1c8-a4a2-11ed-b9df-0242ac120003",
-            name: "Dep"
-          },
-          {
-            id: "2d9dd2ea-a4a2-11ed-b9df-0242ac120003",
-            name: "St"
-          },
-          {
-            id: "9baf3b54-ae0f-11ed-9bd8-0242ac110002",
-            name: "22-5KB-A"
-          },
-          {
-            id: "9baf3d70-ae0f-11ed-9bd8-0242ac110002",
-            name: "22-5KB-B"
-          },
-          {
-            id: "9baf3de8-ae0f-11ed-9bd8-0242ac110002",
-            name: "22-5KB-C"
-          },
-          {
-            id: "9baf3e42-ae0f-11ed-9bd8-0242ac110002",
-            name: "22-5KB-D"
-          },
-          {
-            id: "9baf3e92-ae0f-11ed-9bd8-0242ac110002",
-            name: "22-5KB-E"
-          },
-          {
-            id: "9baf3eec-ae0f-11ed-9bd8-0242ac110002",
-            name: "22-5KB-F"
-          },
-          {
-            id: "9baf3f3c-ae0f-11ed-9bd8-0242ac110002",
-            name: "22-5KB-G"
-          },
-          {
-            id: "9baf3f96-ae0f-11ed-9bd8-0242ac110002",
-            name: "22-5KB-H"
-          },
-          {
-            id: "9baf3fe6-ae0f-11ed-9bd8-0242ac110002",
-            name: "22-5KB-I"
-          },
-          {
-            id: "9baf4040-ae0f-11ed-9bd8-0242ac110002",
-            name: "22-5KB-J"
-          },
-          {
-            id: "480f2802-a869-11ed-924c-0242ac110002",
-            name: "správa"
-          }
-        ],
-        memberships: []
-      },
-      {
-        id: "2d9dd1c8-a4a2-11ed-b9df-0242ac120003",
-        name: "Dep",
-        lastchange: "2023-04-19T17:27:12",
-        grouptype: {
-          id: "cd49e155-610c-11ed-844e-001a7dda7110",
-          name: "katedra"
-        },
-        subgroups: [],
-        memberships: []
-      },
-      {
-        id: "2d9dd2ea-a4a2-11ed-b9df-0242ac120003",
-        name: "St",
-        lastchange: "2023-04-19T17:27:12",
-        grouptype: {
-          id: "cd49e157-610c-11ed-9312-001a7dda7110",
-          name: "studijní skupina"
-        },
-        subgroups: [],
-        memberships: []
-      },
-      {
-        id: "9baf3b54-ae0f-11ed-9bd8-0242ac110002",
-        name: "22-5KB-A",
-        lastchange: "2023-04-19T17:27:12",
-        grouptype: {
-          id: "cd49e157-610c-11ed-9312-001a7dda7110",
-          name: "studijní skupina"
-        },
-        subgroups: [],
-        memberships: []
-      },
-      {
-        id: "9baf3d70-ae0f-11ed-9bd8-0242ac110002",
-        name: "22-5KB-B",
-        lastchange: "2023-04-19T17:27:12",
-        grouptype: {
-          id: "cd49e157-610c-11ed-9312-001a7dda7110",
-          name: "studijní skupina"
-        },
-        subgroups: [],
-        memberships: []
-      },
-      {
-        id: "9baf3de8-ae0f-11ed-9bd8-0242ac110002",
-        name: "22-5KB-C",
-        lastchange: "2023-04-19T17:27:12",
-        grouptype: {
-          id: "cd49e157-610c-11ed-9312-001a7dda7110",
-          name: "studijní skupina"
-        },
-        subgroups: [],
-        memberships: []
-      },
-      {
-        id: "9baf3e42-ae0f-11ed-9bd8-0242ac110002",
-        name: "22-5KB-D",
-        lastchange: "2023-04-19T17:27:12",
-        grouptype: {
-          id: "cd49e157-610c-11ed-9312-001a7dda7110",
-          name: "studijní skupina"
-        },
-        subgroups: [],
-        memberships: []
-      },
-      {
-        id: "9baf3e92-ae0f-11ed-9bd8-0242ac110002",
-        name: "22-5KB-E",
-        lastchange: "2023-04-19T17:27:12",
-        grouptype: {
-          id: "cd49e157-610c-11ed-9312-001a7dda7110",
-          name: "studijní skupina"
-        },
-        subgroups: [],
-        memberships: []
-      },
-      {
-        id: "9baf3eec-ae0f-11ed-9bd8-0242ac110002",
-        name: "22-5KB-F",
-        lastchange: "2023-04-19T17:27:12",
-        grouptype: {
-          id: "cd49e157-610c-11ed-9312-001a7dda7110",
-          name: "studijní skupina"
-        },
-        subgroups: [],
-        memberships: []
       }
-    ]
+    }
   }
-}
+
