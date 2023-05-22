@@ -54,7 +54,7 @@ export const Display = ({id}) => {
     {
         return (
         <>
-
+    
                 <button onClick={event=>console.log(group)} >Get store </button>
                 <SearchBar setDisplayId={set_display_id} />
                 <div>No matched ID found</div>

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { PersonAdd, Save, Trash, X } from 'react-bootstrap-icons';
+import { PersonAdd, Save, Trash, Trash2, X } from 'react-bootstrap-icons';
 import { v1 } from 'uuid';
 export const Adding_Member = ({new_user,set_new_user, onClick,setState0,setState1,state}) =>{ 
 
@@ -23,7 +23,7 @@ export const Adding_Member = ({new_user,set_new_user, onClick,setState0,setState
             <label>User's surname:<input type="text" name="surname" value={new_user.lastName} placeholder='Enter user surname' onChange={handleChange} /> </label>  
             <label>User's email address:<input type="text" name="email" value={new_user.email} placeholder='Enter user email' onChange={handleChange} /> </label>
            
-                <button className='btn btn-sm btn-warning' onClick={setState0}><X></X></button>
+                <button className='btn btn-sm btn-warning' onClick={setState0}><Trash2></Trash2></button>
                 <button className='btn btn-sm btn-success' onClick={onClick}><Save></Save></button>
             </>
         )

@@ -36,7 +36,7 @@ export const Get_Card_Header = ({group,set_display_id,actions}) => {
             ID: {group.id} <br />
             <HeaderTextInput group={group} actions={actions}/>
             Last change:{group.lastchange} <br />
-            Group type: {group.grouptype.name} <br />
+            Group type: {group.grouptype.nameEn} <br />
         </tr>
         </div>
     )

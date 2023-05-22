@@ -7,9 +7,11 @@ import { Adding_Subgroup_Button } from "./Adding Subgroup"
 import { DeleteButton } from "./Delete_Button"
 import { Trash } from "react-bootstrap-icons"
 import { Role_Select } from "./Role Dropdown"
+import { UNSAFE_DataRouterStateContext } from "react-router-dom"
+import { useState } from "react"
 export const Table_Display =({group,set_display_id,actions}) =>
 {
-    const Get_Member_Row =({group,membership,actions}) =>
+    const Get_Member_Row =({group,membership,show_old_member,actions}) =>
     {
         const onclick= () => {
             const payload = 
@@ -24,13 +26,26 @@ export const Table_Display =({group,set_display_id,actions}) =>
         if( membership.valid )
         {
             return (
-                <tr>
+                <tr className="table-success">
                 <td>{membership.user.id}</td>
                 <td>{membership.user.name}</td>
                 <td>{membership.user.surname}</td>
                 <td>{membership.user.email}</td>
-                <Role_Select user={membership.user} group={group} actions={actions}/>
-                <DeleteButton onClick={onclick}><Trash></Trash></DeleteButton>
+                <td><Role_Select user={membership.user} group={group} actions={actions}/></td>
+                <td><DeleteButton onClick={onclick}><Trash></Trash></DeleteButton></td>
+            </tr>
+            )
+        } 
+        else if (show_old_member)
+        {
+            return (
+                <tr className="table-warning">
+                <td>{membership.user.id}</td>
+                <td>{membership.user.name}</td>
+                <td>{membership.user.surname}</td>
+                <td>{membership.user.email}</td>
+                <td><Role_Select user={membership.user} group={group} actions={actions}/></td>
+                <td><DeleteButton onClick={onclick}><Trash></Trash></DeleteButton></td>
             </tr>
             )
         }
@@ -49,6 +64,7 @@ export const Table_Display =({group,set_display_id,actions}) =>
             </tr>
         )
     }
+    const [show_old_member,set_show_member]=useState(false)
     return (
         <div>
                         List of members:
@@ -66,8 +82,10 @@ export const Table_Display =({group,set_display_id,actions}) =>
             </thead>
             <tbody>
                 <>
-                {group?.memberships?.map(item => <Get_Member_Row group={group} membership={item} actions={actions}/>)}
+                
+                {group?.memberships?.map(item => <Get_Member_Row group={group} membership={item} show_old_member={show_old_member} actions={actions}/>)}
                 <br/>
+                <button onClick={event => set_show_member(!show_old_member)}>Toggle</button>
                 <Adding_Member_Button group={group} actions={actions} />
                 </>
             </tbody>
@@ -84,7 +102,8 @@ export const Table_Display =({group,set_display_id,actions}) =>
                 </tr>
             </thead>
             <tbody>
-        <>
+                <>
+
                 {group?.subgroups?.map(item => <Get_Sub_Group_Row item={item}/>)}
                 <Adding_Subgroup_Button group={group} actions = {actions}/>
                 </>

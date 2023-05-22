@@ -13,7 +13,7 @@ export const GroupQueryJSON = (id) => ({
                 }
                 grouptype { 
                     id
-                    name 
+                    nameEn
                 }
                 subgroups {
                     id
