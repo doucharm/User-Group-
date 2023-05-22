@@ -15,10 +15,10 @@ export const Role_Select = ({user,group,actions}) =>
     const role_format=
     [
       {
-        id:v1(),
         roletype:role
       }
     ]
+    console.log(user)
     const new_user={...user,roles:role_format}
     const payload=
     {
@@ -29,7 +29,25 @@ export const Role_Select = ({user,group,actions}) =>
           user:new_user
         }
     }
+    const roleadd = {
+      group_id: group.id,
+      user_id: user.id,
+      roletype_id: role.id
+    }
     actions.onMemberUpdate(payload)
+    console.log("now",user.roles) 
+    console.log("now",user.roles.id)
+    console.log("after",new_user.roles)
+    console.log("after",new_user.roles[0].roletype)
+    const roletype = {
+      name:new_user.roles[0].roletype.name,
+      nameEn:new_user.roles[0].roletype.nameEn
+    }
+    console.log(user.roles[0])
+    actions.roleAsyncInsert(roleadd)
+    actions.roleAsyncUpdate({...user.roles[0],roletype: roletype})
+    
+    
     console.log(payload)
   }
   return (

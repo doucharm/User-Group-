@@ -213,3 +213,28 @@ export const UserAsyncUpdate = (user) => (dispatch, getState) => {
         )   
 }
 
+export const GroupAsyncInsert = (group) => (dispatch, getState) => {
+    const groupMutationJSON = (group) => {
+        return {
+            query: `mutation ($id: ID!, $name: String!, $mastergroupId: ID!) {
+                groupInsert(group: {id: $id, name: $name, mastergroupId: $mastergroupId}) {
+                  msg
+                }
+              }`,
+            variables: group
+            }
+        }
+
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(groupMutationJSON(group))
+    }
+
+
+    return fetch('/api/gql', params)
+}
