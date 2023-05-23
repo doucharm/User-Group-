@@ -60,8 +60,7 @@ export const Adding_Member_Button = ({group,  actions}) => {
         user_id: new_user.id,
         group_id: group.id
     }
-    actions.userAsyncUpdate(new_user)
-    actions.membershipAsyncInsert(payload)
+    actions.userAsyncUpdate(new_user).then(actions.membershipAsyncInsert(payload))
     actions.onMemberAdd({group: group, membership: membership})
     setState0()
   }
