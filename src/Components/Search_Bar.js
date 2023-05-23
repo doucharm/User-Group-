@@ -1,24 +1,24 @@
 import { useState } from 'react';
 
-export const SearchBar = ({ onSearch }) => {
-    const [inputData, setInputData] = useState('');
+export const SearchBar = ({ setDisplayId }) => {
+    const [inputId, setInputId] = useState('');
 
     const handleInputChange = (event) => {
-        setInputData(event.target.value);
+        setInputId(event.target.value);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        onSearch(inputData);
+        setDisplayId(inputId);
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <label htmlFor="inputData">Enter:</label>
+            <label htmlFor="inputId">Enter ID:</label>
             <input
-                id="inputData"
+                id="inputId"
                 type="text"
-                value={inputData}
+                value={inputId}
                 onChange={handleInputChange}
             />
             <button type="submit">Submit</button>

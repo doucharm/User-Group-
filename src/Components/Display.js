@@ -5,51 +5,61 @@ import { actions } from 'pages/Redux Store';
 import { SearchBar } from './Search_Bar';
 import { UserDisplay } from './User_Display';
 
-export const Display = () => {
-    const [display, set_display] = useState(0);
-    const [display_input, set_display_input] = useState('');
+export const Display = ({id}) => {
+    const [display,set_display]=useState(0)
+    const [display_id,set_display_id]=useState(id)
     const groups = useSelector((state) => state.groups);
-    const users = useSelector((state) => state.usersByName.users);
-
-    const group = groups[display_input];
-    const filteredUsers = users && users.filter((user) =>
-        user.name.includes(display_input)
-    );
-
+    const users = useSelector((state) => state.users);
+    const group = groups[display_id];
+    const user = users[display_id];
     useEffect(() => {
-        if (!group) {
+        if (!group) 
+        {
             actions.roleFetch();
-            actions.groupFetch(display_input);
+            actions.groupFetch(display_id)
         }
-    }, [display_input, group]);
-
+    }, [display_id, group]);
     useEffect(() => {
-        if (!filteredUsers || filteredUsers.length === 0) {
-            actions.userByLetterFetch(display_input);
+        if (!user) 
+        {
+            actions.userFetch(display_id)            
         }
-    }, [display_input, filteredUsers]);
+    }, [display_id, user]);
+    console.log('display',display)
+    if (group) 
+    {
+        return (
+            <>
 
-    console.log('display', display);
+                <button onClick={event=>console.log(group)} >Get store </button>
+                <SearchBar setDisplayId={set_display_id} />
+                <Card_Display group={group} set_display_id={set_display_id} actions={actions} />
+                
+            </>
+        );
 
-    const handleSearch = (inputData) => {
-        set_display_input(inputData);
-    };
-
-    return (
+    } 
+    else if(user)
+    {
+        return(
         <>
-            <button onClick={() => console.log(group)}>Get store</button>
-            <SearchBar onSearch={handleSearch} />
-            {group ? (
-                <Card_Display group={group} set_display_id={set_display_input} actions={actions} />
-            ) : filteredUsers && filteredUsers.length !== 0 ? (
-                <div>
-                    {filteredUsers.map((user) => (
-                        <UserDisplay key={user.name} user={user} />
-                    ))}
-                </div>
-            ) : (
+
+                <button onClick={event=>console.log(group)} >Get store </button>
+                <SearchBar setDisplayId={set_display_id} />
+                <UserDisplay user={user} setUserId={set_display_id} />
+                
+         </>
+        )
+    } else 
+    {
+        return (
+        <>
+    
+                <button onClick={event=>console.log(group)} >Get store </button>
+                <SearchBar setDisplayId={set_display_id} />
                 <div>No matched ID found</div>
-            )}
-        </>
-    );
+                
+         </>
+        )
+    }
 };

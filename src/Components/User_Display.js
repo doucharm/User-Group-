@@ -4,7 +4,7 @@ import { actions } from 'pages/Redux Store';
 import { TextInput } from './Text_Input';
 import { useEffect } from 'react';
 
-export const UserDisplay = ({ user }) => {
+export const UserDisplay = ({ user, setUserId }) => {
 
     const onChangeEmail = (value) => {
         if (actions.onUserUpdate) {
@@ -55,7 +55,7 @@ export const UserDisplay = ({ user }) => {
                         <td>
                             <TextInput placeholder={"email"} id={user.id} value={user.email} onChange={onChangeEmail} />
                         </td>
-
+                        <td>{user.membership[0].group.name}</td>
                     </tr>
                 </tbody>
             </table>
