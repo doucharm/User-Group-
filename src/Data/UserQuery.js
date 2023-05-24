@@ -27,3 +27,30 @@ export const UserQuery = (id) =>
     authorizedFetch('/gql', {
         body: JSON.stringify(UserQueryJSON(id)),
     })
+
+export const UserQueryByLettersJSON = (letters) => ({
+    "query":
+        `query ($letters: String!) {
+              userByLetters(letters: $letters) {
+                id
+                name
+                surname
+                email
+                membership {
+                  group {
+                    name
+                    id
+                  }
+                }
+                roles {
+                  lastchange
+                }
+              }
+            }`,
+    "variables": { "letters": letters }
+});
+
+export const UserQueryByLetters = (letters) =>
+    authorizedFetch('/gql', {
+        body: JSON.stringify(UserQueryByLettersJSON(letters)),
+    });

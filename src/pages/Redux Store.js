@@ -1,27 +1,31 @@
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
-import { GroupReducer,MembershipReducer,RoleReducer,UserReducer,bindGroupActions } from 'Reducers/Reducer Slice'; 
-import {data} from 'Data/data'
+import { GroupReducer, MembershipReducer, RoleReducer, UserReducer, UserByNameReducer, bindGroupActions } from 'Reducers/Reducer Slice';
+import { data } from 'Data/data'
 
 
 export const store = configureStore(
-    { 
+    {
         reducer: {
             groups: GroupReducer,
             roles: RoleReducer,
-            users: UserReducer
-            
-        }, 
+            users: UserReducer,
+            usersByName: UserByNameReducer
+
+        },
         preloadedState: {
             groups: {},
             roles: {},
-            users: {}
-            
-        }
-})
+            users: {},
+            usersByName: {
+                usersByLetter: []
+            }
 
-export const dispatch=store.dispatch
-export const actions={...bindGroupActions(dispatch)}
+        }
+    })
+
+export const dispatch = store.dispatch
+export const actions = { ...bindGroupActions(dispatch) }
 
 export const AppProvider = (props) => {
     return (

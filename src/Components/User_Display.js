@@ -32,7 +32,7 @@ export const UserDisplay = ({ user, setUserId }) => {
 
     return (
         <div>
-            <h2>User Info</h2>
+
             <table className="table table-hover table-bordered table-light table-stripped">
                 <thead>
                     <tr>
@@ -55,7 +55,7 @@ export const UserDisplay = ({ user, setUserId }) => {
                         <td>
                             <TextInput placeholder={"email"} id={user.id} value={user.email} onChange={onChangeEmail} />
                         </td>
-                        <td>{user.membership[0].group.name}</td>
+
                     </tr>
                 </tbody>
             </table>
