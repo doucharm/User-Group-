@@ -1,11 +1,13 @@
-export const RoleAsyncInsert = ({group_id,user_id,roletype_id}) => (dispatch, getState) => {
+export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
   const roleMutationJSON = (role) => {
       return {
-          query: `mutation($group_id: ID!, $user_id: ID!, $roletype_id: ID!) {
+          query: `mutation($groupId: ID!, $userId: ID!, $roletypeID: ID!,$id: ID!) {
             roleInsert(role: {
-            groupId: $group_id,
-            userId: $user_id,
-            roletypeId: $roletype_id
+            id: $id,
+            groupId: $groupId,
+            userId: $userId,
+            roletypeId: $roletypeID
+            valid:true
         }){
             msg
         }
@@ -21,7 +23,7 @@ export const RoleAsyncInsert = ({group_id,user_id,roletype_id}) => (dispatch, ge
       },
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       redirect: 'follow', // manual, *follow, error
-      body: JSON.stringify(roleMutationJSON({group_id,user_id,roletype_id}))
+      body: JSON.stringify(roleMutationJSON(payload))
   }
 
 

@@ -1,5 +1,6 @@
-export const MembershipAsyncInsert = ({group_id,user_id}) => (dispatch, getState) => {
-  const membershipMutationJSON = (membership) => {
+import { GroupActions } from "./Reducer Slice"
+export const MembershipAsyncInsert = ({store_update,group_id,user_id}) => (dispatch, getState) => {
+  const membershipInsertJSON = (membership) => {
       return {
           query: `mutation($group_id: ID!, $user_id: ID!) {
               membershipInsert(membership: {
@@ -8,6 +9,11 @@ export const MembershipAsyncInsert = ({group_id,user_id}) => (dispatch, getState
               valid: true
           }){
               msg
+              membership
+              {
+                id
+                lastchange
+              }
           }
           }`, variables: membership
           }
@@ -19,11 +25,26 @@ export const MembershipAsyncInsert = ({group_id,user_id}) => (dispatch, getState
       },
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       redirect: 'follow', // manual, *follow, error
-      body: JSON.stringify(membershipMutationJSON({group_id,user_id}))
+      body: JSON.stringify(membershipInsertJSON({group_id,user_id}))
   }
 
 
   return fetch('/api/gql', params)
+  .then(
+    resp => resp.json()
+)
+.then(
+    json => {
+        const msg = json.data?.membershipInsert?.msg
+        if (msg === "fail") {
+            console.log("Update selhalo")
+        } else {
+            const new_membership = json.data.membershipInsert.membership
+            dispatch(GroupActions.memberAdd({group:store_update.group,membership:{...store_update.membership,new_membership}}))
+        }
+        return json
+    }
+).catch(console.log("failed insert")) 
 }
 
 

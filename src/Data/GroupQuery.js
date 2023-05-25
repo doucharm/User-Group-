@@ -24,12 +24,11 @@ export const GroupQueryJSON = (id) => ({
                     id
                     lastchange
                     valid
+                    group
+                    {
+                        id
+                    }
                     user {
-                        membership 
-                        {
-                            id
-                            
-                        }
                         id
                         name
                         surname
@@ -40,7 +39,13 @@ export const GroupQueryJSON = (id) => ({
                             id
                             startdate
                             enddate
+                            group
+                            {
+                                id
+                            }
+                            valid
                             roletype {
+                              id
                               name
                               nameEn
                             }

@@ -6,7 +6,7 @@ import { Adding_Member_Button } from "./Adding Member Button"
 import { Adding_Subgroup_Button } from "./Adding Subgroup"
 import { DeleteButton } from "./Delete_Button"
 import { Trash } from "react-bootstrap-icons"
-import { Role_Select } from "./Role Dropdown"
+import { Role_Select } from "./Role_Selector"
 import { UNSAFE_DataRouterStateContext } from "react-router-dom"
 import { useState } from "react"
 export const Table_Display =({group,set_display_id,actions}) =>
@@ -31,7 +31,7 @@ export const Table_Display =({group,set_display_id,actions}) =>
                 <td>{membership.user.name}</td>
                 <td>{membership.user.surname}</td>
                 <td>{membership.user.email}</td>
-                <td><Role_Select user={membership.user} group={group} actions={actions}/></td>
+                <td><Role_Select membership={membership} actions={actions}/></td>
                 <td><DeleteButton onClick={onclick}><Trash></Trash></DeleteButton></td>
             </tr>
             )
@@ -44,7 +44,7 @@ export const Table_Display =({group,set_display_id,actions}) =>
                 <td>{membership.user.name}</td>
                 <td>{membership.user.surname}</td>
                 <td>{membership.user.email}</td>
-                <td><Role_Select user={membership.user} group={group} actions={actions}/></td>
+                <td><Role_Select membership={membership} actions={actions}/></td>
                 <td><DeleteButton onClick={onclick}><Trash></Trash></DeleteButton></td>
             </tr>
             )

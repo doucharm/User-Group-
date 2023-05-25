@@ -1,3 +1,4 @@
+import { delay } from '@reduxjs/toolkit';
 import { useState, useCallback } from 'react';
 import { PersonAdd, Save, Trash, Trash2, X } from 'react-bootstrap-icons';
 import { v1 } from 'uuid';
@@ -57,11 +58,19 @@ export const Adding_Member_Button = ({group,  actions}) => {
         user:new_user
     }
     const payload = {
+        store_update:
+        {
+            group:group,
+            membership:membership
+        },
         user_id: new_user.id,
         group_id: group.id
     }
-    actions.userAsyncUpdate(new_user).then(actions.membershipAsyncInsert(payload))
-    actions.onMemberAdd({group: group, membership: membership})
+    actions.userAsyncUpdate(new_user).then
+    (
+        
+    ).then(actions.membershipAsyncInsert(payload))
+    
     setState0()
   }
   const [ state, setState ] = useState(0)

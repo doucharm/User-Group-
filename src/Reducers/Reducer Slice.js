@@ -32,7 +32,7 @@ export const bindGroupActions = (dispatch) => {
         
         onMemberAdd: ({membership, group}) => dispatch(GroupActions.memberAdd({membership, group})),
         onMemberRemove: ({group,membership}) => dispatch(GroupActions.memberRemove({group,membership})),
-        onMemberUpdate: ({group,user}) => dispatch(GroupActions.memberUpdate({group,user})),
+        onMemberUpdate: (payload) => dispatch(GroupActions.memberUpdate(payload)),
         onMemberMoving: ({old_group,new_group,moving_member}) => dispatch(GroupActions.memberMoving({old_group,new_group,moving_member})),
 
         groupFetch: (id) => dispatch(GroupFetch(id)),
@@ -40,14 +40,14 @@ export const bindGroupActions = (dispatch) => {
         groupAsyncInsert: (group) => dispatch(GroupAsyncInsert(group)),
         userAsyncUpdate: (user) => dispatch(UserAsyncUpdate(user)),
         roleFetch: () => dispatch(RoleFetch()),
-        membershipAsyncInsert: ({group_id,user_id}) => {
-            dispatch(MembershipAsyncInsert({group_id,user_id}))
+        membershipAsyncInsert: (payload) => {
+            dispatch(MembershipAsyncInsert(payload))
         },
         membershipAsyncUpdate: ({id,lastchange}) => {dispatch(MembershipAsyncUpdate({id,lastchange}))},
         userFetch: (id) => dispatch(UserFetch(id)),
         userFetch: (id) => dispatch(UserFetch(id)),
-        roleAsyncInsert: ({group_id,user_id,roletype_id}) => {
-            dispatch(RoleAsyncInsert({group_id,user_id,roletype_id}))
+        roleAsyncInsert: (payload) => {
+            dispatch(RoleAsyncInsert(payload))
         },
         roleAsyncUpdate: (role) => {
             dispatch(RoleAsyncUpdate(role))
