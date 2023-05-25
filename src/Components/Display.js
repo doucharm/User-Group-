@@ -17,10 +17,11 @@ export const Display = ({id}) => {
         if (!group) 
         {
             actions.roleFetch();
-            actions.groupFetch(display_id).catch(set_display(1))
+            actions.groupFetch(display_id).then(set_display(0)).catch(set_display(1))
         }
     }, [display_id, group]);
     useEffect(() => {
+        console.log('display before fetch',display)
         if (!user && display===1) 
         {
             actions.userFetch(display_id).finally(set_display(0))    

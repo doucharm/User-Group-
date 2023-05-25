@@ -55,7 +55,7 @@ export const UserDisplay = ({ user, setUserId }) => {
                         <td>
                             <TextInput placeholder={"email"} id={user.id} value={user.email} onChange={onChangeEmail} />
                         </td>
-                        <td>{user.membership[0].group.name}</td>
+                        <td>{user?.membership[0]?.group?.name}</td>
                     </tr>
                 </tbody>
             </table>
