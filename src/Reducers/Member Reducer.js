@@ -11,12 +11,10 @@ export const Adding_Member = (state,action) =>
 export const Moving_Member = (state,action) =>
 {
     const {user, fromg, tog } = action.payload
-
-    const old_group= state[fromg.id] //action.payload.old_group
-    const new_group=    state[fromg.id] //action.payload.old_group    
+    const old_group= state[fromg.id]
+    const new_group=    state[fromg.id]    
     old_group.memberships = old_group.memberships?.filter((m) => m.user.id!==user.id )
     new_group.memberships.push({})
-
     return state
 }
 export const Remove_Member = (state, action) =>

@@ -12,17 +12,18 @@ export const Display = ({id}) => {
     const users = useSelector((state) => state.users);
     const group = groups[display_id];
     const user = users[display_id];
+    
     useEffect(() => {
         if (!group) 
         {
             actions.roleFetch();
-            actions.groupFetch(display_id)
+            actions.groupFetch(display_id).catch(set_display(1))
         }
     }, [display_id, group]);
     useEffect(() => {
-        if (!user) 
+        if (!user && display===1) 
         {
-            actions.userFetch(display_id)            
+            actions.userFetch(display_id).finally(set_display(0))    
         }
     }, [display_id, user]);
     console.log('display',display)

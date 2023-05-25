@@ -22,7 +22,6 @@ export const UserQueryJSON = (id) => ({
         }`,
     "variables": { "id": id }
 })
-
 export const UserQuery = (id) =>
     authorizedFetch('/gql', {
         body: JSON.stringify(UserQueryJSON(id)),

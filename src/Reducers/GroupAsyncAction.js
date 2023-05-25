@@ -19,9 +19,6 @@ export const GroupFetchHelper = (id, query, resultselector, dispatch, getState) 
           error => error  
       )
       .then(
-          (i) => log('incomming')(i)
-      )
-      .then(
           json => log('converted')(resultselector(json)),
           error => error
       )
@@ -32,6 +29,7 @@ export const GroupFetchHelper = (id, query, resultselector, dispatch, getState) 
 
   return p
 }
+
 
 export const UserFetchHelper = (id, query, resultselector, dispatch, getState) => {
     const log = (text) => (p) => {
@@ -77,11 +75,6 @@ export const RoleFetchHelper = (query, selecter ,dispatch, getState) => {
         .then(
             (i) => log('incomming')(i)
         )
-        // .then(
-        //     response => log('received')(response.json()),
-        //     error => error
-        //     //error
-        //     )
         .then(
             json => log('converted')(selecter(json)),
             error => error
