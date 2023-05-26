@@ -2,7 +2,6 @@ import { Card_Display } from './Card_Display';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { actions } from 'pages/Redux Store';
-import { SearchBar } from './Search_Bar';
 import { UserDisplay } from './User_Display';
 
 export const Display = ({display_id,set_display_id}) => {
@@ -12,7 +11,7 @@ export const Display = ({display_id,set_display_id}) => {
     const users = useSelector((state) => state.users);
     const group = groups[display_id];
     const user = users[display_id];
-    actions.roleFetch();
+    
     
     useEffect(() => {
         if (!group) 

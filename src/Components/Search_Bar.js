@@ -40,9 +40,11 @@ export const SearchBar = () => {
         } else
         {
             fetch_by_letters(inputId,set_users_list)
+            set_found(false)
         }
     }
-
+console.log(users_list)
+console.log(foundID)
 if (users_list.length>0 && !foundID)
     { 
         return (
@@ -78,6 +80,7 @@ if (users_list.length>0 && !foundID)
     } else     if(display_id)
     {
         {console.log("display id going into display",display_id)}
+     
         return (
             
             <>
@@ -91,8 +94,8 @@ if (users_list.length>0 && !foundID)
                 />
                 <button type="submit"><Search></Search></button>
             </form>
-           <Display display_id={display_id} set_display_id={set_display_id} />
             
+           <Display display_id={display_id} set_display_id={set_display_id} />
             </>
             
             

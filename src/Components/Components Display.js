@@ -13,6 +13,7 @@ export const Table_Display =({group,set_display_id,actions}) =>
 {
     const Get_Member_Row =({group,membership,show_old_member,actions}) =>
     {
+        actions.roleFetch();
         const onclick= () => {
             const payload = 
             {
