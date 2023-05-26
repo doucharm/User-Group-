@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { validate } from 'uuid'
 import { fetch_by_letters } from 'Data/UserByLetters';
-import { DoorOpen, Search } from 'react-bootstrap-icons';
-import userEvent from '@testing-library/user-event';
-export const SearchBar = ({ setDisplayId }) => {
+import {  DoorOpen, Search } from 'react-bootstrap-icons';
+import { Display } from './Display';
+export const SearchBar = () => {
+    console.log('search bar called')
+    const [display_id,set_display_id]=useState(null)
+    const [foundID,set_found]=useState(false)
     const [inputId, setInputId] = useState('');
     const [users_list,set_users_list]=useState([])
     const handleInputChange = (event) => {
@@ -11,45 +14,36 @@ export const SearchBar = ({ setDisplayId }) => {
     };
     const UserBasic = ({user}) =>
     {
-        
+        const findID=() =>
+        {
+            console.log("Event called ")
+            set_display_id(user.id)
+            set_found(true)
+        }
         return   (
             <tr>
                 <td>{user.id}</td>
                 <td>{user.name}</td>
                 <td>{user.surname}</td>
                 <td>{user.email}</td>
-                <button onClick={event => setDisplayId(user.id)}><DoorOpen></DoorOpen></button>
+                <button onClick={event => findID()}><DoorOpen></DoorOpen></button>
             </tr>
         )
     }
     const handleSubmit = (event) => 
     {
+        console.log(inputId)
         event.preventDefault();
         if(validate(inputId))
         {
-            setDisplayId(inputId)
+            set_display_id(inputId)
         } else
         {
             fetch_by_letters(inputId,set_users_list)
         }
     }
 
-    if(users_list.length===0)
-    {
-        return (
-        
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="inputId">Enter ID:</label>
-                <input
-                    id="inputId"
-                    type="text"
-                    value={inputId}
-                    onChange={handleInputChange}
-                />
-                <button type="submit"><Search></Search></button>
-            </form>
-        );
-    } else 
+if (users_list.length>0 && !foundID)
     { 
         return (
             <>
@@ -81,6 +75,43 @@ export const SearchBar = ({ setDisplayId }) => {
             
             </>
         )
+    } else     if(display_id)
+    {
+        {console.log("display id going into display",display_id)}
+        return (
+            
+            <>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="inputId">Enter ID:</label>
+                <input
+                    id="inputId"
+                    type="text"
+                    value={inputId}
+                    onChange={handleInputChange}
+                />
+                <button type="submit"><Search></Search></button>
+            </form>
+           <Display display_id={display_id} set_display_id={set_display_id} />
+            
+            </>
+            
+            
+        )
+    } else 
+    {
+    return (
+        
+        <form onSubmit={handleSubmit}>
+        <label htmlFor="inputId">Enter ID:</label>
+        <input
+            id="inputId"
+            type="text"
+            value={inputId}
+            onChange={handleInputChange}
+        />
+        <button type="submit"><Search></Search></button>
+    </form>
+    )
     }
    
 };

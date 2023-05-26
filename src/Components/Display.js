@@ -5,26 +5,25 @@ import { actions } from 'pages/Redux Store';
 import { SearchBar } from './Search_Bar';
 import { UserDisplay } from './User_Display';
 
-export const Display = ({id}) => {
-    const [display,set_display]=useState(0)
-    const [display_id,set_display_id]=useState(id)
+export const Display = ({display_id,set_display_id}) => {
+    console.log('display called with id',display_id)
+    let display=0
     const groups = useSelector((state) => state.groups);
     const users = useSelector((state) => state.users);
     const group = groups[display_id];
     const user = users[display_id];
+    actions.roleFetch();
     
     useEffect(() => {
         if (!group) 
         {
-            actions.roleFetch();
-            actions.groupFetch(display_id).then(set_display(0)).catch(set_display(1))
+            actions.groupFetch(display_id).then(display =0).catch(display=1)     
         }
     }, [display_id, group]);
     useEffect(() => {
-        console.log('display before fetch',display)
         if (!user && display===1) 
         {
-            actions.userFetch(display_id).finally(set_display(0))    
+            actions.userFetch(display_id).finally( display =0)    
         }
     }, [display_id, user]);
     console.log('display',display)
@@ -32,11 +31,8 @@ export const Display = ({id}) => {
     {
         return (
             <>
-
                 <button onClick={event=>console.log(group)} >Get store </button>
-                <SearchBar setDisplayId={set_display_id} />
-                <Card_Display group={group} set_display_id={set_display_id} actions={actions} />
-                
+                <Card_Display group={group} set_display_id={set_display_id} actions={actions} /> 
             </>
         );
 
@@ -45,9 +41,7 @@ export const Display = ({id}) => {
     {
         return(
         <>
-
                 <button onClick={event=>console.log(group)} >Get store </button>
-                <SearchBar setDisplayId={set_display_id} />
                 <UserDisplay user={user} setUserId={set_display_id} />
                 
          </>
@@ -55,10 +49,8 @@ export const Display = ({id}) => {
     } else 
     {
         return (
-        <>
-    
+        <>  
                 <button onClick={event=>console.log(group)} >Get store </button>
-                <SearchBar setDisplayId={set_display_id} />
                 <div>No matched ID found</div>
                 
          </>
