@@ -170,7 +170,7 @@ export const GroupAsyncUpdate = (group) => (dispatch, getState) => {
         )   
 }
 
-export const UserAsyncUpdate = (user) => (dispatch, getState) => {
+export const UserAsyncInsert = (user) => (dispatch, getState) => {
     const userMutationJSON = (user) => {
         return {
             query: `mutation ($id: ID!, $name: String!, $surname: String!,$email: String!) {
@@ -201,6 +201,47 @@ export const UserAsyncUpdate = (user) => (dispatch, getState) => {
         .then(
             json => {
                 dispatch(UserActions.users_update({user}))
+                return json
+            }
+        )   
+}
+
+export const UserAsyncUpdate = (user) => (dispatch, getState) => {
+    const userMutationJSON = (user) => {
+        return {
+            query: `mutation ($id: ID!, $lastchange: DateTime!) {
+                userUpdate(user: {id: $id, lastchange: $lastchange}) {
+                  msg
+                  user {
+                    lastchange
+                  }
+                }
+              }`,
+            variables: user
+            }
+        }
+
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(userMutationJSON({...user}))
+    }
+
+
+    return fetch('/api/gql', params)
+    //return authorizedFetch('/api/gql', params)
+        .then(
+            resp => resp.json()
+        )
+        .then(
+            json => {
+                console.log(json)
+                const lastchange = json.data.userUpdate.user.lastchange
+                dispatch(UserActions.users_update({...user,lastchange:lastchange}))
                 return json
             }
         )   

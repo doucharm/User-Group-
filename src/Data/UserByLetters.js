@@ -9,6 +9,7 @@ export const UserbyLettersJSON = (letters) => ({
             surname
             email 
             valid
+            lastchange
           }
         }`,
 "variables": { "letters": letters }

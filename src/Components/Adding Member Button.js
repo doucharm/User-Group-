@@ -36,7 +36,8 @@ export const MembershipInsert_SearchBar = ({group,actions}) => {
             {
                 id:membership_id,
                 valid:true,
-                user:modify_user
+                user:modify_user,
+                group:group
             }
             const payload = {
                 store_update:
@@ -50,7 +51,7 @@ export const MembershipInsert_SearchBar = ({group,actions}) => {
             const check_existance = group.memberships.filter(m => m.user.id === payload.user_id)
             console.log(check_existance)
             if (check_existance.length===0){
-                actions.membershipAsyncInsert(payload)
+                actions.userAsyncUpdate(modify_user).then(actions.membershipAsyncInsert(payload))
             }else {
                 console.log("existed")
             }
@@ -70,7 +71,7 @@ export const MembershipInsert_SearchBar = ({group,actions}) => {
             <form method="GET" id="my_form" onSubmit={handleSubmit} ></form>
             <table class="table table-sm table-info">
                 <thead>
-                <label htmlFor="Id" form='my_form'>Enter ID:</label>
+                <label htmlFor="Id" form='my_form'>Add new member:</label>
                 <input
                     form = "my_form"
                     id="Id"
@@ -91,7 +92,7 @@ export const MembershipInsert_SearchBar = ({group,actions}) => {
             <table class="table table-sm table-info">
             <caption>  Possible users with that name: </caption>
                 <thead>
-                <label htmlFor="Id" form='my_form'>Enter ID:</label>
+                <label htmlFor="Id" form='my_form'>Add new member:</label>
                 <input
                     form = "my_form"
                     id="Id"
