@@ -8,26 +8,26 @@ import { UserQuery } from "Data/UserQuery";
  * @returns promise
  */
 export const GroupFetchHelper = (id, query, resultselector, dispatch, getState) => {
-  const log = (text) => (p) => {
-      console.log(text)
-      console.log(JSON.stringify(p))
-      return p
-  }
-  const p = query(id)
-      .then(
-          response => response.json(),
-          error => error  
-      )
-      .then(
-          json => log('converted')(resultselector(json)),
-          error => error
-      )
-      .then(
-          json => log('dispatching')(dispatch(GroupActions.group_update(json))),
-          error => error
-      )
+    const log = (text) => (p) => {
+        console.log(text)
+        console.log(JSON.stringify(p))
+        return p
+    }
+    const p = query(id)
+        .then(
+            response => response.json(),
+            error => error
+        )
+        .then(
+            json => log('converted')(resultselector(json)),
+            error => error
+        )
+        .then(
+            json => log('dispatching')(dispatch(GroupActions.group_update(json))),
+            error => error
+        )
 
-  return p
+    return p
 }
 
 
@@ -40,7 +40,7 @@ export const UserFetchHelper = (id, query, resultselector, dispatch, getState) =
     const p = query(id)
         .then(
             response => response.json(),
-            error => error  
+            error => error
         )
         .then(
             (i) => log('incomming')(i)
@@ -58,10 +58,10 @@ export const UserFetchHelper = (id, query, resultselector, dispatch, getState) =
             json => log('dispatching')(dispatch(UserActions.users_update(json))),
             error => error
         )
-  
+
     return p
-  }
-export const RoleFetchHelper = (query, selecter ,dispatch, getState) => {
+}
+export const RoleFetchHelper = (query, selecter, dispatch, getState) => {
     const log = (text) => (p) => {
         console.log(text)
         console.log(JSON.stringify(p))
@@ -70,7 +70,7 @@ export const RoleFetchHelper = (query, selecter ,dispatch, getState) => {
     const p = query()
         .then(
             response => response.json(),
-            error => error  
+            error => error
         )
         .then(
             (i) => log('incomming')(i)
@@ -84,7 +84,7 @@ export const RoleFetchHelper = (query, selecter ,dispatch, getState) => {
             error => error
         )
     return p
-  }
+}
 
 /**
 * Fetch the group from server checks its type and asks once more for detailed data. Finally puts the result in the store.
@@ -92,13 +92,13 @@ export const RoleFetchHelper = (query, selecter ,dispatch, getState) => {
 * @returns 
 */
 export const GroupFetch = (id) => (dispatch, getState) => {
-  const groupSelector = (json) => json.data.groupById
-  const bodyfunc = async () => {
-      let groupData = await GroupFetchHelper(id, GroupQuery, groupSelector, dispatch, getState)
-    
-      return groupData
-  }
-  return bodyfunc()
+    const groupSelector = (json) => json.data.groupById
+    const bodyfunc = async () => {
+        let groupData = await GroupFetchHelper(id, GroupQuery, groupSelector, dispatch, getState)
+
+        return groupData
+    }
+    return bodyfunc()
 }
 
 export const UserFetch = (id) => (dispatch, getState) => {
@@ -109,17 +109,17 @@ export const UserFetch = (id) => (dispatch, getState) => {
         return userData
     }
     return bodyfunc()
-  }
+}
 
 export const RoleFetch = () => (dispatch, getState) => {
     const selecter = (json) => json.data.roleTypePage
     const bodyfunc = async () => {
-        let RoleData = await RoleFetchHelper(RoleQuery,selecter, dispatch, getState)
+        let RoleData = await RoleFetchHelper(RoleQuery, selecter, dispatch, getState)
         console.log(RoleData)
         return RoleData
     }
     return bodyfunc()
-  }
+}
 
 export const GroupAsyncUpdate = (group) => (dispatch, getState) => {
     const groupMutationJSON = (group) => {
@@ -136,8 +136,8 @@ export const GroupAsyncUpdate = (group) => (dispatch, getState) => {
                 }
               }`,
             variables: group
-            }
         }
+    }
 
     const params = {
         method: 'POST',
@@ -151,7 +151,7 @@ export const GroupAsyncUpdate = (group) => (dispatch, getState) => {
 
 
     return fetch('/api/gql', params)
-    //return authorizedFetch('/api/gql', params)
+        //return authorizedFetch('/api/gql', params)
         .then(
             resp => resp.json()
         )
@@ -163,48 +163,13 @@ export const GroupAsyncUpdate = (group) => (dispatch, getState) => {
                 } else {
                     //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
                     const lastchange = json.data.groupUpdate.group.lastchange
-                    dispatch(GroupActions.group_update({...group, lastchange: lastchange}))
+                    dispatch(GroupActions.group_update({ ...group, lastchange: lastchange }))
                 }
                 return json
             }
-        )   
-}
-
-export const UserAsyncUpdate = (user) => (dispatch, getState) => {
-    const userMutationJSON = (user) => {
-        return {
-            query: `mutation ($id: ID!, $name: String!, $surname: String!,$email: String!) {
-                userInsert(user: {id: $id, name: $name, surname: $surname, email: $email}) {
-                  msg
-                }
-              }`,
-            variables: user
-            }
-        }
-
-    const params = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        redirect: 'follow', // manual, *follow, error
-        body: JSON.stringify(userMutationJSON({...user}))
-    }
-
-
-    return fetch('/api/gql', params)
-    //return authorizedFetch('/api/gql', params)
-        .then(
-            resp => resp.json()
         )
-        .then(
-            json => {
-                dispatch(UserActions.users_update({user}))
-                return json
-            }
-        )   
 }
+
 
 export const GroupAsyncInsert = (group) => (dispatch, getState) => {
     const groupMutationJSON = (group) => {
@@ -215,8 +180,8 @@ export const GroupAsyncInsert = (group) => (dispatch, getState) => {
                 }
               }`,
             variables: group
-            }
         }
+    }
 
     const params = {
         method: 'POST',
@@ -231,3 +196,4 @@ export const GroupAsyncInsert = (group) => (dispatch, getState) => {
 
     return fetch('/api/gql', params)
 }
+
