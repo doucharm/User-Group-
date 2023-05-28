@@ -62,45 +62,21 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                         <p>
                             <strong>Groups:</strong>
                             {user?.membership?.map((membership) => (
-                                <React.Fragment key={membership.group.id}>
-                                    <span>
-                                        {membership.group.name}:
-                                        {membership.group.roles && membership.group.roles.length > 0 ? (
-                                            <span>
-                                                {membership.group.roles.reduce((latestRole, role) =>
-                                                    role.lastchange > latestRole.lastchange ? role : latestRole
-                                                ).roletype.nameEn}
-                                            </span>
-                                        ) : (
-                                            <span>No roles found</span>
-                                        )}
-                                    </span>
-                                </React.Fragment>
-                            ))}
-                        </p>
-                        <p>
-                            <strong>Master Groups:</strong>
-                            {user?.membership?.map((membership) => (
-                                <React.Fragment key={membership.group.id}>
-                                    <span>
-                                        {membership.group.mastergroup && (
-                                            <React.Fragment key={membership.group.mastergroup.id}>
-                                                {membership.group.mastergroup.name}:
-                                                {membership.group.mastergroup.roles &&
-                                                    membership.group.mastergroup.roles.length > 0 ? (
-                                                    membership.group.mastergroup.roles.map((role) => (
-                                                        <span key={role.id}>{role.roletype.nameEn} </span>
-                                                    ))
-                                                ) : (
-                                                    <span>No roles found</span>
-                                                )}
-                                            </React.Fragment>
-                                        )}
-                                    </span>
-                                </React.Fragment>
-                            ))}
-                        </p>
+                                <span key={membership.group.id}>
 
+                                    {membership.group.name}:
+                                    {membership.group.roles && membership.group.roles.length > 0 ? (
+                                        <span>
+                                            {membership.group.roles.reduce((latestRole, role) =>
+                                                role.lastchange > latestRole.lastchange ? role : latestRole
+                                            ).roletype.nameEn}
+                                        </span>
+                                    ) : (
+                                        <span>No roles found</span>
+                                    )}
+                                </span>
+                            ))}
+                        </p>
                     </div>
                 </div>
             </div>
