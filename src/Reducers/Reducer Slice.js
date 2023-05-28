@@ -43,6 +43,7 @@ export const bindGroupActions = (dispatch) => {
         groupAsyncInsert: (group) => dispatch(GroupAsyncInsert(group)),
         userAsyncInsert: (user) => dispatch(UserAsyncInsert(user)),
         userAsyncUpdate: (user) => dispatch(UserAsyncUpdate(user)),
+        userAsyncInsert: (user) => dispatch(UserAsyncInsert(user)),
         roleFetch: () => dispatch(RoleFetch()),
         membershipAsyncInsert: (payload) => {
             dispatch(MembershipAsyncInsert(payload))

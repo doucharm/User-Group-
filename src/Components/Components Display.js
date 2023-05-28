@@ -1,7 +1,7 @@
 import { EnvelopeOpen } from "react-bootstrap-icons"
 import { TextInput } from "./Text_Input"
 import { GroupMemberRemoveButton } from "./Delete_Button"
-import { Adding_Member_Button } from "./Adding Member Button"
+import { MembershipInsert_SearchBar } from "./Adding Member Button"
 
 import { Adding_Subgroup_Button } from "./Adding Subgroup"
 import { DeleteButton } from "./Delete_Button"
@@ -87,7 +87,7 @@ export const Table_Display =({group,set_display_id,actions}) =>
                 {group?.memberships?.map(item => <Get_Member_Row group={group} membership={item} show_old_member={show_old_member} actions={actions}/>)}
                 <br/>
                 <button onClick={event => set_show_member(!show_old_member)}>Toggle</button>
-                <Adding_Member_Button group={group} actions={actions} />
+                <MembershipInsert_SearchBar group = {group} actions = {actions}/>
                 </>
             </tbody>
         </table>
