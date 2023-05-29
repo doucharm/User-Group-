@@ -9,14 +9,41 @@ export const UserQueryJSON = (id) => ({
                 name
                 surname
                 email
+                lastchange
                 membership {
                   group {
                     name
                     id
+                    roles {
+                        lastchange
+                        id
+                        roletype{
+                            nameEn 
+                        }
+                    }
+                    mastergroup{
+                        name
+                        id
+                        roles{
+                            lastchange
+                            id
+                            roletype{
+                                nameEn
+                            }
+                        }
+                    }
                   }
                 }
                 roles {
                     lastchange
+                    id
+                    valid
+                    group{
+                        id
+                    }
+                roletype {
+                    nameEn
+                }
                 }
             }
         }`,
