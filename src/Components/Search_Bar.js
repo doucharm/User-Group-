@@ -37,6 +37,7 @@ export const SearchBar = () => {
         if(validate(inputId))
         {
             set_display_id(inputId)
+            set_found(true)
         } else
         {
             fetch_by_letters(inputId,set_users_list)
