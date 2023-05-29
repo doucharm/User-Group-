@@ -1,7 +1,6 @@
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
-import { GroupReducer,MembershipReducer,RoleReducer,UserReducer,bindGroupActions } from 'Reducers/Reducer Slice'; 
-import {data} from 'Data/data'
+import { GroupReducer,RoleReducer,UserReducer,bindGroupActions } from 'Reducers/Reducer Slice'; 
 
 
 export const store = configureStore(

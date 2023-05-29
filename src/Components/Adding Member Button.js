@@ -1,19 +1,24 @@
-import { delay } from '@reduxjs/toolkit';
-import { useState, useCallback } from 'react';
-import { PersonAdd, Save, Trash, Trash2, X ,Search} from 'react-bootstrap-icons';
+import { useState } from 'react';
+import { PersonAdd,Search} from 'react-bootstrap-icons';
 import { v1 } from 'uuid';
 import { fetch_by_letters } from 'Data/UserByLetters';
+import { useSelector } from 'react-redux';
 
 
 export const MembershipInsert_SearchBar = ({group,actions}) => {
     const [inputId, setInputId] = useState('');
     const [users_list,set_users_list]=useState([])
+    const users = useSelector((state) => state.users)
+    const user = users[inputId]
+    
     const handleInputChange = (event) => {
         setInputId(event.target.value)
     }
     const handleSubmit = (event) => 
     {
         event.preventDefault();
+        actions.userFetch(inputId)
+        console.log(user)
         console.log(inputId)
         fetch_by_letters(inputId,set_users_list)
     }
@@ -79,7 +84,7 @@ export const MembershipInsert_SearchBar = ({group,actions}) => {
                     value={inputId}
                     onChange={handleInputChange}
                 />
-                <button type="submit" form='my_form'><Search></Search></button>
+                <button type="submit" title="Submit Form" form='my_form'><Search></Search></button>
                 </thead>
             </table>
             
@@ -100,7 +105,7 @@ export const MembershipInsert_SearchBar = ({group,actions}) => {
                     value={inputId}
                     onChange={handleInputChange}
                 />
-                <button type="submit" form='my_form'><Search></Search></button>
+                <button type="submit" title="Submit Form" form='my_form'><Search></Search></button>
                 <br></br>
                 <td>Name</td>
                 </thead>
@@ -111,7 +116,4 @@ export const MembershipInsert_SearchBar = ({group,actions}) => {
             </>
         )
     }
-        
-    
-    
 }

@@ -51,7 +51,7 @@ export const SearchBar = () => {
                         value={inputId}
                         onChange={handleInputChange}
                     />
-                    <button type="submit"><Search></Search></button>
+                    <button type="submit" title="Submit Form"><Search></Search></button>
                 </form>
 
                 <table class="table table-sm table-info">
@@ -72,7 +72,7 @@ export const SearchBar = () => {
             </>
         )
     } else if (display_id) {
-        { console.log("display id going into display", display_id) }
+        console.log("display id going into display", display_id) 
 
         return (
 
@@ -85,7 +85,7 @@ export const SearchBar = () => {
                         value={inputId}
                         onChange={handleInputChange}
                     />
-                    <button type="submit"><Search></Search></button>
+                    <button type="submit" title="Submit Form"><Search></Search></button>
                 </form>
 
                 <Display display_id={display_id} set_display_id={set_display_id} />
@@ -104,7 +104,7 @@ export const SearchBar = () => {
                     value={inputId}
                     onChange={handleInputChange}
                 />
-                <button type="submit"><Search></Search></button>
+                <button type="submit" title="Submit Form"><Search></Search></button>
             </form>
         )
     }
