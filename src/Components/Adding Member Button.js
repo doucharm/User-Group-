@@ -59,7 +59,7 @@ export const MembershipInsert_SearchBar = ({group,actions}) => {
         }
         return   (
             <tr>
-                <td>{user.name}</td>
+                <td>{user.name} {user.surname}</td>
                 <button onClick={onclick}><PersonAdd></PersonAdd></button>
             </tr>
         )
