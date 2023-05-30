@@ -1,3 +1,41 @@
+import { RoleQuery } from "Data/RoleQuery";
+import { RoleActions } from "./Reducer Slice";
+export const RoleFetchHelper = (query, selecter, dispatch, getState) => {
+    const log = (text) => (p) => {
+        console.log(text)
+        console.log(JSON.stringify(p))
+        return p
+    }
+    const p = query()
+        .then(
+            response => response.json(),
+            error => error
+        )
+        .then(
+            (i) => log('incomming')(i)
+        )
+        .then(
+            json => log('converted')(selecter(json)),
+            error => error
+        )
+        .then(
+            json => log('dispatching')(dispatch(RoleActions.roles_update(json))),
+            error => error
+        )
+    return p
+  }
+  
+  export const RoleFetch = () => (dispatch, getState) => {
+    const selecter = (json) => json.data.roleTypePage
+    const bodyfunc = async () => {
+        let RoleData = await RoleFetchHelper(RoleQuery, selecter, dispatch, getState)
+        console.log(RoleData)
+        return RoleData
+    }
+    return bodyfunc()
+  }
+  
+
 export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
   const roleMutationJSON = (role) => {
       return {

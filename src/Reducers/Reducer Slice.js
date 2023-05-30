@@ -1,12 +1,13 @@
-import { Create_Group, Delete_Group, Update_Group, Adding_Subgroup, GroupMemberUpdate, GroupMemberRemove } from "./Group Reducer";
+import { Create_Group, Delete_Group, Update_Group, Adding_Subgroup} from "./Group Reducer";
 import { Adding_Member, Remove_Member, Update_Member, Moving_Member } from "./Member Reducer";
-import { GroupAsyncInsert, GroupAsyncUpdate, GroupFetch, RoleFetch, UserFetch } from "./GroupAsyncAction";
-import { MembershipAsyncUpdate, MembershipAsyncInsert } from "./MembershipAsyncActions";
 import { Update_Role } from "./Role Reducer";
-import { createSlice } from '@reduxjs/toolkit'
 import { Update_User } from "./User Reducer";
-import { RoleAsyncInsert, RoleAsyncUpdate } from "./RoleAsyncActions";
-import { UserAsyncInsert, UserAsyncUpdate } from "./UserAsyncActions";
+import { GroupAsyncInsert, GroupAsyncUpdate, GroupFetch } from "./GroupAsyncAction";
+import { MembershipAsyncUpdate, MembershipAsyncInsert } from "./MembershipAsyncActions";
+import { RoleAsyncInsert, RoleAsyncUpdate, RoleFetch } from "./RoleAsyncActions";
+import { UserAsyncInsert, UserAsyncUpdate, UserFetch } from "./UserAsyncActions";
+import { createSlice } from '@reduxjs/toolkit'
+
 export const GroupSlice = createSlice({
     name: 'groups',
     initialState: {},
@@ -24,6 +25,33 @@ export const GroupSlice = createSlice({
 })
 export const GroupActions = GroupSlice.actions
 export const GroupReducer = GroupSlice.reducer
+
+export const RoleSlice = createSlice(
+    {
+        name: 'roles',
+        initialState: {},
+        reducers: {
+            roles_update: Update_Role
+        }
+
+    }
+)
+export const RoleActions = RoleSlice.actions
+export const RoleReducer = RoleSlice.reducer
+
+export const UserSlice = createSlice(
+    {
+        name: 'users',
+        initialState: {},
+        reducers: {
+            users_update: Update_User
+        }
+
+    }
+)
+export const UserActions = UserSlice.actions
+export const UserReducer = UserSlice.reducer
+
 export const bindGroupActions = (dispatch) => {
     return {
         onGroupUpdate: (g) => dispatch(GroupActions.group_update(g)),
@@ -43,13 +71,11 @@ export const bindGroupActions = (dispatch) => {
         groupAsyncInsert: (group) => dispatch(GroupAsyncInsert(group)),
         userAsyncInsert: (user) => dispatch(UserAsyncInsert(user)),
         userAsyncUpdate: (user) => dispatch(UserAsyncUpdate(user)),
-        userAsyncInsert: (user) => dispatch(UserAsyncInsert(user)),
         roleFetch: () => dispatch(RoleFetch()),
         membershipAsyncInsert: (payload) => {
             dispatch(MembershipAsyncInsert(payload))
         },
         membershipAsyncUpdate: ({ id, lastchange }) => { dispatch(MembershipAsyncUpdate({ id, lastchange })) },
-        userFetch: (id) => dispatch(UserFetch(id)),
         userFetch: (id) => dispatch(UserFetch(id)),
         roleAsyncInsert: (payload) => {
             dispatch(RoleAsyncInsert(payload))
@@ -59,32 +85,3 @@ export const bindGroupActions = (dispatch) => {
         }
     }
 }
-
-export const RoleSlice = createSlice(
-    {
-        name: 'roles',
-        initialState: {},
-        reducers: {
-            roles_update: Update_Role
-        }
-
-    }
-)
-
-export const RoleActions = RoleSlice.actions
-export const RoleReducer = RoleSlice.reducer
-
-export const UserSlice = createSlice(
-    {
-        name: 'users',
-        initialState: {},
-        reducers: {
-            users_update: Update_User
-        }
-
-    }
-)
-
-export const UserActions = UserSlice.actions
-export const UserReducer = UserSlice.reducer
-

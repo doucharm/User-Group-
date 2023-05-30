@@ -1,9 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { TextInput } from './Text_Input';
-import { useEffect, useState, useCallback } from 'react';
-import { PersonAdd, Save, Trash, Trash2, X } from 'react-bootstrap-icons';
+import { useState, useCallback } from 'react';
+import { PersonAdd, Save, Trash2} from 'react-bootstrap-icons';
 import { v1 } from 'uuid';
+
 
 export const UserDisplay = ({ user, setUserId, actions }) => {
 
@@ -61,22 +61,26 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                         </p>
                         <p>
                             <strong>Groups:</strong>
-                            {user?.membership?.map((membership) => (
-                                <span key={membership.group.id}>
-
-                                    {membership.group.name}:
-                                    {membership.group.roles && membership.group.roles.length > 0 ? (
-                                        <span>
-                                            {membership.group.roles.reduce((latestRole, role) =>
-                                                role.lastchange > latestRole.lastchange ? role : latestRole
-                                            ).roletype.nameEn}
-                                        </span>
-                                    ) : (
-                                        <span>No roles found</span>
-                                    )}
-                                </span>
+                            <br></br>
+                            {user?.membership?.map((membership, index) => (
+                                <React.Fragment key={membership.group.id}>
+                                    <span>
+                                        {membership.group.name}:
+                                        {membership.group.roles && membership.group.roles.length > 0 ? (
+                                            <span>
+                                                {membership.group.roles.reduce((latestRole, role) =>
+                                                    role.lastchange > latestRole.lastchange ? role : latestRole
+                                                ).roletype.nameEn}
+                                            </span>
+                                        ) : (
+                                            <span>No roles found</span>
+                                        )}
+                                    </span>
+                                    {index !== user.membership.length - 1 && <br />} { }
+                                </React.Fragment>
                             ))}
                         </p>
+
                     </div>
                 </div>
             </div>

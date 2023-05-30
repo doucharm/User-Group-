@@ -1,5 +1,5 @@
 import { Card_Display } from './Card_Display';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { actions } from 'pages/Redux Store';
 import { UserDisplay } from './User_Display';

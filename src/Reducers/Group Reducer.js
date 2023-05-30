@@ -47,7 +47,3 @@ export const GroupMemberAdd = (state, action) => {
     gtochange.memberships.push(membership)
     return state 
 }
-
-export const GroupMemberRemove = (state, action) => {
-
-}
