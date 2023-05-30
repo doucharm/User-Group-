@@ -1,7 +1,7 @@
-import { GroupActions, RoleActions, UserActions } from "./Reducer Slice";
+import { GroupActions } from "./Reducer Slice";
 import { GroupQuery } from "Data/GroupQuery";
-import { RoleQuery } from "Data/RoleQuery";
-import { UserQuery } from "Data/UserQuery";
+
+
 /**
  * Ask for the item on server and adds it or update it in the store to the heap
  * @param {*} id 
@@ -31,60 +31,6 @@ export const GroupFetchHelper = (id, query, resultselector, dispatch, getState) 
 }
 
 
-export const UserFetchHelper = (id, query, resultselector, dispatch, getState) => {
-    const log = (text) => (p) => {
-        console.log(text)
-        console.log(JSON.stringify(p))
-        return p
-    }
-    const p = query(id)
-        .then(
-            response => response.json(),
-            error => error
-        )
-        .then(
-            (i) => log('incomming')(i)
-        )
-        // .then(
-        //     response => log('received')(response.json()),
-        //     error => error
-        //     //error
-        //     )
-        .then(
-            json => log('converted')(resultselector(json)),
-            error => error
-        )
-        .then(
-            json => log('dispatching')(dispatch(UserActions.users_update(json))),
-            error => error
-        )
-
-    return p
-}
-export const RoleFetchHelper = (query, selecter, dispatch, getState) => {
-    const log = (text) => (p) => {
-        console.log(text)
-        console.log(JSON.stringify(p))
-        return p
-    }
-    const p = query()
-        .then(
-            response => response.json(),
-            error => error
-        )
-        .then(
-            (i) => log('incomming')(i)
-        )
-        .then(
-            json => log('converted')(selecter(json)),
-            error => error
-        )
-        .then(
-            json => log('dispatching')(dispatch(RoleActions.roles_update(json))),
-            error => error
-        )
-    return p
-}
 
 /**
 * Fetch the group from server checks its type and asks once more for detailed data. Finally puts the result in the store.
@@ -97,26 +43,6 @@ export const GroupFetch = (id) => (dispatch, getState) => {
         let groupData = await GroupFetchHelper(id, GroupQuery, groupSelector, dispatch, getState)
 
         return groupData
-    }
-    return bodyfunc()
-}
-
-export const UserFetch = (id) => (dispatch, getState) => {
-    const userSelector = (json) => json.data.userById
-    const bodyfunc = async () => {
-        let userData = await UserFetchHelper(id, UserQuery, userSelector, dispatch, getState)
-        console.log(userData)
-        return userData
-    }
-    return bodyfunc()
-}
-
-export const RoleFetch = () => (dispatch, getState) => {
-    const selecter = (json) => json.data.roleTypePage
-    const bodyfunc = async () => {
-        let RoleData = await RoleFetchHelper(RoleQuery, selecter, dispatch, getState)
-        console.log(RoleData)
-        return RoleData
     }
     return bodyfunc()
 }
@@ -169,7 +95,6 @@ export const GroupAsyncUpdate = (group) => (dispatch, getState) => {
             }
         )
 }
-
 
 export const GroupAsyncInsert = (group) => (dispatch, getState) => {
     const groupMutationJSON = (group) => {

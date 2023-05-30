@@ -1,8 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { TextInput } from './Text_Input';
-import { useEffect, useState, useCallback } from 'react';
-import { PersonAdd, Save, Trash, Trash2, X } from 'react-bootstrap-icons';
+import { useState, useCallback } from 'react';
+import { PersonAdd, Save, Trash2} from 'react-bootstrap-icons';
 import { v1 } from 'uuid';
 
 
