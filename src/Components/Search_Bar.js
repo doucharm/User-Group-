@@ -33,8 +33,10 @@ export const SearchBar = () => {
         event.preventDefault();
         if (validate(inputId)) {
             set_display_id(inputId)
-        } else {
-            fetch_by_letters(inputId, set_users_list)
+            set_found(true)
+        } else
+        {
+            fetch_by_letters(inputId,set_users_list)
             set_found(false)
         }
     }
