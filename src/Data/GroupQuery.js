@@ -54,7 +54,7 @@ export const GroupQueryJSON = (id) => ({
                 }
             }
         }`,
-    "variables": {"id": id}
+    "variables": { "id": id }
 })
 
 

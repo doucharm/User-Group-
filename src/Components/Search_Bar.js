@@ -72,7 +72,7 @@ export const SearchBar = () => {
             </>
         )
     } else if (display_id) {
-        console.log("display id going into display", display_id) 
+        console.log("display id going into display", display_id)
 
         return (
 
