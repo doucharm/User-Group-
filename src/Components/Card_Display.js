@@ -2,8 +2,7 @@ import { HeaderTextInput } from "./Header_Text_Input"
 import { Table_Display } from "./Components Display"
 
 
-export const Card_Display = ({group,set_display_id,actions}) =>
-{
+export const Card_Display = ({ group, set_display_id, actions }) => {
     return (
         <main>
             <div class="card  border-success  bg-info mb-3" >
@@ -19,25 +18,23 @@ export const Card_Display = ({group,set_display_id,actions}) =>
     )
 }
 
-export const Get_Card_Header = ({group,set_display_id,actions}) => {
-    const MasterGroup= ()=>
-    {
-    if (group.mastergroup)
-    {
-        return (
-            <button onClick={event => set_display_id(group.mastergroup.id)}>Master group </button>
-        )
-    } else return;
+export const Get_Card_Header = ({ group, set_display_id, actions }) => {
+    const MasterGroup = () => {
+        if (group.mastergroup) {
+            return (
+                <button onClick={event => set_display_id(group.mastergroup.id)}>Master group </button>
+            )
+        } else return;
     }
     return (
         <div>
             <MasterGroup />
-        <tr>
-            ID: {group.id} <br />
-            <HeaderTextInput group={group} actions={actions}/>
-            Last change:{group.lastchange} <br />
-            Group type: {group.grouptype?.nameEn} <br />
-        </tr>
+            <tr>
+                ID: {group.id} <br />
+                <HeaderTextInput group={group} actions={actions} />
+                Last change:{group.lastchange} <br />
+                Group type: {group.grouptype?.nameEn} <br />
+            </tr>
         </div>
     )
 }

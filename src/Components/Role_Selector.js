@@ -2,36 +2,34 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { useSelector } from 'react-redux';
 import { v1 } from 'uuid'
-import { TextInput } from './Text_Input';
-import { Hourglass, HouseAdd } from 'react-bootstrap-icons';
-import { useState } from 'react';
-import { Role_Type_Insert } from 'Reducers/RoleAsyncActions';
 export const Role_Select = ({membership,actions}) =>
 {
+    console.log(membership)
     const current_role=membership?.user.roles?.filter((item) => item.group.id===membership.group.id && item.valid===true)
+    console.log(current_role)
     const roles=useSelector(state =>state.roles)
     const role_list=Object.values(roles)
     const onRoleChange=({roletype_new,membership}) =>
     {
-        console.log(roletype_new)
+        console.log(membership)
         const new_role=
         {
-            id:v1(),
-            roletypeID:roletype_new.id,
-            valid:true,
-            groupId:membership.group.id,
-            userId:membership.user.id,
-            roletype:roletype_new,
+            id: v1(),
+            roletypeID: roletype_new.id,
+            valid: true,
+            groupId: membership.group.id,
+            userId: membership.user.id,
+            roletype: roletype_new,
             group:
             {
-                id:membership.group.id
+                id: membership.group.id
             }
         }
         actions.roleAsyncInsert(new_role)
-        const new_role_store=
+        const new_role_store =
         {
-            group:{id : membership.group.id},
-            membership:{...membership,user:{...membership.user, roles:membership.user.roles.concat(new_role)}}
+            group: { id: membership.group.id },
+            membership: { ...membership, user: { ...membership.user, roles: membership.user.roles.concat(new_role) } }
         }
         console.log(new_role_store)
         actions.onMemberUpdate(new_role_store)
@@ -68,7 +66,7 @@ export const Role_Select = ({membership,actions}) =>
       <Make_New_Role />
     </DropdownButton>
     )
-  }
-  
-  
+}
+
+
 

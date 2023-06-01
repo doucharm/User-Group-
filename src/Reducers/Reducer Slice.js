@@ -1,4 +1,4 @@
-import { Create_Group, Delete_Group, Update_Group, Adding_Subgroup} from "./Group Reducer";
+import { Create_Group, Delete_Group, Update_Group, Adding_Subgroup } from "./Group Reducer";
 import { Adding_Member, Remove_Member, Update_Member, Moving_Member } from "./Member Reducer";
 import { Update_Role } from "./Role Reducer";
 import { Update_User } from "./User Reducer";
@@ -75,7 +75,7 @@ export const bindGroupActions = (dispatch) => {
         membershipAsyncInsert: (payload) => {
             dispatch(MembershipAsyncInsert(payload))
         },
-        membershipAsyncUpdate: ({ id, lastchange }) => { dispatch(MembershipAsyncUpdate({ id, lastchange })) },
+        membershipAsyncUpdate: ({ id, lastchange, valid }) => { dispatch(MembershipAsyncUpdate({ id, lastchange, valid })) },
         userFetch: (id) => dispatch(UserFetch(id)),
         roleAsyncInsert: (payload) => {
             dispatch(RoleAsyncInsert(payload))

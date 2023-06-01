@@ -1,26 +1,27 @@
 import React from 'react';
 import { TextInput } from './Text_Input';
 import { useState, useCallback } from 'react';
-import { PersonAdd, Save, Trash2} from 'react-bootstrap-icons';
+import { PersonAdd, Save, Trash2 } from 'react-bootstrap-icons';
 import { v1 } from 'uuid';
 
-
 export const UserDisplay = ({ user, setUserId, actions }) => {
-
     const onChangeEmail = (value) => {
-        actions.userAsyncUpdate({ ...user, email: value })
-            .then(json => console.log("UserEmailInput", json.data.userUpdate.msg))
-    }
+        actions.userAsyncUpdate({ ...user, email: value }).then((json) =>
+            console.log("UserEmailInput", json.data.userUpdate.msg)
+        );
+    };
 
     const onChangeSurname = (value) => {
-        actions.userAsyncUpdate({ ...user, surname: value })
-            .then(json => console.log("UserSurnameInput", json.data.userUpdate.msg))
-    }
+        actions.userAsyncUpdate({ ...user, surname: value }).then((json) =>
+            console.log("UserSurnameInput", json.data.userUpdate.msg)
+        );
+    };
 
     const onChangeName = (value) => {
-        actions.userAsyncUpdate({ ...user, name: value })
-            .then(json => console.log("UserNameInput", json.data.userUpdate.msg))
-    }
+        actions.userAsyncUpdate({ ...user, name: value }).then((json) =>
+            console.log("UserNameInput", json.data.userUpdate.msg)
+        );
+    };
 
     return (
         <div>
@@ -65,13 +66,11 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                             {user?.membership?.map((membership, index) => (
                                 <React.Fragment key={membership.group.id}>
                                     <span>
-                                        {membership.group.name}:
+                                        {membership.group.name}:{" "}
                                         {membership.group.roles && membership.group.roles.length > 0 ? (
-                                            <span>
-                                                {membership.group.roles.reduce((latestRole, role) =>
-                                                    role.lastchange > latestRole.lastchange ? role : latestRole
-                                                ).roletype.nameEn}
-                                            </span>
+                                            membership.group.roles.reduce((latestRole, role) =>
+                                                role && role.lastchange > latestRole.lastchange ? role : latestRole
+                                            ).roletype?.nameEn
                                         ) : (
                                             <span>No roles found</span>
                                         )}
@@ -80,11 +79,9 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                                 </React.Fragment>
                             ))}
                         </p>
-
                     </div>
                 </div>
             </div>
-
             <div className="card mt-4">
                 <div className="card-body">
                     <h5 className="card-title">Add User</h5>
@@ -94,6 +91,7 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
         </div>
     );
 };
+
 
 export const Adding_User = ({ new_user, set_new_user, onClick, setState0, setState1, state }) => {
 

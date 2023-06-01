@@ -1,5 +1,4 @@
-export const Adding_Member = (state,action) =>
-{
+export const Adding_Member = (state, action) => {
     console.log(action.payload)
     const group = action.payload.group
     const membership = action.payload.membership
@@ -30,7 +29,7 @@ export const Update_Member = (state,action) =>
     const g = action.payload.group
     const m = action.payload.membership
     const group = state[g.id]
-    group.memberships = group.memberships.map(membership => membership.id === m.id ? {...membership, ...m} : membership)
+    group.memberships = group.memberships.map(membership => membership.id === m.id ? { ...membership, ...m } : membership)
     console.log(group.memberships)
     return state
 }
