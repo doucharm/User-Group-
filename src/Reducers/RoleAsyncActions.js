@@ -63,8 +63,6 @@ export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
       redirect: 'follow', // manual, *follow, error
       body: JSON.stringify(roleMutationJSON(payload))
   }
-
-
   return fetch('/api/gql', params)
 }
 
@@ -102,3 +100,37 @@ export const RoleAsyncUpdate = (role) => (dispatch, getState) => {
   return fetch('/api/gql', params)
   
 }
+export const Role_Type_Insert = (payload) => (dispatch, getState) => {
+    const roletypeMutationJSON = (roletype) => {
+        return {
+            query: `mutation($id: ID!, $name: String!, $nameEn: String!) {
+              roleTypeInsert(roleType: {
+              id: $id,
+              name:$name,
+              nameEn: $nameEn
+          }){
+              msg
+              id
+              roleType
+              {
+                id
+                name
+                nameEn
+              }
+
+          }
+          }`,
+            variables: roletype
+            }
+        }
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(roletypeMutationJSON(payload))
+    }
+    return fetch('/api/gql', params)
+  }
