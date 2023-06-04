@@ -4,7 +4,7 @@ import { Update_Role } from "./Role Reducer";
 import { Update_User } from "./User Reducer";
 import { GroupAsyncInsert, GroupAsyncUpdate, GroupFetch } from "./GroupAsyncAction";
 import { MembershipAsyncUpdate, MembershipAsyncInsert } from "./MembershipAsyncActions";
-import { RoleAsyncInsert, RoleAsyncUpdate, RoleFetch } from "./RoleAsyncActions";
+import { RoleAsyncInsert, RoleAsyncUpdate, RoleFetch, Role_Type_Insert } from "./RoleAsyncActions";
 import { UserAsyncInsert, UserAsyncUpdate, UserFetch } from "./UserAsyncActions";
 import { createSlice } from '@reduxjs/toolkit'
 
@@ -82,6 +82,7 @@ export const bindGroupActions = (dispatch) => {
         },
         roleAsyncUpdate: (role) => {
             dispatch(RoleAsyncUpdate(role))
-        }
+        },
+        roletype_insert: (payload) => {dispatch(Role_Type_Insert(payload))}
     }
 }
