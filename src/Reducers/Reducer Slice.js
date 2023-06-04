@@ -20,7 +20,7 @@ export const GroupSlice = createSlice({
         memberAdd: Adding_Member,
         memberRemove: Remove_Member,
         memberUpdate: Update_Member,
-        memberMoving: Moving_Member
+        memberMoving: Moving_Member,
     }
 })
 export const GroupActions = GroupSlice.actions

@@ -63,9 +63,10 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                         <p>
                             <strong>Groups:</strong>
                             <br></br>
-                            {user?.membership?.map((membership, index) => (
-                                <React.Fragment key={membership.group.id}>
-                                    <span>
+                            { user?.membership?.map((membership, index) => {
+                                console.log(membership.group.id); // Move the console log outside JSX expression
+                                return (
+                                    <span key={membership.group.id}>
                                         {membership.group.name}:{" "}
                                         {membership.group.roles && membership.group.roles.length > 0 ? (
                                             membership.group.roles.reduce((latestRole, role) =>
@@ -74,10 +75,10 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                                         ) : (
                                             <span>No roles found</span>
                                         )}
+                                        {index !== user.membership.length - 1 && <br />}
                                     </span>
-                                    {index !== user.membership.length - 1 && <br />} { }
-                                </React.Fragment>
-                            ))}
+                                );
+                            })}
                         </p>
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 import { authorizedFetch } from "./authorizedFetch"
+
 export const UserbyLettersJSON = (letters) => ({
     "query":
         `query ($letters: String!) {

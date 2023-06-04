@@ -5,20 +5,29 @@ import { DeleteButton } from "./Delete_Button"
 import { Trash } from "react-bootstrap-icons"
 import { Role_Select } from "./Role_Selector"
 import { useState } from "react"
+import { Replace_Button } from "./Replace_Button"
+
+
 export const Table_Display = ({ group, set_display_id, actions }) => {
     const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
         actions.roleFetch();
-        const onclick = () => {
-            const payload =
-            {
+        const onClick = async () => {
+            const payload = {
                 id: membership.id,
                 lastchange: membership.lastchange,
                 valid: false
-            }
-            actions.membershipAsyncUpdate(payload)
-            actions.onMemberRemove({ group, membership })
+            };
 
-        }
+            console.log('REMOVE_MEMBER action dispatched with payload:', payload);
+
+            try {
+                await actions.membershipAsyncUpdate(payload);
+                actions.onMemberRemove({ group, membership });
+            } catch (error) {
+                console.log('Membership update failed:', error);
+            }
+        };
+
         if (membership.valid) {
             return (
                 <tr className="table-success">
@@ -27,7 +36,8 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
                     <td>{membership.user.surname}</td>
                     <td>{membership.user.email}</td>
                     <td><Role_Select membership={membership} actions={actions} /></td>
-                    <td><DeleteButton onClick={onclick}><Trash></Trash></DeleteButton></td>
+                    <td><DeleteButton onClick={onClick}><Trash></Trash></DeleteButton></td>
+                    <td><Replace_Button group={group} actions={actions} membership={membership}  >Replace</Replace_Button></td>
                 </tr>
             )
         }
@@ -39,7 +49,8 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
                     <td>{membership.user.surname}</td>
                     <td>{membership.user.email}</td>
                     <td><Role_Select membership={membership} actions={actions} /></td>
-                    <td><DeleteButton onClick={onclick}><Trash></Trash></DeleteButton></td>
+                    <td><DeleteButton onClick={onClick}><Trash></Trash></DeleteButton></td>
+                    <td><Replace_Button group={group} actions={actions}  >Replace</Replace_Button></td>
                 </tr>
             )
         }
@@ -70,13 +81,14 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
                         <th>Surname</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>    </th>
+                        <th>Delete</th>
+                        <th>Replace</th>
                     </tr>
                 </thead>
                 <tbody>
                     <>
 
-                        {group?.memberships?.map(item => <Get_Member_Row group={group} membership={item} show_old_member={show_old_member} actions={actions} />)}
+                        {group?.memberships?.map(item => <Get_Member_Row key={item.id} group={group} membership={item} show_old_member={show_old_member} actions={actions} />)}
                         <br />
                         <button onClick={event => set_show_member(!show_old_member)}>Toggle</button>
                         <MembershipInsert_SearchBar group={group} actions={actions} />

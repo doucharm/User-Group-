@@ -15,11 +15,6 @@ export const UserFetchHelper = (id, query, resultselector, dispatch, getState) =
         .then(
             (i) => log('incomming')(i)
         )
-        // .then(
-        //     response => log('received')(response.json()),
-        //     error => error
-        //     //error
-        //     )
         .then(
             json => log('converted')(resultselector(json)),
             error => error
@@ -120,6 +115,5 @@ export const UserAsyncInsert = (user) => (dispatch, getState) => {
     return fetch('/api/gql', params)
 
 }
-
 
 
