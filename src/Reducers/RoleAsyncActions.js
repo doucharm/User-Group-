@@ -2,8 +2,8 @@ import { RoleQuery } from "Data/RoleQuery";
 import { RoleActions } from "./Reducer Slice";
 export const RoleFetchHelper = (query, selecter, dispatch, getState) => {
     const log = (text) => (p) => {
-        console.log(text)
-        console.log(JSON.stringify(p))
+        //console.log(text)
+        //console.log(JSON.stringify(p))
         return p
     }
     const p = query()

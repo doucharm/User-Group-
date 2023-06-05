@@ -1,6 +1,5 @@
 import { authorizedFetch } from "./authorizedFetch"
 
-
 export const RoleQueryJSON = () => ({
   "query":
     `query {

@@ -16,16 +16,35 @@ export const Moving_Member = (state,action) =>
     new_group.memberships.push(membership)
     return state
 }
-export const Remove_Member = (state, action) =>
-{
-    const g = action.payload.group
-    const membership = action.payload.membership
-    const group = state[g.id]
-    group.memberships = group.memberships.map((item) => item.id===membership.id? {...item,valid:false}: item  )
-    return state
+export const Remove_Member = (state, action) => {
+    console.log('reducer called', action.payload);
+    const g = action.payload.group;
+    const membership = action.payload.membership;
+    const group = state[g.id];
+    console.log("group membership", group.memberships);
+    console.log('group', state[g.id])
+
+    if (!membership) {
+        return state;
+    }
+
+    group.memberships = group.memberships.map((item) =>
+        item.id === membership.id ? { ...item, valid: false } : item
+    );
+
+    group.memberships.forEach((item) => {
+        if (item.id === membership.id) {
+            item.user.roles = item.user.roles.map((role) =>
+                role.group?.id === group.id ? { ...role, valid: false } : role
+            );
+        }
+    });
+    console.log('roles', group)
+
+    return state;
 }
-export const Update_Member = (state,action) =>
-{
+
+export const Update_Member = (state, action) => {
     const g = action.payload.group
     const m = action.payload.membership
     const group = state[g.id]
@@ -33,3 +52,5 @@ export const Update_Member = (state,action) =>
     console.log(group.memberships)
     return state
 }
+
+
