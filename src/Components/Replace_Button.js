@@ -9,7 +9,7 @@ export const Replace_Button = ({ group, actions, membership }) => {
     const [inputId, setInputId] = useState('');
     const [usersList, setUsersList] = useState([]);
     const users = useSelector((state) => state.users);
-
+    
     const handleInputChange = (event) => {
         setInputId(event.target.value);
     };
@@ -53,13 +53,6 @@ export const Replace_Button = ({ group, actions, membership }) => {
             actions
                 .userAsyncUpdate(modifyUser)
                 .then(() => actions.membershipAsyncInsert(payload))
-                .then(() =>
-                    actions.membershipAsyncUpdate({
-                        id: newMembership.id,
-                        lastchange: newMembership.lastchange,
-                        valid: newMembership.valid,
-                    })
-                )
                 .then(() =>
                     actions.membershipAsyncUpdate({
                         id: membership.id,

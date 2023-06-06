@@ -98,6 +98,7 @@ export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
 }
 
 export const RoleAsyncUpdate = (role) => (dispatch, getState) => {
+    console.log("role update ",role)
     const roleMutationJSON = (role) => {
         return {
             query: ` mutation($id: ID!, $lastchange: DateTime!) {
