@@ -1,5 +1,5 @@
 import { RoleQuery } from "Data/RoleQuery";
-import { RoleActions } from "./Reducer Slice";
+import { GroupActions, RoleActions } from "./Reducer Slice";
 export const RoleFetchHelper = (query, selecter, dispatch, getState) => {
     const log = (text) => (p) => {
         //console.log(text)
@@ -48,6 +48,21 @@ export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
             valid:true
         }){
             msg
+            role {
+                lastchange
+                id
+                startdate
+                enddate
+                roletype {
+                  id
+                  nameEn
+                }
+                group
+                {
+                    id
+                }
+                valid
+              }
         }
         }`,
             variables: role
@@ -63,10 +78,23 @@ export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
       redirect: 'follow', // manual, *follow, error
       body: JSON.stringify(roleMutationJSON(payload))
   }
-
-
-
     return fetch('/api/gql', params)
+    .then((resp) => resp.json())
+        .then((json) => {
+            const msg = json.data?.roleInsert?.msg;
+            if (msg === "fail") {
+                console.log("Update failed");
+            } else {
+
+                const new_role = json.data?.roleInsert?.role;
+                const new_user={...payload.membership.user,roles : payload.membership.user.roles.concat(new_role) }
+                const new_membership={...payload.membership,user:new_user}
+                console.log("new membership going into store",new_membership)
+                dispatch(GroupActions.memberUpdate({membership:new_membership,group:{id:new_membership.group.id}}))
+            }
+            return json;
+        })
+        .catch(() => console.log("Failed to insert"));
 }
 
 export const RoleAsyncUpdate = (role) => (dispatch, getState) => {
@@ -75,7 +103,8 @@ export const RoleAsyncUpdate = (role) => (dispatch, getState) => {
             query: ` mutation($id: ID!, $lastchange: DateTime!) {
             roleUpdate(role: {
             id: $id, 
-            lastchange: $lastchange
+            lastchange: $lastchange,
+            valid:false
         }){
             id
             msg

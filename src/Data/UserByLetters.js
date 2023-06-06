@@ -44,7 +44,7 @@ export const fetch_by_letters = (letters, set_users_list) => {
     const selector = (json) => json.data.userByLetters
     const bodyfunc = async () => {
         let groupData = await UserbyLettersFetch(letters, UserbyLetters, selector)
-        console.log(groupData)
+        console.log("users",groupData)
         set_users_list(groupData)
         return groupData
     }

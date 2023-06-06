@@ -45,6 +45,7 @@ export const Remove_Member = (state, action) => {
 }
 
 export const Update_Member = (state, action) => {
+    console.log(action.payload)
     const g = action.payload.group
     const m = action.payload.membership
     const group = state[g.id]

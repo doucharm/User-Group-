@@ -9,8 +9,9 @@ import { Replace_Button } from "./Replace_Button"
 
 
 export const Table_Display = ({ group, set_display_id, actions }) => {
+    actions.roleFetch();
     const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
-        actions.roleFetch();
+        
         const onClick = async () => {
             const payload = {
                 id: membership.id,

@@ -64,15 +64,7 @@ export const GroupQueryJSON = (id) => ({
                           }
                     }
                 }
-                roles{
-                    valid
-                    id
-                    lastchange
-                    roletype{
-                        id
-                        nameEn
-                    }
-                }
+                
             }
         }`,
     "variables": { "id": id }
