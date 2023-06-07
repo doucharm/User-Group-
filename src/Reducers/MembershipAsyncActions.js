@@ -4,19 +4,19 @@ export const MembershipAsyncInsert = ({ store_update, group_id, user_id,id }) =>
     const membershipInsertJSON = (membership) => {
         return {
             query: `mutation($group_id: ID!, $user_id: ID!,$id: ID!) {
-        membershipInsert(membership: {
-        groupId: $group_id,
-        userId: $user_id
-        id: $id
-        valid: true
-      }){
-        msg
-        membership 
-        {
-          id
-          lastchange
-        }
-      }
+              membershipInsert(membership: {
+              groupId: $group_id,
+              userId: $user_id
+              id: $id
+              valid: true
+            }){
+              msg
+              membership 
+              {
+                id
+                lastchange
+              }
+            }
       }`,
             variables: membership
         };

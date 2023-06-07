@@ -6,6 +6,7 @@ import { Trash } from "react-bootstrap-icons"
 import { Role_Select } from "./Role_Selector"
 import { useState } from "react"
 import { Replace_Button } from "./Replace_Button"
+import { Moving_Member_Button } from "./Moving_Member"
 
 
 export const Table_Display = ({ group, set_display_id, actions }) => {
@@ -18,7 +19,6 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
                 lastchange: membership.lastchange,
                 valid: false
             };
-
             console.log('REMOVE_MEMBER action dispatched with payload:', payload);
 
             try {
@@ -39,6 +39,7 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
                     <td><Role_Select membership={membership} actions={actions} /></td>
                     <td><DeleteButton onClick={onClick}><Trash></Trash></DeleteButton></td>
                     <td><Replace_Button group={group} actions={actions} membership={membership}  >Replace</Replace_Button></td>
+                    <td><Moving_Member_Button membership={membership} actions={actions}    /></td>
                 </tr>
             )
         }
@@ -49,9 +50,7 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
                     <td>{membership.user.name}</td>
                     <td>{membership.user.surname}</td>
                     <td>{membership.user.email}</td>
-                    <td><Role_Select membership={membership} actions={actions} /></td>
-                    <td><DeleteButton onClick={onClick}><Trash></Trash></DeleteButton></td>
-                    <td><Replace_Button group={group} actions={actions}  >Replace</Replace_Button></td>
+
                 </tr>
             )
         }
@@ -84,6 +83,7 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
                         <th>Role</th>
                         <th>Delete</th>
                         <th>Replace</th>
+                        <th>Move</th>
                     </tr>
                 </thead>
                 <tbody>
