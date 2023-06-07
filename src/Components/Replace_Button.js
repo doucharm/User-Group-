@@ -9,7 +9,7 @@ export const Replace_Button = ({ group, actions, membership }) => {
     const [inputId, setInputId] = useState('');
     const [usersList, setUsersList] = useState([]);
     const users = useSelector((state) => state.users);
-    
+
     const handleInputChange = (event) => {
         setInputId(event.target.value);
     };
@@ -37,6 +37,7 @@ export const Replace_Button = ({ group, actions, membership }) => {
             group: group,
             lastchange: Date.now(),
         };
+        
         const payload = {
             store_update: {
                 group: group,

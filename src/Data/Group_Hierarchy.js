@@ -1,5 +1,4 @@
-import React, { useState ,useEffect} from 'react';
-import { OrganizationChart } from 'primereact/organizationchart';
+
 import { Get_Node } from './Get_Chart_Node';
 export const Get_Hierarchy = async (id) =>
 {

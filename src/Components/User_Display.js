@@ -64,7 +64,7 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                             <strong>Groups:</strong>
                             <br></br>
                             { user?.membership?.map((membership, index) => {
-                                console.log(membership.group.id); // Move the console log outside JSX expression
+                                console.log(membership.group.id); 
                                 return (
                                     <span key={membership.group.id}>
                                         {membership.group.name}:{" "}

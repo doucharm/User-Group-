@@ -11,7 +11,7 @@ import { Replace_Button } from "./Replace_Button"
 export const Table_Display = ({ group, set_display_id, actions }) => {
     actions.roleFetch();
     const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
-        
+
         const onClick = async () => {
             const payload = {
                 id: membership.id,
@@ -24,6 +24,7 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
             try {
                 await actions.membershipAsyncUpdate(payload);
                 actions.onMemberRemove({ group, membership });
+
             } catch (error) {
                 console.log('Membership update failed:', error);
             }

@@ -32,15 +32,6 @@ export const Remove_Member = (state, action) => {
         item.id === membership.id ? { ...item, valid: false } : item
     );
 
-    group.memberships.forEach((item) => {
-        if (item.id === membership.id) {
-            item.user.roles = item.user.roles.map((role) =>
-                role.group?.id === group.id ? { ...role, valid: false } : role
-            );
-        }
-    });
-    console.log('roles', group)
-
     return state;
 }
 
