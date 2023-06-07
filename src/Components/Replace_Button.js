@@ -65,7 +65,7 @@ export const Replace_Button = ({ group, actions, membership }) => {
                     actions.membershipAsyncUpdate({
                         id: membership.id,
                         lastchange: membership.lastchange,
-
+                        valid: false,
                     })
                 )
                 .then(() => actions.onMemberRemove({ group, membership }))

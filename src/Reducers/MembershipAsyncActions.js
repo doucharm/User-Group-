@@ -4,19 +4,19 @@ export const MembershipAsyncInsert = ({ store_update, group_id, user_id, id }) =
   const membershipInsertJSON = (membership) => {
     return {
       query: `mutation($group_id: ID!, $user_id: ID!,$id: ID!) {
-        membershipInsert(membership: {
-        groupId: $group_id,
-        userId: $user_id
-        id: $id
-        valid: true
-      }){
-        msg
-        membership 
-        {
-          id
-          lastchange
-        }
-      }
+              membershipInsert(membership: {
+              groupId: $group_id,
+              userId: $user_id
+              id: $id
+              valid: true
+            }){
+              msg
+              membership 
+              {
+                id
+                lastchange
+              }
+            }
       }`,
       variables: membership
     };
@@ -49,15 +49,15 @@ export const MembershipAsyncInsert = ({ store_update, group_id, user_id, id }) =
 
 
 
-export const MembershipAsyncUpdate = ({ id, lastchange }) => (dispatch, getState) => {
+export const MembershipAsyncUpdate = ({ id, lastchange, valid }) => (dispatch, getState) => {
   const membershipUpdateJSON = (membership) => {
     return {
       query: `
-          mutation($id: ID!, $lastchange: DateTime!) {
+          mutation($id: ID!, $lastchange: DateTime!, $valid: Boolean!) {
             membershipUpdate(membership: {
               id: $id,
               lastchange: $lastchange,
-              valid: false
+              valid: $valid
             }) {
               id
               msg
@@ -69,7 +69,11 @@ export const MembershipAsyncUpdate = ({ id, lastchange }) => (dispatch, getState
             }
           }
         `,
-      variables: membership
+      variables: {
+        id,
+        lastchange,
+        valid,
+      },
     };
   };
 
@@ -80,7 +84,7 @@ export const MembershipAsyncUpdate = ({ id, lastchange }) => (dispatch, getState
     },
     cache: 'no-cache',
     redirect: 'follow',
-    body: JSON.stringify(membershipUpdateJSON({ id, lastchange })),
+    body: JSON.stringify(membershipUpdateJSON({ id, lastchange, valid })),
   };
 
   return fetch('/api/gql', params)
