@@ -44,6 +44,7 @@ export const Replace_Button = ({ group, actions, membership }) => {
             group: group,
             lastchange: Date.now(),
         };
+        
         const payload = {
             store_update: {
                 group: group,
