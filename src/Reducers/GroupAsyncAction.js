@@ -47,17 +47,60 @@ export const GroupFetch = (id) => (dispatch, getState) => {
     return bodyfunc()
 }
 
-export const GroupAsyncUpdate = (group) => (dispatch, getState) => {
+export const GroupTypeAsyncUpdate = ({group,id,lastchange,grouptypeId}) => (dispatch, getState) => {
     const groupMutationJSON = (group) => {
         return {
-            query: `mutation ($id: ID!, $name: String!, $lastchange: DateTime!) {
-                groupUpdate(group: {id: $id, name: $name, lastchange: $lastchange}) {
-                  id
+            query: `mutation ($id: ID!, $lastchange: DateTime!, $grouptypeId: ID!) {
+                groupUpdate(group: {id: $id, lastchange: $lastchange, grouptypeId: $grouptypeId}) {
                   msg
                   group {
                     id
                     name
                     lastchange
+                    mastergroup {
+                        id
+                    }
+                    grouptype { 
+                        id
+                        nameEn
+                    }
+                    subgroups {
+                        id
+                        name
+                        valid
+                    }
+                    memberships {
+                        id
+                        lastchange
+                        valid
+                        group
+                        {
+                            id
+                        }
+                        user {
+                            id
+                            name
+                            surname
+                            email
+                            lastchange
+                            roles {
+                                lastchange
+                                id
+                                startdate
+                                enddate
+                                group
+                                {
+                                    id
+                                }
+                                valid
+                                roletype {
+                                id
+                                name
+                                nameEn
+                                }
+                            }
+                        }
+                    }
                   }
                 }
               }`,
@@ -72,7 +115,7 @@ export const GroupAsyncUpdate = (group) => (dispatch, getState) => {
         },
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         redirect: 'follow', // manual, *follow, error
-        body: JSON.stringify(groupMutationJSON(group))
+        body: JSON.stringify(groupMutationJSON({id,lastchange,grouptypeId}))
     }
 
 
@@ -88,8 +131,8 @@ export const GroupAsyncUpdate = (group) => (dispatch, getState) => {
                     console.log("Update selhalo")
                 } else {
                     //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
-                    const lastchange = json.data.groupUpdate.group.lastchange
-                    dispatch(GroupActions.group_update({ ...group, lastchange: lastchange }))
+                    const newgroup = json.data.groupUpdate.group
+                    dispatch(GroupActions.group_update({ ...group, ...newgroup }))
                 }
                 return json
             }
@@ -122,3 +165,94 @@ export const GroupAsyncInsert = (group) => (dispatch, getState) => {
     return fetch('/api/gql', params)
 }
 
+export const GroupAsyncUpdate = ({group,id,lastchange,name}) => (dispatch, getState) => {
+    const groupMutationJSON = (group) => {
+        return {
+            query: `mutation ($id: ID!, $lastchange: DateTime!, $name: String!) {
+                groupUpdate(group: {id: $id, lastchange: $lastchange, name: $name}) {
+                  msg
+                  group {
+                    id
+                    name
+                    lastchange
+                    mastergroup {
+                        id
+                    }
+                    grouptype { 
+                        id
+                        nameEn
+                    }
+                    subgroups {
+                        id
+                        name
+                        valid
+                    }
+                    memberships {
+                        id
+                        lastchange
+                        valid
+                        group
+                        {
+                            id
+                        }
+                        user {
+                            id
+                            name
+                            surname
+                            email
+                            lastchange
+                            roles {
+                                lastchange
+                                id
+                                startdate
+                                enddate
+                                group
+                                {
+                                    id
+                                }
+                                valid
+                                roletype {
+                                id
+                                name
+                                nameEn
+                                }
+                            }
+                        }
+                    }
+                  }
+                }
+              }`,
+            variables: group
+        }
+    }
+
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(groupMutationJSON({id,lastchange,name}))
+    }
+
+
+    return fetch('/api/gql', params)
+        //return authorizedFetch('/api/gql', params)
+        .then(
+            resp => resp.json()
+        )
+        .then(
+            json => {
+                const msg = json.data.groupUpdate.msg
+                if (msg === "fail") {
+                    console.log("Update selhalo")
+                } else {
+                    //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
+                    const newgroup = json.data.groupUpdate.group
+                    dispatch(GroupActions.group_update({ ...group, ...newgroup }))
+                }
+                return json
+            }
+        )
+}

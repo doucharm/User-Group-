@@ -2,7 +2,7 @@ import { Create_Group, Delete_Group, Update_Group, Adding_Subgroup} from "./Grou
 import { Adding_Member, Remove_Member, Update_Member, Moving_Member } from "./Member Reducer";
 import { Update_Role } from "./Role Reducer";
 import { Update_User } from "./User Reducer";
-import { GroupAsyncInsert, GroupAsyncUpdate, GroupFetch } from "./GroupAsyncAction";
+import { GroupAsyncInsert, GroupTypeAsyncUpdate, GroupFetch, GroupAsyncUpdate } from "./GroupAsyncAction";
 import { MembershipAsyncUpdate, MembershipAsyncInsert } from "./MembershipAsyncActions";
 import { RoleAsyncInsert, RoleAsyncUpdate, RoleFetch } from "./RoleAsyncActions";
 import { UserAsyncInsert, UserAsyncUpdate, UserFetch } from "./UserAsyncActions";
@@ -82,6 +82,7 @@ export const bindGroupActions = (dispatch) => {
         },
         roleAsyncUpdate: (role) => {
             dispatch(RoleAsyncUpdate(role))
-        }
+        },
+        grouptypeAsyncUpdate: (payload) => dispatch(GroupTypeAsyncUpdate(payload))
     }
 }

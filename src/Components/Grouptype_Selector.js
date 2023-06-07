@@ -11,9 +11,18 @@ export const GroupType_Select = ({group,actions}) => {
 
   const onGroupTypeInsert = ({group,grouptype}) =>
   {
-    actions.groupUpdate({...group,grouptype: grouptype})
-    actions.groupAsyncUpdate({...group,grouptype: grouptype})
-    console.log("vai ca lon")
+    console.log(grouptype.id)
+    const payload = {
+      group: group,
+      id: group.id,
+      lastchange: group.lastchange,
+      grouptypeId: grouptype.id
+      
+    }
+    console.log(payload)
+    actions.grouptypeAsyncUpdate(payload)
+    
+    
   }
 
   return (
@@ -22,4 +31,3 @@ export const GroupType_Select = ({group,actions}) => {
     </DropdownButton>
     )
 }
-
