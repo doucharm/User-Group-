@@ -1,16 +1,18 @@
 import { GroupActions } from "./Reducer Slice"
 
-export const MembershipAsyncInsert = ({ store_update, group_id, user_id }) => (dispatch, getState) => {
+export const MembershipAsyncInsert = ({ store_update, group_id, user_id,id }) => (dispatch, getState) => {
     const membershipInsertJSON = (membership) => {
         return {
-            query: `mutation($group_id: ID!, $user_id: ID!) {
+            query: `mutation($group_id: ID!, $user_id: ID!,$id: ID!) {
         membershipInsert(membership: {
         groupId: $group_id,
         userId: $user_id
+        id: $id
         valid: true
       }){
         msg
-        membership {
+        membership 
+        {
           id
           lastchange
         }
@@ -27,7 +29,7 @@ export const MembershipAsyncInsert = ({ store_update, group_id, user_id }) => (d
         },
         cache: 'no-cache',
         redirect: 'follow',
-        body: JSON.stringify(membershipInsertJSON({ group_id, user_id })),
+        body: JSON.stringify(membershipInsertJSON({ group_id, user_id,id })),
     };
 
     return fetch('/api/gql', params)
@@ -49,8 +51,7 @@ export const MembershipAsyncInsert = ({ store_update, group_id, user_id }) => (d
 
 export const MembershipAsyncUpdate = ({ id, lastchange, valid }) => (dispatch, getState) => {
     const membershipUpdateJSON = (membership) => {
-        return {
-            query: `
+        return { query: `
           mutation($id: ID!, $lastchange: DateTime!, $valid: Boolean!) {
             membershipUpdate(membership: {
               id: $id,
@@ -86,22 +87,5 @@ export const MembershipAsyncUpdate = ({ id, lastchange, valid }) => (dispatch, g
     };
 
     return fetch('/api/gql', params)
-        .then((resp) => resp.json())
-        .then((json) => {
-            const msg = json.data?.membershipUpdate?.msg;
-            if (msg === 'fail') {
-                console.log('Update failed');
-            } else {
-                const lastchange = json.data?.membershipUpdate?.membership?.lastchange;
-                const valid = json.data?.membershipUpdate?.membership?.valid;
-                dispatch(
-                    GroupActions.memberUpdate({
-                        ...id,
-                        lastchange: lastchange,
-                        valid: valid,
-                    })
-                );
-            }
-            return json;
-        });
+      
 };

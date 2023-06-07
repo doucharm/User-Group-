@@ -49,7 +49,8 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
                     membership: membership
                 },
                 user_id: modify_user.id,
-                group_id: group.id
+                group_id: group.id,
+                id:membership_id
             }
             const check_existance = group.memberships.find(
                 (m) => m.user.id === payload.user_id && m.valid
