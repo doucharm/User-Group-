@@ -1,5 +1,6 @@
 import { HeaderTextInput } from "./Header_Text_Input"
 import { Table_Display } from "./Components Display"
+import { GroupType_Select } from "./Grouptype_Selector"
 
 
 export const Card_Display = ({group,set_display_id,actions}) =>
@@ -36,7 +37,7 @@ export const Get_Card_Header = ({group,set_display_id,actions}) => {
             ID: {group.id} <br />
             <HeaderTextInput group={group} actions={actions}/>
             Last change:{group.lastchange} <br />
-            Group type: {group.grouptype?.nameEn} <br />
+            Group type: <GroupType_Select group={group} actions={actions}/> 
         </tr>
         </div>
     )
