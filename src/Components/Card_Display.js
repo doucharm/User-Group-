@@ -27,6 +27,7 @@ export const Get_Card_Header = ({ group, set_display_id, actions }) => {
             )
         } else return;
     }
+    
     return (
         <div>
             <MasterGroup />

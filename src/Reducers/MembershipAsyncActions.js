@@ -11,11 +11,42 @@ export const MembershipAsyncInsert = ({ store_update, group_id, user_id, id }) =
               valid: true
             }){
               msg
-              membership 
-              {
+              membership {
                 id
                 lastchange
-              }
+                valid
+                group
+                {
+                    id
+                  
+                }
+                user {
+                    id
+                    name
+                    surname
+                    email
+                    lastchange
+                    roles {
+                        lastchange
+                        id
+                        startdate
+                        enddate
+                        group
+                        {
+                            id
+                            memberships{
+                                id
+                            }
+                        }
+                        valid
+                        roletype {
+                          id
+                          name
+                          nameEn
+                        }
+                      }
+                }
+            }
             }
       }`,
       variables: membership
