@@ -16,14 +16,19 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
             const payload = {
                 id: membership.id,
                 lastchange: membership.lastchange,
-                valid: false
             };
+
+            const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)
+            const old_role = current_role[current_role.length - 1]
 
             console.log('REMOVE_MEMBER action dispatched with payload:', payload);
 
             try {
                 await actions.membershipAsyncUpdate(payload);
                 actions.onMemberRemove({ group, membership });
+                if (old_role) {
+                    actions.roleAsyncUpdate(old_role)
+                }
 
             } catch (error) {
                 console.log('Membership update failed:', error);

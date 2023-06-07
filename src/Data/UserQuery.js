@@ -10,6 +10,7 @@ export const UserQueryJSON = (id) => ({
                 email
                 lastchange
                 membership {
+                  valid
                   group {
                     name
                     id

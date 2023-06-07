@@ -10,7 +10,7 @@ export const Replace_Button = ({ group, actions, membership }) => {
     const [usersList, setUsersList] = useState([]);
     const users = useSelector((state) => state.users);
 
-    
+
     const handleInputChange = (event) => {
         setInputId(event.target.value);
     };
@@ -21,11 +21,10 @@ export const Replace_Button = ({ group, actions, membership }) => {
     };
 
     const handleReplace = (newUser) => {
-        const current_role=membership?.user.roles?.filter((item) => item.group?.id===membership.group?.id && item.valid===true)
-        let moving_role=""
-        if(current_role.length>0)
-        {
-            moving_role=current_role[current_role.length-1]
+        const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)
+        let moving_role = ""
+        if (current_role.length > 0) {
+            moving_role = current_role[current_role.length - 1]
         }
         const membershipId = v1();
         const modifyUser = {
@@ -44,13 +43,13 @@ export const Replace_Button = ({ group, actions, membership }) => {
             group: group,
             lastchange: Date.now(),
         };
-        
+
         const payload = {
             store_update: {
                 group: group,
                 membership: newMembership,
             },
-            id:newMembership.id,
+            id: newMembership.id,
             user_id: modifyUser.id,
             group_id: group.id,
         };
@@ -66,39 +65,39 @@ export const Replace_Button = ({ group, actions, membership }) => {
                     actions.membershipAsyncUpdate({
                         id: membership.id,
                         lastchange: membership.lastchange,
-                        valid: false,
+
                     })
                 )
                 .then(() => actions.onMemberRemove({ group, membership }))
                 .then(
 
-                   ()=>{
-                     if(moving_role.roletype)
-                    {
-                        const new_role=
-                        {
-                            id:v1(),
-                            roletypeID:moving_role.roletype.id,
-                            valid:true,
-                            groupId:group.id,
-                            userId:newUser.id,
-                            roletype:moving_role.roletype,
-                            group:
+                    () => {
+                        if (moving_role.roletype) {
+                            const new_role =
                             {
-                                id:group.id
-                            },
-                            membership:newMembership,
-    
+                                id: v1(),
+                                roletypeID: moving_role.roletype.id,
+                                valid: true,
+                                groupId: group.id,
+                                userId: newUser.id,
+                                roletype: moving_role.roletype,
+                                group:
+                                {
+                                    id: group.id
+                                },
+                                membership: newMembership,
+
+                            }
+                            actions.roleAsyncUpdate(moving_role)
+                            actions.roleAsyncInsert(new_role)
                         }
-                        actions.roleAsyncUpdate(moving_role)
-                        actions.roleAsyncInsert(new_role)
                     }
-                }
                 )
-                .catch((error) => {console.log('Error occurred:', error);
+                .catch((error) => {
+                    console.log('Error occurred:', error);
                 });
-                
-               
+
+
         } else {
             console.log("existed");
         }

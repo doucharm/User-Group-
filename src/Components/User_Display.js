@@ -63,21 +63,22 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                         <p>
                             <strong>Groups:</strong>
                             <br></br>
-                            { user?.membership?.map((membership, index) => {
-                                console.log(membership.group.id); 
-                                return (
-                                    <span key={membership.group.id}>
-                                        {membership.group.name}:{" "}
-                                        {membership.group.roles && membership.group.roles.length > 0 ? (
-                                            membership.group.roles.reduce((latestRole, role) =>
-                                                role && role.lastchange > latestRole.lastchange ? role : latestRole
-                                            ).roletype?.nameEn
-                                        ) : (
-                                            <span>No roles found</span>
-                                        )}
-                                        {index !== user.membership.length - 1 && <br />}
-                                    </span>
-                                );
+                            {user?.membership?.map((membership, index) => {
+                                if (membership.valid) {
+                                    return (
+                                        <span key={membership.group.id}>
+                                            {membership.group.name}:{" "}
+                                            {membership.group.roles && membership.group.roles.length > 0 ? (
+                                                membership.group.roles.reduce((latestRole, role) =>
+                                                    role && role.lastchange > latestRole.lastchange ? role : latestRole
+                                                ).roletype?.nameEn
+                                            ) : (
+                                                <span>No roles found</span>
+                                            )}
+                                            {index !== user.membership.length - 1 && <br />}
+                                        </span>
+                                    );
+                                }
                             })}
                         </p>
                     </div>
