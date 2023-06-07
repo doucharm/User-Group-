@@ -10,7 +10,7 @@ import { useState, useCallback, useMemo } from "react"
  * @param {(value) => void} onChange delayed callback notifying about the change
  * @returns 
  */
-export const TextInput = ({id, value, onChange, placeholder}) => {
+export const TextInput = ({ id, value, onChange, placeholder }) => {
     const [localValue, setLocalValue] = useState(value)
 
     const delayer = useMemo(
@@ -28,6 +28,6 @@ export const TextInput = ({id, value, onChange, placeholder}) => {
     )
 
     return (
-        <input className="form-control" placeholder={placeholder} value={localValue} onChange={localOnChange}/>
+        <input className="form-control" placeholder={placeholder} value={localValue} onChange={localOnChange} />
     )
 }

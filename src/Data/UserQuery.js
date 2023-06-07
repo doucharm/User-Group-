@@ -1,6 +1,5 @@
 import { authorizedFetch } from "./authorizedFetch"
 
-
 export const UserQueryJSON = (id) => ({
     "query":
         `query ($id: ID!) {

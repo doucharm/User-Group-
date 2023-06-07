@@ -1,9 +1,8 @@
 import { authorizedFetch } from "./authorizedFetch"
 
-
 export const RoleQueryJSON = () => ({
-    "query":
-        `query {
+  "query":
+    `query {
           roleTypePage {
             name
             nameEn
@@ -13,6 +12,6 @@ export const RoleQueryJSON = () => ({
 })
 
 export const RoleQuery = () =>
-    authorizedFetch('/gql', {
-        body: JSON.stringify(RoleQueryJSON()),
-    })
+  authorizedFetch('/gql', {
+    body: JSON.stringify(RoleQueryJSON()),
+  })

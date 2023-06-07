@@ -1,6 +1,5 @@
 import { authorizedFetch } from "./authorizedFetch"
 
-
 export const GroupQueryJSON = (id) => ({
     "query":
         `query ($id: ID!) {
@@ -27,6 +26,16 @@ export const GroupQueryJSON = (id) => ({
                     group
                     {
                         id
+                        roles{
+                            lastchange
+                            id
+                            roletype{
+                                nameEn
+                            }
+                            group{
+                                id
+                            }
+                        }
                     }
                     user {
                         id
@@ -42,6 +51,9 @@ export const GroupQueryJSON = (id) => ({
                             group
                             {
                                 id
+                                memberships{
+                                    id
+                                }
                             }
                             valid
                             roletype {
@@ -52,9 +64,10 @@ export const GroupQueryJSON = (id) => ({
                           }
                     }
                 }
+                
             }
         }`,
-    "variables": {"id": id}
+    "variables": { "id": id }
 })
 
 

@@ -1,10 +1,10 @@
-import { Create_Group, Delete_Group, Update_Group, Adding_Subgroup} from "./Group Reducer";
+import { Create_Group, Delete_Group, Update_Group, Adding_Subgroup } from "./Group Reducer";
 import { Adding_Member, Remove_Member, Update_Member, Moving_Member } from "./Member Reducer";
 import { Update_Role } from "./Role Reducer";
 import { Update_User } from "./User Reducer";
 import { GroupAsyncInsert, GroupTypeAsyncUpdate, GroupFetch, GroupAsyncUpdate } from "./GroupAsyncAction";
 import { MembershipAsyncUpdate, MembershipAsyncInsert } from "./MembershipAsyncActions";
-import { RoleAsyncInsert, RoleAsyncUpdate, RoleFetch } from "./RoleAsyncActions";
+import { RoleAsyncInsert, RoleAsyncUpdate, RoleFetch, Role_Type_Insert } from "./RoleAsyncActions";
 import { UserAsyncInsert, UserAsyncUpdate, UserFetch } from "./UserAsyncActions";
 import { createSlice } from '@reduxjs/toolkit'
 
@@ -20,7 +20,7 @@ export const GroupSlice = createSlice({
         memberAdd: Adding_Member,
         memberRemove: Remove_Member,
         memberUpdate: Update_Member,
-        memberMoving: Moving_Member
+        memberMoving: Moving_Member,
     }
 })
 export const GroupActions = GroupSlice.actions
@@ -75,7 +75,7 @@ export const bindGroupActions = (dispatch) => {
         membershipAsyncInsert: (payload) => {
             dispatch(MembershipAsyncInsert(payload))
         },
-        membershipAsyncUpdate: ({ id, lastchange }) => { dispatch(MembershipAsyncUpdate({ id, lastchange })) },
+        membershipAsyncUpdate: ({ id, lastchange, valid }) => { dispatch(MembershipAsyncUpdate({ id, lastchange, valid })) },
         userFetch: (id) => dispatch(UserFetch(id)),
         roleAsyncInsert: (payload) => {
             dispatch(RoleAsyncInsert(payload))
@@ -83,6 +83,7 @@ export const bindGroupActions = (dispatch) => {
         roleAsyncUpdate: (role) => {
             dispatch(RoleAsyncUpdate(role))
         },
+        roletype_insert: (payload) => {dispatch(Role_Type_Insert(payload))},
         grouptypeAsyncUpdate: (payload) => dispatch(GroupTypeAsyncUpdate(payload))
     }
 }

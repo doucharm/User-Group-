@@ -19,7 +19,7 @@ export const GroupType_Select = ({group,actions}) => {
       grouptypeId: grouptype.id
       
     }
-    console.log(payload)
+
     actions.grouptypeAsyncUpdate(payload)
     
     

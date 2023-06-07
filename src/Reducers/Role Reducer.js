@@ -1,7 +1,6 @@
-export const Update_Role =(state,action) =>
-{
+export const Update_Role = (state, action) => {
     const newItem = action.payload;
-    state = {...state, ...newItem}
-    
+    state = { ...state, ...newItem }
+
     return state
 }
