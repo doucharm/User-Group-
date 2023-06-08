@@ -39,7 +39,7 @@ export const Moving_Member = ({membership,actions,toggle_moving}) =>
     }
     return (
         <>
-        <input onChange={onInputChange} placeholder="Enter destination group's ID"/>
+        <input className = "form-control-warning "onChange={onInputChange} placeholder="Enter destination group's ID"/>
         <button onClick={toggle_moving}><RewindCircleFill></RewindCircleFill></button>
         <button onClick={onMove}><RocketTakeoff></RocketTakeoff></button>
         </>

@@ -70,21 +70,11 @@ export const Replace_Button = ({ group, actions, membership }) => {
                 )
                 .then(() => actions.onMemberRemove({ group, membership }))
                 .then(
-
                     () => {
                         if (moving_role.roletype) {
                             const new_role =
                             {
-                                id: v1(),
-                                roletypeID: moving_role.roletype.id,
-                                valid: true,
-                                groupId: group.id,
-                                userId: newUser.id,
-                                roletype: moving_role.roletype,
-                                group:
-                                {
-                                    id: group.id
-                                },
+                                role:moving_role.roletype,
                                 membership: newMembership,
 
                             }

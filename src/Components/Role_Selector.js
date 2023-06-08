@@ -12,21 +12,10 @@ export const Role_Select = ({membership,actions}) =>
     const role_list=Object.values(roles)
     const onRoleChange=({roletype_new,membership}) =>
     {
-        console.log(roletype_new)
         const new_role=
         {
-            id:v1(),
-            roletypeID:roletype_new.id,
-            valid:true,
-            groupId:membership.group.id,
-            userId:membership.user.id,
-            roletype:roletype_new,
-            group:
-            {
-                id:membership.group.id
-            },
             membership:membership,
-
+            role:roletype_new
         }
         if(old_role)
         {

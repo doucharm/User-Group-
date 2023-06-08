@@ -1,5 +1,6 @@
 import { RoleQuery } from "Data/RoleQuery";
 import { GroupActions, RoleActions } from "./Reducer Slice";
+import { v1 } from "uuid";
 export const RoleFetchHelper = (query, selecter, dispatch, getState) => {
     const log = (text) => (p) => {
         //console.log(text)
@@ -37,7 +38,8 @@ export const RoleFetch = () => (dispatch, getState) => {
 
 
 export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
-    const roleMutationJSON = (role) => {
+    const roleMutationJSON = (payload) => {
+        console.log("payload into role_insert",payload)
         return {
             query: `mutation($groupId: ID!, $userId: ID!, $roletypeID: ID!,$id: ID!) {
             roleInsert(role: {
@@ -65,7 +67,11 @@ export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
               }
         }
         }`,
-            variables: role
+            variables:      { id:v1(), 
+                              groupId:payload.membership.group.id,
+                              userId:payload.membership.user.id,
+                              roletypeID:payload.role.id
+                            }
         }
     }
 

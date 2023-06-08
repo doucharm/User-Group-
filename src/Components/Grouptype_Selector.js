@@ -8,7 +8,6 @@ export const GroupType_Select = ({group,actions}) => {
     group_type_fetch(set_group_type)
   },set_group_type)
   console.log(group_type)
-
   const onGroupTypeInsert = ({group,grouptype}) =>
   {
     console.log(grouptype.id)
@@ -19,10 +18,7 @@ export const GroupType_Select = ({group,actions}) => {
       grouptypeId: grouptype.id
       
     }
-
-    actions.grouptypeAsyncUpdate(payload)
-    
-    
+    actions.grouptypeAsyncUpdate(payload)   
   }
 
   return (

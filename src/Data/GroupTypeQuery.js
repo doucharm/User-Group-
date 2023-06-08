@@ -27,21 +27,16 @@ export const GroupTypePageFetch = (query,selector) => {
             error => error  
         )
         .then(
-            (i) => log('incomming')(i)
-        )
-        .then(
-            json => log('converted')(selector(json)),
+            json => selector(json),
             error => error
         )
         return p
       }
 export const group_type_fetch = (set_group_type) => 
 {
-        console.log('function fetch by letter called')
         const selector = (json) => json.data.groupTypePage
         const bodyfunc = async () => {
             let grouptypes = await GroupTypePageFetch(GroupTypePage, selector)
-            console.log(grouptypes)
             set_group_type(grouptypes)
             return grouptypes
         }
