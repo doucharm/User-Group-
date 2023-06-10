@@ -78,8 +78,6 @@ export const MembershipAsyncInsert = ({ store_update, group_id, user_id, id }) =
     .catch(() => console.log("Failed to insert"));
 };
 
-
-
 export const MembershipAsyncUpdate = ({ id, lastchange, valid }) => (dispatch, getState) => {
   const membershipUpdateJSON = (membership) => {
     return {
@@ -117,7 +115,5 @@ export const MembershipAsyncUpdate = ({ id, lastchange, valid }) => (dispatch, g
     redirect: 'follow',
     body: JSON.stringify(membershipUpdateJSON({ id, lastchange, valid })),
   };
-
   return fetch('/api/gql', params)
-
 };

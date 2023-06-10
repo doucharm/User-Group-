@@ -23,7 +23,6 @@ export const UserFetchHelper = (id, query, resultselector, dispatch, getState) =
             json => log('dispatching')(dispatch(UserActions.users_update(json))),
             error => error
         )
-
     return p
 }
 
@@ -63,14 +62,12 @@ export const UserAsyncUpdate = (user) => (dispatch, getState) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        redirect: 'follow', // manual, *follow, error
+        cache: 'no-cache', 
+        redirect: 'follow', 
         body: JSON.stringify(userMutationJSON(user))
     }
 
-
     return fetch('/api/gql', params)
-        //return authorizedFetch('/api/gql', params)
         .then(
             resp => resp.json()
         )
@@ -80,7 +77,6 @@ export const UserAsyncUpdate = (user) => (dispatch, getState) => {
                 if (msg === "fail") {
                     console.log("Update selhalo")
                 } else {
-                    //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
                     const lastchange = json.data.userUpdate.user.lastchange
                     dispatch(UserActions.users_update({ ...user, lastchange: lastchange }))
                 }
@@ -106,14 +102,11 @@ export const UserAsyncInsert = (user) => (dispatch, getState) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        redirect: 'follow', // manual, *follow, error
+        cache: 'no-cache', 
+        redirect: 'follow', 
         body: JSON.stringify(userMutationJSON({ ...user }))
     }
-
-
     return fetch('/api/gql', params)
-
 }
 
 

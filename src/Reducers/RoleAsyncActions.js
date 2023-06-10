@@ -3,8 +3,6 @@ import { GroupActions, RoleActions } from "./Reducer Slice";
 import { v1 } from "uuid";
 export const RoleFetchHelper = (query, selecter, dispatch, getState) => {
     const log = (text) => (p) => {
-        //console.log(text)
-        //console.log(JSON.stringify(p))
         return p
     }
     const p = query()
@@ -35,7 +33,6 @@ export const RoleFetch = () => (dispatch, getState) => {
     }
     return bodyfunc()
 }
-
 
 export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
     const roleMutationJSON = (payload) => {
@@ -80,8 +77,8 @@ export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
       headers: {
           'Content-Type': 'application/json',
       },
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      redirect: 'follow', // manual, *follow, error
+      cache: 'no-cache', 
+      redirect: 'follow', 
       body: JSON.stringify(roleMutationJSON(payload))
   }
     return fetch('/api/gql', params)
@@ -91,7 +88,6 @@ export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
             if (msg === "fail") {
                 console.log("Update failed");
             } else {
-
                 const new_role = json.data?.roleInsert?.role;
                 const new_user={...payload.membership.user,roles : payload.membership.user.roles.concat(new_role) }
                 const new_membership={...payload.membership,user:new_user}
@@ -134,11 +130,9 @@ export const RoleAsyncUpdate = (role) => (dispatch, getState) => {
         redirect: 'follow', // manual, *follow, error
         body: JSON.stringify(roleMutationJSON(role))
     }
-
-
   return fetch('/api/gql', params)
-  
 }
+
 export const Role_Type_Insert = (payload) => (dispatch, getState) => {
     const roletypeMutationJSON = (roletype) => {
         return {
@@ -156,7 +150,6 @@ export const Role_Type_Insert = (payload) => (dispatch, getState) => {
                 name
                 nameEn
               }
-
           }
           }`,
             variables: roletype

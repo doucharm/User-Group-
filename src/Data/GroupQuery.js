@@ -70,7 +70,6 @@ export const GroupQueryJSON = (id) => ({
     "variables": { "id": id }
 })
 
-
 export const GroupQuery = (id) =>
     authorizedFetch('/gql', {
         body: JSON.stringify(GroupQueryJSON(id)),

@@ -8,8 +8,6 @@ export const Adding_Subgroup = ({ new_sub, set_new_sub, onClick, setState0, setS
             <button className='btn btn-sm btn-primary' onClick={setState1}><PersonAdd></PersonAdd></button>
         )
     } else {
-
-
         function handleChange(evt) {
             const value = evt.target.value;
             set_new_sub(
@@ -17,14 +15,12 @@ export const Adding_Subgroup = ({ new_sub, set_new_sub, onClick, setState0, setS
                     ...new_sub,
                     [evt.target.name]: value
                 });
-
         }
 
         return (
             <>
                 <label>Subgroup ID:<input type="text" name="id" value={new_sub.id} placeholder='Enter subgroup ID' onChange={handleChange} /> </label>
                 <label>New subgroup name:<input type="text" name="name" value={new_sub.name} placeholder='Enter new sub group name' onChange={handleChange} /> </label>
-
                 <button className='btn btn-sm btn-warning' onClick={setState0}><X></X></button>
                 <button className='btn btn-sm btn-success' onClick={onClick}><Save></Save></button>
             </>

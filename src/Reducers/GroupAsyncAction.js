@@ -1,7 +1,6 @@
 import { GroupActions } from "./Reducer Slice";
 import { GroupQuery } from "Data/GroupQuery";
 
-
 /**
  * Ask for the item on server and adds it or update it in the store to the heap
  * @param {*} id 
@@ -30,8 +29,6 @@ export const GroupFetchHelper = (id, query, resultselector, dispatch, getState) 
     return p
 }
 
-
-
 /**
 * Fetch the group from server checks its type and asks once more for detailed data. Finally puts the result in the store.
 * @param {*} id 
@@ -41,7 +38,6 @@ export const GroupFetch = (id) => (dispatch, getState) => {
     const groupSelector = (json) => json.data.groupById
     const bodyfunc = async () => {
         let groupData = await GroupFetchHelper(id, GroupQuery, groupSelector, dispatch, getState)
-
         return groupData
     }
     return bodyfunc()
@@ -160,8 +156,6 @@ export const GroupAsyncInsert = (group) => (dispatch, getState) => {
         redirect: 'follow', // manual, *follow, error
         body: JSON.stringify(groupMutationJSON(group))
     }
-
-
     return fetch('/api/gql', params)
 }
 
@@ -238,7 +232,6 @@ export const GroupAsyncUpdate = ({group,id,lastchange,name}) => (dispatch, getSt
 
 
     return fetch('/api/gql', params)
-        //return authorizedFetch('/api/gql', params)
         .then(
             resp => resp.json()
         )
@@ -248,7 +241,6 @@ export const GroupAsyncUpdate = ({group,id,lastchange,name}) => (dispatch, getSt
                 if (msg === "fail") {
                     console.log("Update selhalo")
                 } else {
-                    //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
                     const newgroup = json.data.groupUpdate.group
                     dispatch(GroupActions.group_update({ ...group, ...newgroup }))
                 }

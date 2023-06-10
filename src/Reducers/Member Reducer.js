@@ -16,6 +16,7 @@ export const Moving_Member = (state,action) =>
     new_group.memberships.push(membership)
     return state
 }
+
 export const Remove_Member = (state, action) => {
     console.log('reducer called', action.payload);
     const g = action.payload.group;

@@ -19,7 +19,5 @@ export const GroupTypeAsyncInsert = (group) => (dispatch, getState) => {
       redirect: 'follow', // manual, *follow, error
       body: JSON.stringify(groupMutationJSON(group))
   }
-
-
   return fetch('/api/gql', params)
 }

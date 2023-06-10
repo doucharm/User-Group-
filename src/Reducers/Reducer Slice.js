@@ -33,7 +33,6 @@ export const RoleSlice = createSlice(
         reducers: {
             roles_update: Update_Role
         }
-
     }
 )
 export const RoleActions = RoleSlice.actions
@@ -46,7 +45,6 @@ export const UserSlice = createSlice(
         reducers: {
             users_update: Update_User
         }
-
     }
 )
 export const UserActions = UserSlice.actions
@@ -69,14 +67,17 @@ export const bindGroupActions = (dispatch) => {
         groupFetch: (id) => dispatch(GroupFetch(id)),
         groupAsyncUpdate: (group) => dispatch(GroupAsyncUpdate(group)),
         groupAsyncInsert: (group) => dispatch(GroupAsyncInsert(group)),
+        
         userAsyncInsert: (user) => dispatch(UserAsyncInsert(user)),
         userAsyncUpdate: (user) => dispatch(UserAsyncUpdate(user)),
-        roleFetch: () => dispatch(RoleFetch()),
+        userFetch: (id) => dispatch(UserFetch(id)),
+        
         membershipAsyncInsert: (payload) => {
             dispatch(MembershipAsyncInsert(payload))
         },
         membershipAsyncUpdate: ({ id, lastchange, valid }) => { dispatch(MembershipAsyncUpdate({ id, lastchange, valid })) },
-        userFetch: (id) => dispatch(UserFetch(id)),
+        
+        roleFetch: () => dispatch(RoleFetch()),
         roleAsyncInsert: (payload) => {
             dispatch(RoleAsyncInsert(payload))
         },
@@ -84,6 +85,7 @@ export const bindGroupActions = (dispatch) => {
             dispatch(RoleAsyncUpdate(role))
         },
         roletype_insert: (payload) => { dispatch(Role_Type_Insert(payload)) },
+        
         grouptypeAsyncUpdate: (payload) => dispatch(GroupTypeAsyncUpdate(payload))
     }
 }
