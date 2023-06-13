@@ -7,6 +7,7 @@ export const GroupQueryJSON = (id) => ({
                 id
                 name
                 lastchange
+                valid
                 mastergroup {
                     id
                 }
@@ -17,6 +18,7 @@ export const GroupQueryJSON = (id) => ({
                 subgroups {
                     id
                     name
+                    lastchange
                     valid
                 }
                 memberships {

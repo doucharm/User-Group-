@@ -11,6 +11,7 @@ import { Moving_Member_Button } from "./Moving_Member"
 
 export const Table_Display = ({ group, set_display_id, actions }) => {
     const [show_old_member, set_show_member] = useState(false)
+    const [show_old_subgroup, set_show_subgroup] = useState(false)
     return (
         <div>
             List of members:
@@ -50,8 +51,10 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
                 </thead>
                 <tbody>
                     <>
-                        {group?.subgroups?.map(item => <Get_Sub_Group_Row item={item} set_display_id={set_display_id}/>)}
+                        {group?.subgroups?.map(item => <Get_Sub_Group_Row group={group} item={item} set_display_id={set_display_id} actions={actions} show_old_subgroup={show_old_subgroup}/>)}
                         <Adding_Subgroup_Button group={group} actions={actions} />
+                        <br/>
+                        <button onClick={() => set_show_subgroup(!show_old_subgroup)}>Show Old Subs</button>
                     </>
                 </tbody>
             </table>
@@ -59,15 +62,39 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
     )
 }
 
-const Get_Sub_Group_Row = ({ item, set_display_id }) => {
-    return (
-        <tr>
-            <td>{item.id}</td>
-            <td>{item.name}</td>
-            <button onClick={() => set_display_id(item.id)}>
-                <EnvelopeOpen></EnvelopeOpen> </button>
-        </tr>
-    )
+const Get_Sub_Group_Row = ({ group,item, set_display_id,actions,show_old_subgroup }) => {
+    const onclick = async() => {
+        const payload = {
+            id: item.id,
+            lastchange: item.lastchange,
+            name: item.name,
+            valid: false
+        }
+        await actions.groupAsyncUpdate(payload)
+        actions.onGroupDelete({group,item})
+    }
+    if (item.valid)
+    {
+        return (
+            <tr>
+                <td>{item.id}</td>
+                <td>{item.name}</td>
+                <button onClick={() => set_display_id(item.id)}>
+                    <EnvelopeOpen></EnvelopeOpen> </button>
+                <DeleteButton onClick = {onclick}></DeleteButton>
+                </tr>
+        )
+    }
+    else if(show_old_subgroup)
+    {
+        return (
+            <tr className="table-warning">
+                <td>{item.id}</td>
+                <td>{item.name}</td>
+                <td>Deleted</td>
+            </tr>
+        )
+    }
 }
 
 const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {

@@ -10,8 +10,16 @@ export const Create_Group = (state, action) => {
     return state
 }
 export const Delete_Group = (state, action) => {
-    delete state[action.payload.id]
-    return state
+    const g = action.payload.group;
+    const subgroup = action.payload.item;
+    const group = state[g.id];
+    if (!subgroup) {
+        return state;
+    }
+    group.subgroups = group.subgroups.map((item) =>
+        item.id === subgroup.id ? { ...item, valid: false } : item
+    );
+    return state;
 }
 export const Update_Group = (state, action) => {
     const newItem = action.payload;

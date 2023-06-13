@@ -159,16 +159,17 @@ export const GroupAsyncInsert = (group) => (dispatch, getState) => {
     return fetch('/api/gql', params)
 }
 
-export const GroupAsyncUpdate = ({group,id,lastchange,name}) => (dispatch, getState) => {
+export const GroupAsyncUpdate = ({group,id,lastchange,name,valid}) => (dispatch, getState) => {
     const groupMutationJSON = (group) => {
         return {
-            query: `mutation ($id: ID!, $lastchange: DateTime!, $name: String!) {
-                groupUpdate(group: {id: $id, lastchange: $lastchange, name: $name}) {
+            query: `mutation ($id: ID!, $lastchange: DateTime!, $name: String!, $valid: Boolean) {
+                groupUpdate(group: {id: $id, lastchange: $lastchange, name: $name, valid: $valid}) {
                   msg
                   group {
                     id
                     name
                     lastchange
+                    valid
                     mastergroup {
                         id
                     }
@@ -227,7 +228,7 @@ export const GroupAsyncUpdate = ({group,id,lastchange,name}) => (dispatch, getSt
         },
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         redirect: 'follow', // manual, *follow, error
-        body: JSON.stringify(groupMutationJSON({id,lastchange,name}))
+        body: JSON.stringify(groupMutationJSON({id,lastchange,name,valid}))
     }
 
 
