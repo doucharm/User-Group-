@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { OrganizationChart } from "primereact/organizationchart"
 import { useState } from "react"
 
-
+// Our page has 2 main branches, first one contains the card header of the group we're accessing to, the second one shows the details of that group like the users or subgroups
 export const Card_Display = ({ group, set_display_id, actions }) => {
     const [show_chart,set_show_chart] = useState(false)
     const pom=[
@@ -76,16 +76,16 @@ export const Card_Display = ({ group, set_display_id, actions }) => {
         </main>
     )
 }
-
+// The functions return the card header
 export const Get_Card_Header = ({ group, set_display_id, actions }) => {
-    const MasterGroup = () => {
-        if (group.mastergroup) {
+    const MasterGroup = () => { // Create a button that allows us to go to the mastergroup of the group to which we're accessing
+        if (group.mastergroup) { // Only if the group has a mastergroup
             return (
                 <button onClick={event => set_display_id(group.mastergroup.id)}>Master group </button>
             )
         } else return;
     }
-    
+    // The output on the page's interface
     return (
         <div>
             <MasterGroup />
