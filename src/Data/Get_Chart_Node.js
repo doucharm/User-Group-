@@ -32,21 +32,13 @@ export const groupByID = (id) =>
         body: JSON.stringify(Get_Chart_NodeJson(id)),
     })
 export const Get_Node_Chart = (id, query, selector) => {
-    const log = (text) => (p) => {
-        console.log(text)
-        console.log(JSON.stringify(p))
-        return p
-    }
     const p = query(id)
         .then(
             response => response.json(),
             error => error
         )
         .then(
-            (i) => log('incomming')(i)
-        )
-        .then(
-            json => log('converted')(selector(json)),
+            json => selector(json),
             error => error
         )
     return p

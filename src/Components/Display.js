@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { actions } from 'pages/Redux Store';
 import { UserDisplay } from './User_Display';
 import { Get_Hierarchy } from 'Data/Group_Hierarchy';
+import { useState } from 'react';
+import { Draw_Chart } from 'Data/Group_Hierarchy';
 
 export const Display =  ({ display_id, set_display_id }) => {
     console.log('display called with id', display_id)
@@ -12,6 +14,7 @@ export const Display =  ({ display_id, set_display_id }) => {
     const users = useSelector((state) => state.users);
     const group = groups[display_id];
     const user = users[display_id];
+    const hie= Get_Hierarchy()   
     useEffect(() => {
         if (!group) {
             actions.groupFetch(display_id).then(display = 0).catch(display = 1)
