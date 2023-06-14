@@ -6,25 +6,23 @@ import { useSelector } from 'react-redux';
 
 
 export const MembershipInsert_SearchBar = ({ group, actions }) => {
-    const [inputId, setInputId] = useState('');
-    const [users_list, set_users_list] = useState([])
+    const [inputId, setInputId] = useState(''); //Define the input for the search bar
+    const [users_list, set_users_list] = useState([]) //Convert users in store to array 
     const users = useSelector((state) => state.users)
-    const user = users[inputId]
+    const user = users[inputId] //Get the user we need with the corresponding inputId
 
     const handleInputChange = (event) => {
-        setInputId(event.target.value)
+        setInputId(event.target.value) //Set the inputId to what we type on the search bar form 
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        actions.userFetch(inputId)
-        console.log(user)
-        console.log(inputId)
-        fetch_by_letters(inputId, set_users_list)
+        actions.userFetch(inputId) //Fetch the user by id inputId
+        fetch_by_letters(inputId, set_users_list) //Fetch the user by letter which is the inputId
     }
-    const UserBasic = ({ user }) => {
+    const UserBasic = ({ user }) => { //This function return a table that return a row of user that contains an add button to insert the user to the group we're seeing
 
         const onclick = () => {
-            const membership_id = v1()
+            const membership_id = v1() //Generate an id for the membership of that user
             const modify_user = {
                 ...user,
                 roles: [],
@@ -35,6 +33,7 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
                         }
                     ]
             }
+            // Give the user we modify a specific membership id
             const membership =
             {
                 id: membership_id,
@@ -42,6 +41,7 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
                 user: modify_user,
                 group: group
             }
+            // We also correspond the membership of that user the appropriate props
             const payload = {
                 store_update:
                 {
@@ -52,14 +52,15 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
                 group_id: group.id,
                 id:membership_id
             }
+            // The payload that requires userid, groupid and the membership id to assign the user to the previously called group
             const check_existance = group.memberships.find(
-                (m) => m.user.id === payload.user_id && m.valid
+                (m) => m.user.id === payload.user_id && m.valid //Check if the user has already been in the group
             );
             console.log(check_existance)
             if (!check_existance) {
-                actions.userAsyncUpdate(modify_user).then(actions.membershipAsyncInsert(payload))
+                actions.userAsyncUpdate(modify_user).then(actions.membershipAsyncInsert(payload)) // If not then we add it to the server and the store
             } else {
-                console.log("existed")
+                console.log("existed") // We wont be alble to add the user once more if its already existed
             }
 
         }
@@ -70,6 +71,7 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
             </tr>
         )
     }
+    // Down below we have 2 diffence interface, 1 for when you dont trigger the HandleSubmit and the other is to show all of the users with the relative letters
     if (users_list.length === 0) {
         return (
             <>
@@ -87,7 +89,6 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
                         <button type="submit" title="Submit Form" form='my_form'><Search></Search></button>
                     </thead>
                 </table>
-
             </>
         )
     } else {

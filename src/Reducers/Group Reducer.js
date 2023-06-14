@@ -30,9 +30,6 @@ export const Update_Group = (state, action) => {
 }
 export const Adding_Subgroup = (state, action) => {
     let new_subgroup = action.payload.new_subgroup
-    if (!validate(new_subgroup.id)) {
-        new_subgroup.id = v1()
-    }
     const g = action.payload.group
     const group = state[g.id]
     group.subgroups.push(new_subgroup)

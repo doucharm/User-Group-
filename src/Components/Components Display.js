@@ -8,7 +8,7 @@ import { useState } from "react"
 import { Replace_Button } from "./Replace_Button"
 import { Moving_Member_Button } from "./Moving_Member"
 
-
+// This function shows the table display which contains the users of the group
 export const Table_Display = ({ group, set_display_id, actions }) => {
     const [show_old_member, set_show_member] = useState(false)
     const [show_old_subgroup, set_show_subgroup] = useState(false)
