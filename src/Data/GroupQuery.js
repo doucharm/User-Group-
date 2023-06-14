@@ -20,6 +20,9 @@ export const GroupQueryJSON = (id) => ({
                     name
                     lastchange
                     valid
+                    mastergroup{
+                        id
+                    }
                 }
                 memberships {
                     id

@@ -43,7 +43,7 @@ export const GroupFetch = (id) => (dispatch, getState) => {
     return bodyfunc()
 }
 
-export const GroupTypeAsyncUpdate = ({group,id,lastchange,grouptypeId}) => (dispatch, getState) => {
+export const GroupTypeAsyncUpdate = ({ group, id, lastchange, grouptypeId }) => (dispatch, getState) => {
     const groupMutationJSON = (group) => {
         return {
             query: `mutation ($id: ID!, $lastchange: DateTime!, $grouptypeId: ID!) {
@@ -111,7 +111,7 @@ export const GroupTypeAsyncUpdate = ({group,id,lastchange,grouptypeId}) => (disp
         },
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         redirect: 'follow', // manual, *follow, error
-        body: JSON.stringify(groupMutationJSON({id,lastchange,grouptypeId}))
+        body: JSON.stringify(groupMutationJSON({ id, lastchange, grouptypeId }))
     }
 
 
@@ -141,6 +141,14 @@ export const GroupAsyncInsert = (group) => (dispatch, getState) => {
             query: `mutation ($id: ID!, $name: String!, $mastergroupId: ID!) {
                 groupInsert(group: {id: $id, name: $name, mastergroupId: $mastergroupId}) {
                   msg
+                  group{
+                    id
+                    name
+                    lastchange
+                    mastergroup{
+                        id
+                    }
+                  }
                 }
               }`,
             variables: group
@@ -157,14 +165,23 @@ export const GroupAsyncInsert = (group) => (dispatch, getState) => {
         body: JSON.stringify(groupMutationJSON(group))
     }
     return fetch('/api/gql', params)
+        .then((resp) => resp.json())
+        .then((json) => {
+            console.log("JSON response groupinsert", json)
+            const msg = json.data?.grouppInsert?.msg;
+            if (msg === "fail") {
+                console.log("Update failed");
+            }
+        });
 }
 
-export const GroupAsyncUpdate = ({group,id,lastchange,name,valid}) => (dispatch, getState) => {
+export const GroupAsyncUpdate = ({ group, id, lastchange, name, valid, mastergroupId }) => (dispatch, getState) => {
     const groupMutationJSON = (group) => {
         return {
-            query: `mutation ($id: ID!, $lastchange: DateTime!, $name: String!, $valid: Boolean) {
-                groupUpdate(group: {id: $id, lastchange: $lastchange, name: $name, valid: $valid}) {
+            query: `mutation ($id: ID!, $lastchange: DateTime!, $name: String!, $valid: Boolean!, $mastergroupId: ID!) {
+                groupUpdate(group: {id: $id, lastchange: $lastchange, name: $name, valid: $valid, mastergroupId: $mastergroupId}) {
                   msg
+                  id
                   group {
                     id
                     name
@@ -181,6 +198,10 @@ export const GroupAsyncUpdate = ({group,id,lastchange,name,valid}) => (dispatch,
                         id
                         name
                         valid
+                        lastchange
+                        mastergroup{
+                            id
+                        }
                     }
                     memberships {
                         id
@@ -218,8 +239,8 @@ export const GroupAsyncUpdate = ({group,id,lastchange,name,valid}) => (dispatch,
                 }
               }`,
             variables: group
-        }
-    }
+        };
+    };
 
     const params = {
         method: 'POST',
@@ -228,24 +249,24 @@ export const GroupAsyncUpdate = ({group,id,lastchange,name,valid}) => (dispatch,
         },
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         redirect: 'follow', // manual, *follow, error
-        body: JSON.stringify(groupMutationJSON({id,lastchange,name,valid}))
-    }
-
+        body: JSON.stringify(groupMutationJSON({ id, lastchange, name, valid, mastergroupId }))
+    };
 
     return fetch('/api/gql', params)
-        .then(
-            resp => resp.json()
-        )
-        .then(
-            json => {
-                const msg = json.data.groupUpdate.msg
-                if (msg === "fail") {
-                    console.log("Update selhalo")
-                } else {
-                    const newgroup = json.data.groupUpdate.group
-                    dispatch(GroupActions.group_update({ ...group, ...newgroup }))
-                }
-                return json
+        .then(resp => resp.json())
+        .then(json => {
+            console.log('JSON response:', json)
+            const msg = json.data.groupUpdate.msg;
+            if (msg === "fail") {
+                console.log("Update selhalo");
+            } else {
+                const newgroup = json.data.groupUpdate.group;
+                dispatch(GroupActions.group_update({ ...group, ...newgroup }));
             }
-        )
-}
+            return json;
+        })
+        .catch((error) => {
+            console.log('Error occurred:', error);
+        });
+
+};

@@ -37,10 +37,15 @@ export const Adding_Subgroup = (state, action) => {
     }
     const g = action.payload.group
     const group = state[g.id]
-    group.subgroups.push(new_subgroup)
+    if (group) {
+        if (!group.subgroups) {
+            group.subgroups = [];
+        }
+        group.subgroups.push(new_subgroup);
+    }
 
-    return state
-}
+    return state;
+};
 
 export const GroupMemberAdd = (state, action) => {
     const membership = action.payload;

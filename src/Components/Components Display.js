@@ -7,6 +7,7 @@ import { Role_Select } from "./Role_Selector"
 import { useState } from "react"
 import { Replace_Button } from "./Replace_Button"
 import { Moving_Member_Button } from "./Moving_Member"
+import { Moving_Subgroup_Button } from "./Moving_Subgroup"
 
 
 export const Table_Display = ({ group, set_display_id, actions }) => {
@@ -51,9 +52,9 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
                 </thead>
                 <tbody>
                     <>
-                        {group?.subgroups?.map(item => <Get_Sub_Group_Row group={group} item={item} set_display_id={set_display_id} actions={actions} show_old_subgroup={show_old_subgroup}/>)}
+                        {group?.subgroups?.map(item => <Get_Sub_Group_Row group={group} item={item} set_display_id={set_display_id} actions={actions} show_old_subgroup={show_old_subgroup} />)}
                         <Adding_Subgroup_Button group={group} actions={actions} />
-                        <br/>
+                        <br />
                         <button onClick={() => set_show_subgroup(!show_old_subgroup)}>Show Old Subs</button>
                     </>
                 </tbody>
@@ -62,31 +63,57 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
     )
 }
 
-const Get_Sub_Group_Row = ({ group,item, set_display_id,actions,show_old_subgroup }) => {
-    const onclick = async() => {
-        const payload = {
-            id: item.id,
-            lastchange: item.lastchange,
-            name: item.name,
-            valid: false
+const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subgroup }) => {
+
+    const onclick = async () => {
+        try {
+            const fetchedItem = await actions.groupFetch(item.id);
+            console.log("Item information:", fetchedItem);
+            const fetchedpayload = fetchedItem.payload
+
+            const payload = {
+                id: item.id,
+                lastchange: item.lastchange,
+                name: item.name,
+                valid: false,
+                mastergroupId: item.mastergroup.id
+            };
+
+            /*const membershipPayload = fetchedpayload.memberships
+                ? {
+                    id: fetchedpayload.memberships.id,
+                    lastchange: fetchedpayload.memberships.lastchange,
+                    valid: false
+                }
+                : null;*/
+
+            console.log("Member subgroup:", fetchedpayload.memberships);
+
+            await actions.groupAsyncUpdate(payload);
+            actions.onGroupDelete({ group, item });
+
+            /*if (membershipPayload) {
+                actions.membershipAsyncUpdate(membershipPayload);
+                actions.onMemberRemove({ group: fetchedItem, membership: fetchedpayload.memberships });
+            }*/
+        } catch (error) {
+            console.error("Error fetching item information:", error);
         }
-        await actions.groupAsyncUpdate(payload)
-        actions.onGroupDelete({group,item})
-    }
-    if (item.valid)
-    {
+    };
+
+    if (item.valid) {
         return (
             <tr>
                 <td>{item.id}</td>
                 <td>{item.name}</td>
                 <button onClick={() => set_display_id(item.id)}>
                     <EnvelopeOpen></EnvelopeOpen> </button>
-                <DeleteButton onClick = {onclick}></DeleteButton>
-                </tr>
+                <DeleteButton onClick={onclick}></DeleteButton>
+                <Moving_Subgroup_Button group={group} subgroup={item} actions={actions} />
+            </tr>
         )
     }
-    else if(show_old_subgroup)
-    {
+    else if (show_old_subgroup) {
         return (
             <tr className="table-warning">
                 <td>{item.id}</td>
