@@ -78,8 +78,9 @@ export const MembershipAsyncInsert = ({ store_update, group_id, user_id, id }) =
     .catch(() => console.log("Failed to insert"));
 };
 
-export const MembershipAsyncUpdate = ({ id, lastchange, valid }) => (dispatch, getState) => {
-  const membershipUpdateJSON = (membership) => {
+export const MembershipAsyncUpdate = (payload) => (dispatch, getState) => {
+  console.log("membershippayload", payload)
+  const membershipUpdateJSON = (payload) => {
     return {
       query: `
           mutation($id: ID!, $lastchange: DateTime!, $valid: Boolean!) {
@@ -98,11 +99,7 @@ export const MembershipAsyncUpdate = ({ id, lastchange, valid }) => (dispatch, g
             }
           }
         `,
-      variables: {
-        id,
-        lastchange,
-        valid,
-      },
+      variables: payload,
     };
   };
 
@@ -113,7 +110,7 @@ export const MembershipAsyncUpdate = ({ id, lastchange, valid }) => (dispatch, g
     },
     cache: 'no-cache',
     redirect: 'follow',
-    body: JSON.stringify(membershipUpdateJSON({ id, lastchange, valid })),
+    body: JSON.stringify(membershipUpdateJSON(payload)),
   };
   return fetch('/api/gql', params)
 };

@@ -86,7 +86,7 @@ export const bindGroupActions = (dispatch) => {
         userFetch: (id) => dispatch(UserFetch(id)),
 
         membershipAsyncInsert: (payload) => {dispatch(MembershipAsyncInsert(payload))},
-        membershipAsyncUpdate: ({ id, lastchange, valid }) => { dispatch(MembershipAsyncUpdate({ id, lastchange, valid })) },
+        membershipAsyncUpdate: (payload) => { dispatch(MembershipAsyncUpdate(payload)) },
         
         roleFetch: () => dispatch(RoleFetch()),
         roleAsyncInsert: (payload) => {dispatch(RoleAsyncInsert(payload)) },

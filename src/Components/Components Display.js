@@ -79,23 +79,25 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
                 mastergroupId: item.mastergroup.id
             };
 
-            /*const membershipPayload = fetchedpayload.memberships
-                ? {
-                    id: fetchedpayload.memberships.id,
-                    lastchange: fetchedpayload.memberships.lastchange,
-                    valid: false
-                }
-                : null;*/
-
             console.log("Member subgroup:", fetchedpayload.memberships);
 
             await actions.groupAsyncUpdate(payload);
             actions.onGroupDelete({ group, item });
 
-            /*if (membershipPayload) {
-                actions.membershipAsyncUpdate(membershipPayload);
-                actions.onMemberRemove({ group: fetchedItem, membership: fetchedpayload.memberships });
-            }*/
+            fetchedpayload.memberships.forEach((membership) => {
+                const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)
+                const old_role = current_role[current_role.length - 1]
+                actions.membershipAsyncUpdate({
+                    id: membership.id,
+                    lastchange: membership.lastchange,
+                    valid: false
+                });
+                actions.onMemberRemove({ group: { id: item.id, lastchange: item.lastchange }, membership: membership });
+                if (old_role) {
+                    actions.roleAsyncUpdate(old_role)
+                }
+            });
+
         } catch (error) {
             console.error("Error fetching item information:", error);
         }

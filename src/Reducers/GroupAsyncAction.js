@@ -145,6 +145,7 @@ export const GroupAsyncInsert = (group) => (dispatch, getState) => {
                     id
                     name
                     lastchange
+                    valid
                     mastergroup{
                         id
                     }
@@ -168,7 +169,7 @@ export const GroupAsyncInsert = (group) => (dispatch, getState) => {
         .then((resp) => resp.json())
         .then((json) => {
             console.log("JSON response groupinsert", json)
-            const msg = json.data?.grouppInsert?.msg;
+            const msg = json.data?.groupInsert?.msg;
             if (msg === "fail") {
                 console.log("Update failed");
             }
