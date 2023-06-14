@@ -9,17 +9,29 @@ export const Get_Each_Node = async (id) => {
     console.log("item", item);
   
     const childrenPromises = item.subgroups?.map((sg) => get_help(sg));
-    const children = await Promise.all(childrenPromises);
+    const subg = await Promise.all(childrenPromises);
+    if (subg.length>0)
+    {
+      const data = [
+        {
+          label: item.name,
+          children: subg,
+          expanded: true
+        },
+      ];
+      return data
+    } else 
+    {
+      const data = [
+        {
+          label: item.name,
+        },
+      ];
+      return data
+    }
+    
   
-    const data = [
-      {
-        label: item.name,
-        expanded: true,
-        children: children,
-      },
-    ];
-  
-    return data;
+   
   };
   
 
@@ -28,6 +40,7 @@ export const Get_Hierarchy = async () =>
     const hie=await Get_Each_Node("2d9dcd22-a4a2-11ed-b9df-0242ac120003")
     console.log("hie called and result ",hie)
     return hie
+
 }
 export const Draw_Chart =async (hie) =>
 {

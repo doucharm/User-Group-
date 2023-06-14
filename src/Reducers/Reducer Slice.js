@@ -96,6 +96,6 @@ export const bindGroupActions = (dispatch) => {
 
         grouptypeAsyncUpdate: (payload) => dispatch(GroupTypeAsyncUpdate(payload)),
 
-        hierarchFetch: (hierarchy) => dispatch(Hierarchy_Update(hierarchy))
+        hierarchFetch: ({res}) => dispatch(Hierarchy_Update({res}))
     }
 }
