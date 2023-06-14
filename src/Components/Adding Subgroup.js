@@ -16,7 +16,6 @@ export const Adding_Subgroup = ({ new_sub, set_new_sub, onClick, setState0, setS
                     [evt.target.name]: value
                 });
         }
-
         return (
             <>
                 <label>Subgroup ID:<input type="text" name="id" value={new_sub.id} placeholder='Enter subgroup ID' onChange={handleChange} /> </label>

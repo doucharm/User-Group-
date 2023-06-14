@@ -4,8 +4,6 @@ import { useSelector } from 'react-redux';
 import { actions } from 'pages/Redux Store';
 import { UserDisplay } from './User_Display';
 import { Get_Hierarchy } from 'Data/Group_Hierarchy';
-import { useState } from 'react';
-import { Draw_Chart } from 'Data/Group_Hierarchy';
 
 export const Display =  ({ display_id, set_display_id }) => {
     console.log('display called with id', display_id)
@@ -14,7 +12,9 @@ export const Display =  ({ display_id, set_display_id }) => {
     const users = useSelector((state) => state.users);
     const group = groups[display_id];
     const user = users[display_id];
-    const hie= Get_Hierarchy()   
+
+    Get_Hierarchy().then(res => actions.hierarchFetch(res))
+    
     useEffect(() => {
         if (!group) {
             actions.groupFetch(display_id).then(display = 0).catch(display = 1)
@@ -25,7 +25,6 @@ export const Display =  ({ display_id, set_display_id }) => {
             actions.userFetch(display_id).finally(display = 0)
         }
     }, [display_id, user]);
-    console.log('display', display)
     if (group) {
         return (
             <>
@@ -38,7 +37,7 @@ export const Display =  ({ display_id, set_display_id }) => {
     else if (user) {
         return (
             <>
-                <button onClick={event => console.log(group)} >Get store </button>
+                <button onClick={event => console.log(user)} >Get store </button>
                 <UserDisplay user={user} setUserId={set_display_id} actions={actions} />
 
             </>
@@ -48,7 +47,6 @@ export const Display =  ({ display_id, set_display_id }) => {
             <>
                 <button onClick={event => console.log(group)} >Get store </button>
                 <div>No matched ID found</div>
-
             </>
         )
     }
