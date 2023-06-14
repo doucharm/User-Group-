@@ -1,4 +1,4 @@
-import { Create_Group, Delete_Group, Update_Group, Adding_Subgroup } from "./Group Reducer";
+import { Create_Group, Delete_Group, Update_Group, Adding_Subgroup, Hierarchy_Update } from "./Group Reducer";
 import { Adding_Member, Remove_Member, Update_Member, Moving_Member } from "./Member Reducer";
 import { Update_Role } from "./Role Reducer";
 import { Update_User } from "./User Reducer";
@@ -38,6 +38,20 @@ export const RoleSlice = createSlice(
 export const RoleActions = RoleSlice.actions
 export const RoleReducer = RoleSlice.reducer
 
+
+export const HierarchySlice = createSlice(
+    {
+        name: 'hierarchy',
+        initialState: {},
+        reducers: {
+            hierarchy_update: Hierarchy_Update
+        }
+    }
+)
+export const HierarchyActions = HierarchySlice.actions
+export const HierarchyReducer = HierarchySlice.reducer
+
+
 export const UserSlice = createSlice(
     {
         name: 'users',
@@ -63,7 +77,6 @@ export const bindGroupActions = (dispatch) => {
         onMemberMoving: ({ old_group, new_group, moving_member }) => dispatch(GroupActions.memberMoving({ old_group, new_group, moving_member })),
 
         onUpdateUser: (user) => dispatch(UserActions.users_update(user)),
-
         groupFetch: (id) => dispatch(GroupFetch(id)),
         groupAsyncUpdate: (group) => dispatch(GroupAsyncUpdate(group)),
         groupAsyncInsert: (group) => dispatch(GroupAsyncInsert(group)),
@@ -71,21 +84,18 @@ export const bindGroupActions = (dispatch) => {
         userAsyncInsert: (user) => dispatch(UserAsyncInsert(user)),
         userAsyncUpdate: (user) => dispatch(UserAsyncUpdate(user)),
         userFetch: (id) => dispatch(UserFetch(id)),
-        
-        membershipAsyncInsert: (payload) => {
-            dispatch(MembershipAsyncInsert(payload))
-        },
+
+        membershipAsyncInsert: (payload) => {dispatch(MembershipAsyncInsert(payload))},
         membershipAsyncUpdate: ({ id, lastchange, valid }) => { dispatch(MembershipAsyncUpdate({ id, lastchange, valid })) },
         
         roleFetch: () => dispatch(RoleFetch()),
-        roleAsyncInsert: (payload) => {
-            dispatch(RoleAsyncInsert(payload))
-        },
-        roleAsyncUpdate: (role) => {
-            dispatch(RoleAsyncUpdate(role))
-        },
+        roleAsyncInsert: (payload) => {dispatch(RoleAsyncInsert(payload)) },
+        roleAsyncUpdate: (role) => {dispatch(RoleAsyncUpdate(role))},
         roletype_insert: (payload) => { dispatch(Role_Type_Insert(payload)) },
-        
-        grouptypeAsyncUpdate: (payload) => dispatch(GroupTypeAsyncUpdate(payload))
+
+
+        grouptypeAsyncUpdate: (payload) => dispatch(GroupTypeAsyncUpdate(payload)),
+
+        hierarchFetch: (hierarchy) => dispatch(Hierarchy_Update(hierarchy))
     }
 }

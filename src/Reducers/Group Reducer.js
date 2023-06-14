@@ -29,12 +29,7 @@ export const Update_Group = (state, action) => {
     return state
 }
 export const Adding_Subgroup = (state, action) => {
-    console.log('pay load of sub')
-    console.log(action.payload)
     let new_subgroup = action.payload.new_subgroup
-    if (!validate(new_subgroup.id)) {
-        new_subgroup.id = v1()
-    }
     const g = action.payload.group
     const group = state[g.id]
     if (group) {
@@ -52,5 +47,12 @@ export const GroupMemberAdd = (state, action) => {
 
     const gtochange = state.find(g => g.id === membership.group.id)
     gtochange.memberships.push(membership)
+    return state
+}
+export const Hierarchy_Update = (state,action) =>
+{
+    console.log(action.payload)
+    const newItem = action.payload;
+    state = { ...state, ...newItem }
     return state
 }

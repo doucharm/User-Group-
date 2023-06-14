@@ -6,6 +6,7 @@ import { AppProvider } from 'pages/Redux Store';
 function App() {
   return (
     <div className="App">
+      
       <AppProvider>
         <SearchBar />
       </AppProvider>

@@ -10,6 +10,16 @@ export const Moving_Member = ({membership,actions,toggle_moving}) =>
     {
         set_destination(e.target.value)
     }
+    return (
+        <>
+        <input className = "form-control-warning "onChange={onInputChange} placeholder="Enter destination group's ID"/>
+        <button onClick={toggle_moving}><RewindCircleFill></RewindCircleFill></button>
+        <Moving_Confirm membership={membership} destination={destination} actions={actions} />
+        </>
+    )
+}
+export const Moving_Confirm = ({membership,destination,actions}) =>
+{
     const onMove = () =>
     {
         const payload_leave = 
@@ -38,11 +48,7 @@ export const Moving_Member = ({membership,actions,toggle_moving}) =>
         actions.onMemberRemove({group:{id:membership.group.id},membership:membership})
     }
     return (
-        <>
-        <input className = "form-control-warning "onChange={onInputChange} placeholder="Enter destination group's ID"/>
-        <button onClick={toggle_moving}><RewindCircleFill></RewindCircleFill></button>
         <button onClick={onMove}><RocketTakeoff></RocketTakeoff></button>
-        </>
     )
 }
 export const Moving_Member_Button =  ({membership, actions}) =>
