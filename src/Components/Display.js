@@ -1,9 +1,10 @@
 import { Card_Display } from './Card_Display';
-import { useEffect } from 'react';
+import { useEffect , useState} from 'react';
 import { useSelector } from 'react-redux';
-import { actions } from 'pages/Redux Store';
+import { actions, dispatch } from 'pages/Redux Store';
 import { UserDisplay } from './User_Display';
 import { Get_Hierarchy } from 'Data/Group_Hierarchy';
+import { HierarchyActions } from 'Reducers/Reducer Slice';
 
 export const Display =  ({ display_id, set_display_id }) => {
     console.log('display called with id', display_id)
@@ -12,9 +13,9 @@ export const Display =  ({ display_id, set_display_id }) => {
     const users = useSelector((state) => state.users);
     const group = groups[display_id];
     const user = users[display_id];
+    const hierarchy=useSelector(state => state.hierarchy)
+    const [chart, set_chart] = useState(false)
 
-    Get_Hierarchy().then(res => actions.hierarchFetch(res))
-    
     useEffect(() => {
         if (!group) {
             actions.groupFetch(display_id).then(display = 0).catch(display = 1)
@@ -25,16 +26,25 @@ export const Display =  ({ display_id, set_display_id }) => {
             actions.userFetch(display_id).finally(display = 0)
         }
     }, [display_id, user]);
-    if (group) {
+    useEffect(() => {
+       if(!chart)
+       {
+        Get_Hierarchy().then(res => dispatch(HierarchyActions.hierarchy_update(res)))
+        set_chart(true)
+       }
+        
+    }, [hierarchy]);
+
+    if (group && set_chart) {
         return (
             <>
-                <button onClick={event => console.log(group)} >Get store </button>
+                <button onClick={event => console.log(hierarchy)} >Get store </button>
                 <Card_Display group={group} set_display_id={set_display_id} actions={actions} />
             </>
         );
 
     }
-    else if (user) {
+    else if (user && set_chart) {
         return (
             <>
                 <button onClick={event => console.log(user)} >Get store </button>

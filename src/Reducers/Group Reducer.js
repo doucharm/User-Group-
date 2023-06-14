@@ -51,6 +51,7 @@ export const GroupMemberAdd = (state, action) => {
 }
 export const Hierarchy_Update = (state,action) =>
 {
+    console.log(action)
     console.log(action.payload)
     const newItem = action.payload;
     state = { ...state, ...newItem }
