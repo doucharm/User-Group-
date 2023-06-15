@@ -1,5 +1,5 @@
 import { authorizedFetch } from "./authorizedFetch"
-
+// This function asks for members with given id from sever
 export const UserQueryJSON = (id) => ({
     "query":
         `query ($id: ID!) {
@@ -49,6 +49,7 @@ export const UserQueryJSON = (id) => ({
         }`,
     "variables": { "id": id }
 })
+// And afterward fetch it from server using authorizedFetch and the newparams is the above query
 export const UserQuery = (id) =>
     authorizedFetch('/gql', {
         body: JSON.stringify(UserQueryJSON(id)),

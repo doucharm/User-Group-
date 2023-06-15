@@ -1,5 +1,5 @@
 import { authorizedFetch } from "./authorizedFetch"
-
+// Query to asks for the group from server with the param is the id of that group
 export const GroupQueryJSON = (id) => ({
     "query":
         `query ($id: ID!) {
@@ -74,7 +74,7 @@ export const GroupQueryJSON = (id) => ({
         }`,
     "variables": { "id": id }
 })
-
+// This function calls the authorizedFetch with the newparams is the above query, it will fetch from server the appropriate group with the given id
 export const GroupQuery = (id) =>
     authorizedFetch('/gql', {
         body: JSON.stringify(GroupQueryJSON(id)),

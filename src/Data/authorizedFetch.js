@@ -7,15 +7,10 @@ const globalFetchParams = {
     redirect: 'follow', // manual, *follow, error
 }
 
-/**
- * Zapouzdrujici funkce pro fetch, vytvari mezi vrstvu pro komunikace ze serverem
- * @param {*} path 
- * @param {*} params 
- * @returns 
- */
+
 export const authorizedFetch = (path, params) => {
     const newParams = { ...globalFetchParams, ...params } // allow owerwrite default parameters (globalFetchParams)
-    const overridenPath = '/api/gql'
+    const overridenPath = '/api/gql' // This is the path of our sever
     return (
         fetch(overridenPath, newParams) //params.header should be extended with Authorization TOKEN
     )
