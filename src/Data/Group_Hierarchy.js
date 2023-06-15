@@ -12,21 +12,23 @@ export const Get_Each_Node = async (id) => {
     const subg = await Promise.all(childrenPromises);
     if (subg.length>0)
     {
-      const data = [
+      const data = 
         {
           label: item.name,
           children: subg,
-          expanded: true
-        },
-      ];
+          expanded: true,
+          className: 'bg-teal-500 text-white',
+        }
+      ;
       return data
     } else 
     {
-      const data = [
+      const data = 
         {
           label: item.name,
-        },
-      ];
+          className: 'bg-pink-500 text-white',
+        }
+      ;
       return data
     }
     

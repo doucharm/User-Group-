@@ -8,49 +8,17 @@ import { useState } from "react"
 // Our page has 2 main branches, first one contains the card header of the group we're accessing to, the second one shows the details of that group like the users or subgroups
 export const Card_Display = ({ group, set_display_id, actions }) => {
     const [show_chart,set_show_chart] = useState(false)
-    const pom=[
-        {
-            label: 'Argentina',
-            expanded: true,
-            children: [
-                {
-                    label: 'Argentina',
-                    expanded: true,
-                    children: [
-                        {
-                            label: 'Argentina'
-                        },
-                        {
-                            label: 'Croatia'
-                        }
-                    ]
-                },
-                {
-                    label: 'France',
-                    expanded: true,
-                    children: [
-                        {
-                            label: 'France'
-                        },
-                        {
-                            label: 'Morocco'
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-    console.log(pom)
     const Get_Chart = (show_chart) =>
     {
         const hierarchy=useSelector(state => state.hierarchy)
         
-        const hierarchy_list=Object.values(hierarchy)
-        console.log("hierarchy into the part",hierarchy_list)
-    if( show_chart && hierarchy[0] )
+        const hierarchy_list=[hierarchy,]
+        console.log("hierarchy into the part",JSON.stringify(hierarchy_list))
+    if( show_chart && hierarchy_list[0] )
     {
+        console.log("this part is called")
         return (
-            <div className="card overflow-x-auto">
+            <div className="card bg-warning overflow-x-auto">
                 <OrganizationChart value={hierarchy_list} />
             </div>
         )  
