@@ -30,14 +30,19 @@ export const Update_Group = (state, action) => {
 }
 export const Adding_Subgroup = (state, action) => {
     let new_subgroup = action.payload.new_subgroup
+    console.log(action.payload.new_subgroup)
+    console.log(action.payload.group)
     const g = action.payload.group
+    console.log(g)
     const group = state[g.id]
+    console.log(group)
     if (group) {
         if (!group.subgroups) {
             group.subgroups = [];
         }
         group.subgroups.push(new_subgroup);
     }
+    console.log(group)
 
     return state;
 };

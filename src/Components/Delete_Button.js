@@ -25,11 +25,3 @@ export const DeleteButton = ({ onClick }) => {
     }
 }
 
-export const GroupMemberRemoveButton = ({ group, user, actions }) => {
-    const onClick = () => {
-        actions.onMemberRemove({ group: group, user: user })
-    }
-    return (
-        <DeleteButton onClick={onClick}><Trash></Trash></DeleteButton>
-    )
-}

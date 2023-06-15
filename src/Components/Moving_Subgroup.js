@@ -59,8 +59,23 @@ export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
             console.log("payload leave", payload_leave);
             console.log("payload arrive", new_sub);
 
-            actions.onAddSubGroup(new_sub);
             actions.groupAsyncInsert(payload_arrive)
+            .then(
+                resp => resp.json()
+            )
+            .then(
+                json => {
+                    const msg = json.data.groupInsert.msg
+                    if (msg === "fail") {
+                        console.log("Update failed")
+                    } else {
+                        const new_subgroup = json.data.groupInsert.group
+                        console.log(new_subgroup)
+                        actions.onAddSubGroup({group:destinationGroup.payload,new_subgroup:new_subgroup}) //Insert the new subgroup in store
+                    }
+                    return json
+                }
+            ) 
             actions.groupAsyncUpdate(payload_leave);
             actions.onGroupDelete({ group, item });
             fetchedpayload.memberships.forEach((membership) => {

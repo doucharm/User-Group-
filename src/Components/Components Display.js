@@ -11,8 +11,10 @@ import { Moving_Subgroup_Button } from "./Moving_Subgroup"
 
 // This function shows the table display which contains the users of the group
 export const Table_Display = ({ group, set_display_id, actions }) => {
-    const [show_old_member, set_show_member] = useState(false)
-    const [show_old_subgroup, set_show_subgroup] = useState(false)
+    const [show_old_member, set_show_member] = useState(false) //useState to declare whether we're showing the deleted members or not
+    const [show_old_subgroup, set_show_subgroup] = useState(false) ////useState to declare whether we're showing the deleted subgroups or not
+    // Returning all of the members and subgroups of the group we're accessing by mapping through its memberships and subgroups
+    // We also add some functional buttons into this table which we'll figure out later
     return (
         <div>
             List of members:
@@ -63,6 +65,7 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
     )
 }
 
+// This return a row of each subgroups existed in the large group
 const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subgroup }) => {
 
     const onclick = async () => {

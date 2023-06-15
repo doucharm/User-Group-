@@ -141,21 +141,17 @@ export const GroupAsyncInsert = (group) => (dispatch, getState) => {
             query: `mutation ($id: ID!, $name: String!, $mastergroupId: ID!) {
                 groupInsert(group: {id: $id, name: $name, mastergroupId: $mastergroupId}) {
                   msg
-                  group{
-                    id
-                    name
+                  group {
                     lastchange
+                    name
+                    id
                     valid
-                    mastergroup{
-                        id
-                    }
                   }
                 }
               }`,
             variables: group
         }
     }
-
     const params = {
         method: 'POST',
         headers: {
@@ -166,14 +162,6 @@ export const GroupAsyncInsert = (group) => (dispatch, getState) => {
         body: JSON.stringify(groupMutationJSON(group))
     }
     return fetch('/api/gql', params)
-        .then((resp) => resp.json())
-        .then((json) => {
-            console.log("JSON response groupinsert", json)
-            const msg = json.data?.groupInsert?.msg;
-            if (msg === "fail") {
-                console.log("Update failed");
-            }
-        });
 }
 
 export const GroupAsyncUpdate = ({ group, id, lastchange, name, valid, mastergroupId }) => (dispatch, getState) => {

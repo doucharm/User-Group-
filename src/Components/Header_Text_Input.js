@@ -7,7 +7,7 @@ export const HeaderTextInput = ({ group, actions }) => {
             lastchange: group.lastchange,
             name: value
         }
-        actions.groupAsyncUpdate(payload)
+        actions.groupAsyncUpdate(payload) //Update the group's name
             .then(json=>console.log("GroupNameInput", json.data.groupUpdate.msg))
     }
     return (
