@@ -13,13 +13,37 @@ export const Card_Display = ({ group, set_display_id, actions }) => {
         const hierarchy=useSelector(state => state.hierarchy)
         
         const hierarchy_list=[hierarchy,]
-        console.log("hierarchy into the part",JSON.stringify(hierarchy_list))
+        console.log("hierarchy into the part",hierarchy_list)
     if( show_chart && hierarchy_list[0] )
     {
-        console.log("this part is called")
+        const nodeTemplate = (node) => {
+            if (node.type === 'member') 
+            {
+                return (
+                    <div className="flex flex-column">
+                        <div className="flex flex-column align-items-center">
+                            <span className="font-bold mb-2">{node.data.name}</span>
+                            <span>{node.data.email}</span>
+                        </div>
+                    </div>
+                );
+            }
+            else if (node.type === 'group') 
+            {
+                return (
+                    <div className="flex flex-column">
+                        <div className="flex flex-column align-items-center">
+                            <span className="font-bold mb-2">{node.data.name}</span>
+                            <br />
+                            <span>{node.data.type}</span>
+                        </div>
+                    </div>
+                );
+            }
+        };
         return (
             <div className="card bg-warning overflow-x-auto">
-                <OrganizationChart value={hierarchy_list} />
+                <OrganizationChart value={hierarchy_list}  nodeTemplate={nodeTemplate}/>
             </div>
         )  
     }

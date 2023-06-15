@@ -6,6 +6,10 @@ export const Get_Chart_NodeJson = (id) => ({
           {
             id
             name
+            grouptype
+            {
+              nameEn
+            }
             memberships
             {
               valid
@@ -14,6 +18,7 @@ export const Get_Chart_NodeJson = (id) => ({
                 id
                 name
                 surname
+                email
               }
             }
             subgroups

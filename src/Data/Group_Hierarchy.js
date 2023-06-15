@@ -6,29 +6,57 @@ export const Get_Each_Node = async (id) => {
     };
   
     const item = await Get_Node(id);
-    console.log("item", item);
-  
     const childrenPromises = item.subgroups?.map((sg) => get_help(sg));
-    const subg = await Promise.all(childrenPromises);
-    if (subg.length>0)
+    const all_children = await Promise.all(childrenPromises);
+    const Get_Label_Member = (m) =>
+    {
+      return (
+      { 
+
+        data:{
+          name: `${m.user.name} ${m.user.surname}`, 
+          email: m.user.email
+            },
+        type: 'member',
+        className: 'bg-indigo-500 text-white',
+        style: { borderRadius: '12px' },
+      }
+    )
+    }
+    const members_label = item.memberships.filter(m => m.valid).map(Get_Label_Member);
+    all_children.push(...members_label)
+    if (all_children.length>0)
     {
       const data = 
         {
-          label: item.name,
-          children: subg,
+          children: all_children,
           expanded: true,
-          className: 'bg-teal-500 text-white',
+          data:
+          {
+            name:item.name,
+            type:item.grouptype.nameEn
+          },
+          type:"group",
+          className: 'bg-blue-500 text-white',
+          style: { borderRadius: '12px' },
         }
-      ;
+      
       return data
-    } else 
+    } 
+    else 
     {
       const data = 
         {
-          label: item.name,
-          className: 'bg-pink-500 text-white',
+
+          data:
+          {
+            name:item.name,
+            type:item.grouptype.nameEn
+          },
+          type:"group",
+          className: 'bg-green-500 text-white',
+          style: { borderRadius: '12px' },
         }
-      ;
       return data
     }
     
