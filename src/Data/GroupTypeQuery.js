@@ -19,11 +19,6 @@ export const GroupTypePage = () =>
     })
     // This functions declare what we would do with the data we get from server, in this case the grouptype page
 export const GroupTypePageFetch = (query,selector) => {
-    const log = (text) => (p) => {
-        console.log(text)
-        console.log(JSON.stringify(p))
-        return p
-    }
         const p = query()
         .then(
             response => response.json(),

@@ -1,6 +1,6 @@
 
+//Sample data show what we are working with. All components are built based on this data, which will be similar to the data receive after fetching using GroupByID(id)
 export const data =
-
 {
   data: {
     groupById: {

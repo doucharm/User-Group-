@@ -1,70 +1,25 @@
 import { HeaderTextInput } from "./Header_Text_Input"
 import { Table_Display } from "./Components Display"
 import { GroupType_Select } from "./Grouptype_Selector"
-import { useSelector } from "react-redux"
-import { OrganizationChart } from "primereact/organizationchart"
+import { Get_Chart } from "Data/Group_Hierarchy"
 import { useState } from "react"
 
 // Our page has 2 main branches, first one contains the card header of the group we're accessing to, the second one shows the details of that group like the users or subgroups
 export const Card_Display = ({ group, set_display_id, actions }) => {
     const [show_chart,set_show_chart] = useState(false)
-    const Get_Chart = (show_chart) =>
-    {
-        const hierarchy=useSelector(state => state.hierarchy)
-        
-        const hierarchy_list=[hierarchy,]
-        console.log("hierarchy into the part",hierarchy_list)
-    if( show_chart && hierarchy_list[0] )
-    {
-        const nodeTemplate = (node) => {
-            if (node.type === 'member') 
-            {
-                return (
-                    <div className="flex flex-column">
-                        <div className="flex flex-column align-items-center">
-                            <span className="font-bold mb-2">{node.data.name}</span>
-                            <span>{node.data.email}</span>
-                        </div>
-                    </div>
-                );
-            }
-            else if (node.type === 'group') 
-            {
-                return (
-                    <div className="flex flex-column">
-                        <div className="flex flex-column align-items-center">
-                            <span className="font-bold mb-2">{node.data.name}</span>
-                            <br />
-                            <span>{node.data.type}</span>
-                        </div>
-                    </div>
-                );
-            }
-        };
-        return (
-            <div className="card bg-warning overflow-x-auto">
-                <OrganizationChart value={hierarchy_list}  nodeTemplate={nodeTemplate}/>
-            </div>
-        )  
-    }
-
-     else return ("Nic");
-    }
     const chart_view=Get_Chart(show_chart)
-    console.log("chart view",chart_view)
     return (
         <main>
             <div class="card  border-success  bg-info mb-3" >
                 <div class="card-header">
-                    <Get_Card_Header group={group} set_display_id={set_display_id} actions={actions} />
+                    <Get_Card_Header group={group} set_display_id={set_display_id} actions={actions} /> 
                 </div>
                 <div class="card-body">
-                    Components of the group:
-                    <Table_Display group={group} set_display_id={set_display_id} actions={actions} />
-                    <button onClick = {event => set_show_chart(!show_chart)}>Display hierarchy</button>
-                    {chart_view}
+                    <Table_Display group={group} set_display_id={set_display_id} actions={actions} />   
                 </div>
             </div>
+            <button onClick = {event => set_show_chart(!show_chart)}>Display hierarchy</button>
+            {chart_view}
         </main>
     )
 }

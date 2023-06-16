@@ -17,7 +17,7 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
     // We also add some functional buttons into this table which we'll figure out later
     return (
         <div>
-            List of members:
+            <h3>List of members: </h3>
             <br />
             <table className="table table-hover table-bordered table-light table-stripped">
                 <thead>
@@ -43,13 +43,15 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
             </table>
             <br />
             <br />
-            List of sub-groups:
+            <h3>List of subgroups</h3>
             <br />
-            <table className="table table-hover table-bordered table-blue table-stripped">
+            <table className="table table-hover table-bordered table-warning table-stripped">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Type</th>
+                        <th>    </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,13 +69,10 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
 
 // This return a row of each subgroups existed in the large group
 const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subgroup }) => {
-
     const onclick = async () => {
         try {
             const fetchedItem = await actions.groupFetch(item.id);
-            console.log("Item information:", fetchedItem);
             const fetchedpayload = fetchedItem.payload
-
             const payload = {
                 id: item.id,
                 lastchange: item.lastchange,
@@ -81,12 +80,8 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
                 valid: false,
                 mastergroupId: item.mastergroup.id
             };
-
-            console.log("Member subgroup:", fetchedpayload.memberships);
-
             await actions.groupAsyncUpdate(payload);
             actions.onGroupDelete({ group, item });
-
             fetchedpayload.memberships.forEach((membership) => {
                 const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)
                 const old_role = current_role[current_role.length - 1]
@@ -100,7 +95,6 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
                     actions.roleAsyncUpdate(old_role)
                 }
             });
-
         } catch (error) {
             console.error("Error fetching item information:", error);
         }
@@ -111,8 +105,8 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
             <tr>
                 <td>{item.id}</td>
                 <td>{item.name}</td>
-                <button onClick={() => set_display_id(item.id)}>
-                    <EnvelopeOpen></EnvelopeOpen> </button>
+                <td>{item.grouptype?.nameEn}</td>
+                <button onClick={() => set_display_id(item.id)}><EnvelopeOpen></EnvelopeOpen></button>
                 <DeleteButton onClick={onclick}></DeleteButton>
                 <Moving_Subgroup_Button group={group} subgroup={item} actions={actions} />
             </tr>
@@ -139,11 +133,9 @@ const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
         };
         const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)
         const old_role = current_role[current_role.length - 1]
-        console.log('REMOVE_MEMBER action dispatched with payload:', payload);
-
         try {
             await actions.membershipAsyncUpdate(payload);
-            actions.onMemberRemove({ group, membership });
+            actions.onMemberRemove({ group:{id:membership}, membership });
             if (old_role) {
                 actions.roleAsyncUpdate(old_role)
             }

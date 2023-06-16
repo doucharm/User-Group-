@@ -7,25 +7,20 @@ import { GroupQuery } from "Data/GroupQuery";
  * @returns promise
  */
 export const GroupFetchHelper = (id, query, resultselector, dispatch, getState) => {
-    const log = (text) => (p) => {
-        console.log(text)
-        console.log(JSON.stringify(p))
-        return p
-    }
+
     const p = query(id)
         .then(
             response => response.json(),
             error => error
         )
         .then(
-            json => log('converted')(resultselector(json)),
+            json => resultselector(json),
             error => error
         )
         .then(
-            json => log('dispatching')(dispatch(GroupActions.group_update(json))),
+            json => dispatch(GroupActions.group_update(json)),
             error => error
         )
-
     return p
 }
 
@@ -249,7 +244,7 @@ export const GroupAsyncUpdate = ({ group, id, lastchange, name, valid, mastergro
             console.log('JSON response:', json)
             const msg = json.data.groupUpdate.msg;
             if (msg === "fail") {
-                console.log("Update selhalo");
+                console.log("Update fail");
             } else {
                 const newgroup = json.data.groupUpdate.group;
                 dispatch(GroupActions.group_update({ ...group, ...newgroup }));

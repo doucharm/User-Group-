@@ -7,8 +7,7 @@ import { Get_Hierarchy } from 'Data/Group_Hierarchy';
 import { HierarchyActions } from 'Reducers/Reducer Slice';
 
 export const Display =  ({ display_id, set_display_id }) => {
-    console.log('display called with id', display_id)
-    let display = 0
+    let display = 0 // Local variables to avoid unnecessary fetch
     const groups = useSelector((state) => state.groups);
     const users = useSelector((state) => state.users);
     const group = groups[display_id];

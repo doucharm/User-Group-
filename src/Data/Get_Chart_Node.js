@@ -49,7 +49,6 @@ export const Get_Node_Chart = (id, query, selector) => {
     return p
 }
 export const Get_Node = (id) => {
-    console.log('function fetch node called with id', id)
     const selector = (json) => json.data.groupById
     const bodyfunc = async () => {
         let item = await Get_Node_Chart(id, groupByID, selector)        
