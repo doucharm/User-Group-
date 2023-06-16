@@ -1,12 +1,16 @@
+// Adding a membership to a group
+// Requires 2 params as the payload, which are group and membership
 export const Adding_Member = (state, action) => {
     console.log(action.payload)
     const group = action.payload.group
     const membership = action.payload.membership
     const grouptake = state[group.id]
-    grouptake.memberships.push(membership)
+    grouptake.memberships.push(membership) //Then we push that membership into the group's membership
     return state
 }
 
+// Moving a member from the old group to a new one
+// Change the valid of that membership in the old group to false and then push that membership to the new group's memberships
 export const Moving_Member = (state,action) =>
 {
     const {membership, from_group, to_group } = action.payload
@@ -17,6 +21,7 @@ export const Moving_Member = (state,action) =>
     return state
 }
 
+// Removing a member from a group by changing the membership's valid to false
 export const Remove_Member = (state, action) => {
     console.log('reducer called', action.payload);
     const g = action.payload.group;
@@ -36,6 +41,7 @@ export const Remove_Member = (state, action) => {
     return state;
 }
 
+// Update the membership of a member by spreading the old one with the updated values of the new one in the group's memberships
 export const Update_Member = (state, action) => {
     console.log(action.payload)
     const g = action.payload.group

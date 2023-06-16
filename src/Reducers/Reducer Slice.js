@@ -7,7 +7,7 @@ import { MembershipAsyncUpdate, MembershipAsyncInsert } from "./MembershipAsyncA
 import { RoleAsyncInsert, RoleAsyncUpdate, RoleFetch, Role_Type_Insert } from "./RoleAsyncActions";
 import { UserAsyncInsert, UserAsyncUpdate, UserFetch } from "./UserAsyncActions";
 import { createSlice } from '@reduxjs/toolkit'
-
+// Where we keep all of the reducers for store, queries and mutations for sever
 export const GroupSlice = createSlice({
     name: 'groups',
     initialState: {},

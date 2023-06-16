@@ -42,7 +42,7 @@ export const GroupFetch = (id) => (dispatch, getState) => {
     }
     return bodyfunc()
 }
-
+// Mutation to update group on server, we pass the neccessary params which is modified to this function
 export const GroupTypeAsyncUpdate = ({ group, id, lastchange, grouptypeId }) => (dispatch, getState) => {
     const groupMutationJSON = (group) => {
         return {
@@ -114,7 +114,7 @@ export const GroupTypeAsyncUpdate = ({ group, id, lastchange, grouptypeId }) => 
         body: JSON.stringify(groupMutationJSON({ id, lastchange, grouptypeId }))
     }
 
-
+    //After fetching it to the server, we update the group with the new grouptype to store
     return fetch('/api/gql', params)
         //return authorizedFetch('/api/gql', params)
         .then(
@@ -134,7 +134,7 @@ export const GroupTypeAsyncUpdate = ({ group, id, lastchange, grouptypeId }) => 
             }
         )
 }
-
+// Mutation to insert a new group to the server, this requires a customized group as an input
 export const GroupAsyncInsert = (group) => (dispatch, getState) => {
     const groupMutationJSON = (group) => {
         return {
@@ -161,9 +161,11 @@ export const GroupAsyncInsert = (group) => (dispatch, getState) => {
         redirect: 'follow', // manual, *follow, error
         body: JSON.stringify(groupMutationJSON(group))
     }
+    // Fetch it to the server
     return fetch('/api/gql', params)
 }
 
+// Mutation to update group on server, we pass the neccessary params which is modified to this function
 export const GroupAsyncUpdate = ({ group, id, lastchange, name, valid, mastergroupId }) => (dispatch, getState) => {
     const groupMutationJSON = (group) => {
         return {
@@ -240,7 +242,7 @@ export const GroupAsyncUpdate = ({ group, id, lastchange, name, valid, mastergro
         redirect: 'follow', // manual, *follow, error
         body: JSON.stringify(groupMutationJSON({ id, lastchange, name, valid, mastergroupId }))
     };
-
+    // Afterward, we update it to store
     return fetch('/api/gql', params)
         .then(resp => resp.json())
         .then(json => {

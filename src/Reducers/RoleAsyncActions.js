@@ -1,6 +1,7 @@
 import { RoleQuery } from "Data/RoleQuery";
 import { GroupActions, RoleActions } from "./Reducer Slice";
 import { v1 } from "uuid";
+// Ask for the item on server and adds it or update it in the store 
 export const RoleFetchHelper = (query, selecter, dispatch, getState) => {
     const log = (text) => (p) => {
         return p
@@ -23,7 +24,7 @@ export const RoleFetchHelper = (query, selecter, dispatch, getState) => {
         )
     return p
 }
-
+// Fetch the roles from server. Finally puts the result in the store.
 export const RoleFetch = () => (dispatch, getState) => {
     const selecter = (json) => json.data.roleTypePage
     const bodyfunc = async () => {
@@ -34,6 +35,7 @@ export const RoleFetch = () => (dispatch, getState) => {
     return bodyfunc()
 }
 
+// This mutation assign a membership with a new role, and after fetching it to the server, it also updates the membership that holds the new role
 export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
     const roleMutationJSON = (payload) => {
         console.log("payload into role_insert",payload)
@@ -99,6 +101,7 @@ export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
         .catch(() => console.log("Failed to insert"));
 }
 
+// This mutation will update a role and fetch it to server, it'll help when you want to change the role of a membership
 export const RoleAsyncUpdate = (role) => (dispatch, getState) => {
     console.log("role update ",role)
     const roleMutationJSON = (role) => {
@@ -133,6 +136,7 @@ export const RoleAsyncUpdate = (role) => (dispatch, getState) => {
   return fetch('/api/gql', params)
 }
 
+// Mutation to insert a new role into roletype page, we're not using it at the moment. This is for further developement
 export const Role_Type_Insert = (payload) => (dispatch, getState) => {
     const roletypeMutationJSON = (roletype) => {
         return {

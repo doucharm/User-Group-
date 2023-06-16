@@ -1,6 +1,7 @@
 import { UserActions } from "./Reducer Slice"
 import { UserQuery } from "Data/UserQuery";
 
+// Ask for the user on server and adds it or update it in the store
 export const UserFetchHelper = (id, query, resultselector, dispatch, getState) => {
     const log = (text) => (p) => {
         console.log(text)
@@ -25,7 +26,7 @@ export const UserFetchHelper = (id, query, resultselector, dispatch, getState) =
         )
     return p
 }
-
+// Fetch the user from server. Finally puts the result in the store.
 export const UserFetch = (id) => (dispatch, getState) => {
     const userSelector = (json) => json.data.userById
     const bodyfunc = async () => {
@@ -36,6 +37,7 @@ export const UserFetch = (id) => (dispatch, getState) => {
     return bodyfunc()
 }
 
+// This mutation will help to update a user to the server, it requires the input as a modified user
 export const UserAsyncUpdate = (user) => (dispatch, getState) => {
     const userMutationJSON = (user) => {
         return {
@@ -66,7 +68,7 @@ export const UserAsyncUpdate = (user) => (dispatch, getState) => {
         redirect: 'follow', 
         body: JSON.stringify(userMutationJSON(user))
     }
-
+    // Fetching it to server and then updating it to the store
     return fetch('/api/gql', params)
         .then(
             resp => resp.json()
@@ -85,6 +87,7 @@ export const UserAsyncUpdate = (user) => (dispatch, getState) => {
         )
 }
 
+// This mutation helps inserting a customized user to the user's page
 export const UserAsyncInsert = (user) => (dispatch, getState) => {
     const userMutationJSON = (user) => {
         return {
@@ -106,6 +109,7 @@ export const UserAsyncInsert = (user) => (dispatch, getState) => {
         redirect: 'follow', 
         body: JSON.stringify(userMutationJSON({ ...user }))
     }
+    // And finally fetching it to the server
     return fetch('/api/gql', params)
 }
 

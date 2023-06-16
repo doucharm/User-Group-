@@ -1,44 +1,33 @@
 /**
- * Vytvari zpozdovac,
+ * Create delay,
  * @param {*} delay 
  * @returns 
  */
 export const CreateDelayer = (delay=300) => {
-    //lokalni promenna
+    //local variables
     let oldTimer = -1;
     let state = 0;
 
-    //navratovou hodnotou je funkce umoznujici zpozdeni volani
+    //the return value is a function enabling a delayed call
     return (delayedFunc) => {
-        /*
-        //https://stackoverflow.com/questions/26150232/resolve-javascript-promise-outside-the-promise-constructor-scope
-        implement as function returning a Promise:
-        const main = () => {
-            let resolver = null
-            const result = new Promise((resolve, reject) => {resolver = resolve})
-            resolver(25)
-            return result
-        }
-        main().then(data=>{console.log('a', data)})
-        */
-        //zruseni stareho timeru
+        //cancellation of the old timer
         if (state !== 0) {
             clearTimeout(oldTimer)
             oldTimer = -1;
             state = 0;
         }
 
-        //zabaleni funkce, pri volani je poznamenano, ze byl volan
+        //wrapping the function, when called it is noted that it was called
         const encapsulatedFunc = () => {
             oldTimer = -1;
             state = 0;
-            return delayedFunc(); // obvykle delayedFunc() vraci Promise, takze lze pouzit .then, .catch a .finally
+            return delayedFunc(); // usually delayedFunc() returns a Promise, so .then, .catch and .finally can be used
         }
 
-        //ocekavame zpozdene volani funkce
+        //we expect a delayed function call
         state = 1;
 
-        //definice noveho timeru
+        //definition of a new timer
         oldTimer = setTimeout(encapsulatedFunc, delay);
     }
 }

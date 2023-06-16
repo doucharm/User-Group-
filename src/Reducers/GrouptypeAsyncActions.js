@@ -1,3 +1,6 @@
+
+// Mutation to insert a new grouptype, we will use it for further development of the project
+// At the time we're not calling it anywhere
 export const GroupTypeAsyncInsert = (group) => (dispatch, getState) => {
   const groupMutationJSON = (group) => {
       return {
