@@ -6,10 +6,11 @@ import { UserDisplay } from './User_Display';
 import { Get_Hierarchy } from 'Data/Group_Hierarchy';
 import { HierarchyActions } from 'Reducers/Reducer Slice';
 
-export const Display =  ({ display_id, set_display_id }) => {
+export const Display =  ({ display_id, set_display_id,actions }) => {
     let display = 0 // Local variables to avoid unnecessary fetch
     const groups = useSelector((state) => state.groups);
     const users = useSelector((state) => state.users);
+    
     const group = groups[display_id];
     const user = users[display_id];
     const hierarchy=useSelector(state => state.hierarchy)

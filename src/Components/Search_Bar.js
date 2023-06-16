@@ -3,7 +3,7 @@ import { validate } from 'uuid'
 import { fetch_by_letters } from 'Data/UserByLetters';
 import { DoorOpen, Search } from 'react-bootstrap-icons';
 import { Display } from './Display';
-export const SearchBar = () => {
+export const SearchBar = ({actions}) => {
     console.log('search bar called')
     const [display_id, set_display_id] = useState(null)
     const [foundID, set_found] = useState(false)
@@ -90,7 +90,7 @@ export const SearchBar = () => {
                     <button type="submit" title="Submit Form"><Search></Search></button>
                 </form>
 
-                <Display display_id={display_id} set_display_id={set_display_id} />
+                <Display display_id={display_id} set_display_id={set_display_id} actions={actions} />
             </>
 
 

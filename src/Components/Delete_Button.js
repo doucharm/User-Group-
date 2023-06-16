@@ -1,27 +1,31 @@
-import { useState, useCallback } from 'react';
-import { Trash, X } from 'react-bootstrap-icons';
+import { useState } from 'react';
+import { XOctagonFill } from 'react-bootstrap-icons';
 /**
- * This is Delete Button with confirmation (two state button).
- * @param {*} children
- * @param {() => void} onClick
+ * This is Two States Button with confirmation (two state button).
+ * @param {*} icon the icon that indicate what this button do
+ * @param {() => void} onClick function that get excercuted when button is clicked
  * @returns 
  */
-export const DeleteButton = ({ onClick }) => {
-    const [state, setState] = useState(0)
-    const setState0 = useCallback(() => setState(0))
-    const setState1 = useCallback(() => setState(1))
-
-    if (state === 0) {
-        return (
-            <button className='btn btn-sm btn-warning' onClick={setState1}><Trash></Trash></button>
-        )
+export const Two_State_Button = ({ onClick, icon: Icon }) => {
+    const [state, setState] = useState(false);
+    if (!state) {
+      return (
+        <button className='btn btn-sm btn-warning' onClick={(event) => setState(!state)}>
+          <Icon />
+        </button>
+      );
     } else {
-        return (
-            <>
-                <button className='btn btn-sm btn-warning' onClick={setState0}><X></X></button>
-                <button className='btn btn-sm btn-danger' onClick={onClick}><Trash></Trash></button>
-            </>
-        )
+      return (
+        <>
+          <button className='btn btn-sm btn-warning' onClick={(event) => setState(!state)}>
+            <XOctagonFill></XOctagonFill>
+          </button>
+          <button className='btn btn-sm btn-danger' onClick={onClick}>
+            <Icon />
+          </button>
+        </>
+      );
     }
-}
+  };
+  
 

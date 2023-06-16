@@ -1,13 +1,14 @@
 import { EnvelopeOpen } from "react-bootstrap-icons"
 import { MembershipInsert_SearchBar } from "./Adding Member Button"
 import { Adding_Subgroup_Button } from "./Adding Subgroup"
-import { DeleteButton } from "./Delete_Button"
+import { Two_State_Button } from "./Delete_Button"
 import { Trash } from "react-bootstrap-icons"
 import { Role_Select } from "./Role_Selector"
 import { useState } from "react"
 import { Replace_Button } from "./Replace_Button"
 import { Moving_Member_Button } from "./Moving_Member"
 import { Moving_Subgroup_Button } from "./Moving_Subgroup"
+import { useSelector } from "react-redux/es"
 
 // This function shows the table display which contains the users of the group
 export const Table_Display = ({ group, set_display_id, actions }) => {
@@ -69,7 +70,7 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
 
 // This return a row of each subgroups existed in the large group
 const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subgroup }) => {
-    const onclick = async () => {
+    const onClickDeleteGroup = async () => {
         try {
             const fetchedItem = await actions.groupFetch(item.id);
             const fetchedpayload = fetchedItem.payload
@@ -107,7 +108,7 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
                 <td>{item.name}</td>
                 <td>{item.grouptype?.nameEn}</td>
                 <button onClick={() => set_display_id(item.id)}><EnvelopeOpen></EnvelopeOpen></button>
-                <DeleteButton onClick={onclick}></DeleteButton>
+                <td><Two_State_Button onClick={onClickDeleteGroup} icon={Trash}></Two_State_Button></td>
                 <Moving_Subgroup_Button group={group} subgroup={item} actions={actions} />
             </tr>
         )
@@ -124,8 +125,8 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
 }
 
 const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
-    actions.roleFetch();
-    const onClick = async () => {
+    
+    const onClickDeleteMember = async () => {
         const payload = {
             id: membership.id,
             lastchange: membership.lastchange,
@@ -133,9 +134,10 @@ const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
         };
         const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)
         const old_role = current_role[current_role.length - 1]
+
         try {
             await actions.membershipAsyncUpdate(payload);
-            actions.onMemberRemove({ group:{id:membership}, membership });
+            actions.onMemberRemove({ group, membership });
             if (old_role) {
                 actions.roleAsyncUpdate(old_role)
             }
@@ -144,7 +146,6 @@ const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
             console.log('Membership update failed:', error);
         }
     };
-
     if (membership.valid) {
         return (
             <tr className="table-success">
@@ -153,7 +154,7 @@ const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
                 <td>{membership.user.surname}</td>
                 <td>{membership.user.email}</td>
                 <td><Role_Select membership={membership} actions={actions} /></td>
-                <td><DeleteButton onClick={onClick}><Trash></Trash></DeleteButton></td>
+                <td><Two_State_Button onClick={onClickDeleteMember} icon={Trash}></Two_State_Button></td>
                 <td><Replace_Button group={group} actions={actions} membership={membership}  >Replace</Replace_Button></td>
                 <td><Moving_Member_Button membership={membership} actions={actions} /></td>
             </tr>
