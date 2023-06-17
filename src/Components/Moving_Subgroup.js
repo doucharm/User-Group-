@@ -54,14 +54,7 @@ export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
                 name: item.name,
                 mastergroupId: destination,
             };
-            const new_sub = {
-                group: destinationGroup,
-                new_subgroup: payload_arrive
-            }
-
-            console.log("payload leave", payload_leave);
-            console.log("payload arrive", new_sub);
-
+            
             actions.groupAsyncInsert(payload_arrive)
             .then(
                 resp => resp.json()

@@ -1,7 +1,7 @@
 import { EnvelopeOpen } from "react-bootstrap-icons"
 import { MembershipInsert_SearchBar } from "./Adding Member Button"
 import { Adding_Subgroup_Button } from "./Adding Subgroup"
-import { Two_State_Button,DeleteButton } from "./Delete_Button"
+import { Two_State_Button, DeleteButton } from "./Delete_Button"
 import { Trash } from "react-bootstrap-icons"
 import { Role_Select } from "./Role_Selector"
 import { useState } from "react"
@@ -52,7 +52,9 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
                         <th>ID</th>
                         <th>Name</th>
                         <th>Type</th>
-                        <th>    </th>
+                        <th>Details</th>
+                        <th>Delete</th>
+                        <th>Move</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -109,7 +111,7 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
                 <td>{item.name}</td>
                 <td>{item.grouptype?.nameEn}</td>
                 <button onClick={() => set_display_id(item.id)}><EnvelopeOpen></EnvelopeOpen></button>
-                <td><DeleteButton onClick={onClickDeleteGroup}/></td>
+                <td><DeleteButton onClick={onClickDeleteGroup} /></td>
                 <Moving_Subgroup_Button group={group} subgroup={item} actions={actions} />
             </tr>
         )
@@ -126,7 +128,7 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
 }
 
 const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
-    
+
     const onClickDeleteMember = async () => { // condition for remove user from membership of group
         const payload = {
             id: membership.id,
@@ -156,7 +158,7 @@ const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
                 <td>{membership.user.surname}</td>
                 <td>{membership.user.email}</td>
                 <td><Role_Select membership={membership} actions={actions} /></td>
-                <td><DeleteButton onClick={onClickDeleteMember}/></td>
+                <td><DeleteButton onClick={onClickDeleteMember} /></td>
                 <td><Replace_Button group={group} actions={actions} membership={membership}  >Replace</Replace_Button></td>
                 <td><Moving_Member_Button membership={membership} actions={actions} /></td>
             </tr>

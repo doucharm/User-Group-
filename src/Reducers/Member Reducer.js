@@ -27,9 +27,7 @@ export const Remove_Member = (state, action) => {
     const g = action.payload.group;
     const membership = action.payload.membership;
     const group = state[g.id];
-    console.log("group membership", group.memberships);
-    console.log('group', state[g.id])
-
+   
     if (!membership) {
         return state;
     }
