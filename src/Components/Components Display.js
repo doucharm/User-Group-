@@ -70,19 +70,20 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
 
 // This return a row of each subgroups existed in the large group
 const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subgroup }) => {
-    const onClickDeleteGroup = async () => {
+    const onClickDeleteGroup = async () => { //The condition for delete the subgroup
         try {
-            const fetchedItem = await actions.groupFetch(item.id);
-            const fetchedpayload = fetchedItem.payload
+            const fetchedItem = await actions.groupFetch(item.id); // get the wanted subgroup data
+            const fetchedpayload = fetchedItem.payload // because the data is wrapped in payload so that we need to get their payload
             const payload = {
                 id: item.id,
                 lastchange: item.lastchange,
                 name: item.name,
-                valid: false,
+                valid: false, // make the wanted subgroup invalid in the mastergroup
                 mastergroupId: item.mastergroup.id
             };
             await actions.groupAsyncUpdate(payload);
             actions.onGroupDelete({ group, item });
+            // Also remove all the membership and roles inside the wanted subgroup
             fetchedpayload.memberships.forEach((membership) => {
                 const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)
                 const old_role = current_role[current_role.length - 1]
@@ -126,11 +127,11 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
 
 const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
     
-    const onClickDeleteMember = async () => {
+    const onClickDeleteMember = async () => { // condition for remove user from membership of group
         const payload = {
             id: membership.id,
             lastchange: membership.lastchange,
-            valid: false
+            valid: false // make the user's membership invalid in the group
         };
         const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)
         const old_role = current_role[current_role.length - 1]
@@ -138,6 +139,7 @@ const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
         try {
             await actions.membershipAsyncUpdate(payload);
             actions.onMemberRemove({ group, membership });
+            // also remove user's role along with the membership
             if (old_role) {
                 actions.roleAsyncUpdate(old_role)
             }

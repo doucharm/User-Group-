@@ -4,6 +4,9 @@ import { v1 } from 'uuid';
 import { fetch_by_letters } from 'Data/UserByLetters';
 import { useSelector } from 'react-redux';
 
+// Replace Button is a combination of Adding Member Button and Delete Button
+// It is used to replace a member of a group with another user
+
 export const Replace_Button = ({ group, actions, membership }) => {
     const [searchMode, setSearchMode] = useState(false);
     const [inputId, setInputId] = useState('');
@@ -13,13 +16,13 @@ export const Replace_Button = ({ group, actions, membership }) => {
         setInputId(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event) => {  // search for user by letter
         event.preventDefault();
         fetch_by_letters(inputId, setUsersList);
     };
 
     const handleReplace = (newUser) => {
-        const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)
+        const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true) // Keep the current role of the user for the new user
         let moving_role = ""
         if (current_role.length > 0) {
             moving_role = current_role[current_role.length - 1]
@@ -52,10 +55,10 @@ export const Replace_Button = ({ group, actions, membership }) => {
             group_id: group.id,
         };
         const checkExistence = group.memberships.find(
-            (m) => m.user.id === payload.user_id && m.valid
+            (m) => m.user.id === payload.user_id && m.valid  // Check if the user is already membership of the group
         );
         console.log(checkExistence);
-        if (!checkExistence) {
+        if (!checkExistence) { // if not then insert new user and remove old user from the group
             actions
                 .userAsyncUpdate(modifyUser)
                 .then(() => actions.membershipAsyncInsert(payload))
@@ -110,7 +113,7 @@ export const Replace_Button = ({ group, actions, membership }) => {
         setSearchMode(true);
     };
 
-    if (searchMode) {
+    if (searchMode) { // Searchbar using for search the wanted user by name
         return (
             <>
                 <form method="GET" id="my_form" onSubmit={handleSubmit}></form>

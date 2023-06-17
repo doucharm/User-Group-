@@ -23,7 +23,9 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
         );
     };
 
-    return (
+    // These three used for changing the information of user: name, surname, email.
+
+    return ( // Showing the information of user
         <div>
             <h2>User Info</h2>
             <div className="card">
@@ -60,22 +62,35 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                                 onChange={onChangeEmail}
                             />
                         </p>
-                        <p>
+                        <p> 
                             <strong>Groups:</strong>
-                            <br></br>
-                            {user?.membership?.map((membership, index) => {
-                                if (membership.valid) {
+                            <br />
+                            {user?.membership?.map((membership, index) => { // Showing the groups that user is in and the role of user in that group
+                                if (membership.valid) { 
+                                    let latestRole = null;
+
+                                    if (membership.group.roles && membership.group.roles.length > 0) { 
+                                        const sortedRoles = [...membership.group.roles].sort((a, b) => { 
+                                            // Because we can change the role of the membership
+                                            // So the user display need to be updated to show the latest role based on lastchange
+                                            const dateA = new Date(a.lastchange);
+                                            const dateB = new Date(b.lastchange);
+
+                                            return dateB - dateA;
+                                        });
+
+                                        latestRole = sortedRoles[0];
+                                    }
+
                                     return (
                                         <span key={membership.group.id}>
-                                            {membership.group.name}:{" "}
-                                            {membership.group.roles && membership.group.roles.length > 0 ? (
-                                                membership.group.roles.reduce((latestRole, role) =>
-                                                    role && role.lastchange > latestRole.lastchange ? role : latestRole
-                                                ).roletype?.nameEn
+                                            {membership.group.name}:{" "} 
+                                            {latestRole ? (
+                                                latestRole.roletype?.nameEn
                                             ) : (
-                                                <span>No roles found</span>
+                                                <span>No roles found</span> // user has membership in the group but not role
                                             )}
-                                            {index !== user.membership.length - 1 && <br />}
+                                            {index !== user.membership.length - 1 && <br /> /* If there is no more group that the user belong to then break*/ }
                                         </span>
                                     );
                                 }
@@ -96,7 +111,7 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
 
 
 export const Adding_User = ({ new_user, set_new_user, onClick, setState0, setState1, state }) => {
-
+// Adding user button used for add new user to store and server with basic information: id, name , surname, email with two state
     if (state === 0) {
         return (
             <button className='btn btn-sm btn-primary' onClick={setState1}><PersonAdd></PersonAdd></button>

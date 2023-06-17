@@ -3,6 +3,9 @@ import { RewindCircleFill, RocketTakeoff, RocketTakeoffFill } from "react-bootst
 
 import { v1 } from 'uuid'
 
+// Moving subgroup button is a combination of Adding subgroup button and Delete subgroup button
+// The subgroup is added to the destination group and deleted from the original group
+
 export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
     const [destination, set_destination] = useState("");
     const [destinationGroup, set_destinationGroup] = useState(null);
@@ -14,7 +17,7 @@ export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
     useEffect(() => {
 
         const getDestinationGroup = () => {
-            actions.groupFetch(destination)
+            actions.groupFetch(destination) //get the destination group data
                 .then((groupData) => {
                     set_destinationGroup(groupData);
                 })
@@ -33,9 +36,9 @@ export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
 
     const onMove = async () => {
         try {
-            const fetchedItem = await actions.groupFetch(item.id);
+            const fetchedItem = await actions.groupFetch(item.id); // get the wanted subgroup data
             console.log("Item information:", fetchedItem);
-            const fetchedpayload = fetchedItem.payload
+            const fetchedpayload = fetchedItem.payload // Because the information of the subgroup is wrapped inside payload, so we must use payload
             const payload_leave = {
                 id: item.id,
                 lastchange: item.lastchange,
@@ -46,7 +49,7 @@ export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
 
             console.log("Member subgroup:", fetchedpayload.memberships);
 
-            const payload_arrive = {
+            const payload_arrive = { // The moved subgroup with the new id in the destination group
                 id: v1(),
                 name: item.name,
                 mastergroupId: destination,
@@ -78,7 +81,7 @@ export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
             ) 
             actions.groupAsyncUpdate(payload_leave);
             actions.onGroupDelete({ group, item });
-            fetchedpayload.memberships.forEach((membership) => {
+            fetchedpayload.memberships.forEach((membership) => { //Moving subgroup button also remove all the membership and role inside it
                 const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)
                 const old_role = current_role[current_role.length - 1]
                 actions.membershipAsyncUpdate({
@@ -109,7 +112,7 @@ export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
     );
 };
 
-export const Moving_Subgroup_Button = ({ group, subgroup, actions }) => {
+export const Moving_Subgroup_Button = ({ group, subgroup, actions }) => { // Two state moving subgroup button
     const [moving, set_moving] = useState(false);
 
     if (!moving) {
