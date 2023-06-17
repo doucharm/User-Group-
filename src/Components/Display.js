@@ -29,11 +29,10 @@ export const Display =  ({ display_id, set_display_id,actions }) => {
     useEffect(() => {
        if(!chart)
        {
-        Get_Hierarchy().then(res => dispatch(HierarchyActions.hierarchy_update(res)))
+        Get_Hierarchy(display_id).then(res => dispatch(HierarchyActions.hierarchy_update(res)))
         set_chart(true)
        }
-        
-    }, [hierarchy]);
+    }, [display_id,hierarchy]);
 
     if (group && set_chart) {
         return (
@@ -44,7 +43,7 @@ export const Display =  ({ display_id, set_display_id,actions }) => {
         );
 
     }
-    else if (user && set_chart) {
+    else if (user) {
         return (
             <>
                 <button onClick={event => console.log(user)} >Get store </button>

@@ -74,8 +74,6 @@ export const SearchBar = ({actions}) => {
             </>
         )
     } else if (display_id) {
-        console.log("display id going into display", display_id)
-
         return (
 
             <>
@@ -97,7 +95,8 @@ export const SearchBar = ({actions}) => {
         )
     } else {
         return (
-
+            <>
+           <img src="https://scx1.b-cdn.net/csz/news/800/2017/theoreticala.jpg" alt="Enter an ID or name"/> 
             <form onSubmit={handleSubmit}>
                 <label htmlFor="inputId">Enter ID:</label>
                 <input
@@ -108,6 +107,7 @@ export const SearchBar = ({actions}) => {
                 />
                 <button type="submit" title="Submit Form"><Search></Search></button>
             </form>
+            </>
         )
     }
 

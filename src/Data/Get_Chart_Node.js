@@ -1,4 +1,5 @@
 import { authorizedFetch } from "./authorizedFetch"
+// new query that return only values needed to draw chart
 export const Get_Chart_NodeJson = (id) => ({
     "query":
         `query ($id: ID!) {
@@ -31,7 +32,7 @@ export const Get_Chart_NodeJson = (id) => ({
         }`,
     "variables": { "id": id }
 })
-
+//Standard procedures to fetch and handle value
 export const groupByID = (id) =>
     authorizedFetch('/gql', {
         body: JSON.stringify(Get_Chart_NodeJson(id)),
@@ -48,6 +49,12 @@ export const Get_Node_Chart = (id, query, selector) => {
         )
     return p
 }
+/**
+ * Get_Node function return a Group through the use of query GroupByID.
+ * @param {*} the id of the group needed to fetch
+ *
+ * @returns Group with attributes listed in query
+ */
 export const Get_Node = (id) => {
     const selector = (json) => json.data.groupById
     const bodyfunc = async () => {
