@@ -13,12 +13,14 @@ export const GroupType_Select = ({group,actions}) => {
   {
     // This mutation requires the below props
     const payload = {
-      group: group,
+      name: group.name,
       id: group.id,
       lastchange: group.lastchange,
-      grouptypeId: grouptype.id
+      grouptypeId: grouptype.id,
+      valid: true,
+      mastergroupId: group.mastergroup.id
     }
-    actions.grouptypeAsyncUpdate(payload) // And finally we change the group type on server
+    actions.groupAsyncUpdate(payload) // And finally we change the group type on server
   }
     // Show the possible options for the group type once you press it
   return (
