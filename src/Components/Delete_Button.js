@@ -6,7 +6,7 @@ import { XOctagonFill,Trash } from 'react-bootstrap-icons';
  * @param {*} sec_button second state of the button
  * @returns 
  */
-export const Two_State_Button = ({ sec_button, icon: Icon }) => {
+export const TwoStateButton = ({ sec_button, icon: Icon }) => {
     const [state, setState] = useState(false);
     if (!state) {
       return (
@@ -25,13 +25,36 @@ export const Two_State_Button = ({ sec_button, icon: Icon }) => {
       );
     }
   };
-export const DeleteButton = ({ onClick }) =>
+  /**
+ * function to invalidate membership and the role that membership/user're having
+ * @param {*} membership membership to be invalidated
+ */
+const onClickDeleteMember = async ({membership,actions}) => { // 
+    const payload = {
+        id: membership.id,
+        lastchange: membership.lastchange,
+        valid: false // make the user's membership invalid in the group
+    };
+    const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)?.splice(-1)[0]
+    try {
+        await actions.membershipAsyncUpdate(payload);
+        actions.onMemberRemove({ group:{id:membership.group.id}, membership });
+        // also remove user's role along with the membership
+        if (current_role) {
+            actions.roleAsyncUpdate(current_role)
+        }
+    } catch (error) {
+        console.log('Membership update failed:', error);
+    }
+};
+export const DeleteButton = ({ membership, actions }) =>
 {
    const Icon=Trash
-   const button_Delete= <button className='btn btn-sm btn-danger' onClick={onClick}><Icon /> </button>
+   const button_Delete= <button className='btn btn-sm btn-danger' onClick={()=>onClickDeleteMember({membership,actions})}><Icon /> </button>
    return (
-    <Two_State_Button sec_button={button_Delete} icon={Icon} />
+    <TwoStateButton sec_button={button_Delete} icon={Icon} />
    )
 }
+
   
 
