@@ -138,7 +138,7 @@ export const GroupAsyncInsert = (group) => (dispatch, getState) => {
     const groupMutationJSON = (group) => {
         return {
             query: `mutation ($id: ID!, $name: String!, $mastergroupId: ID!) {
-                groupInsert(group: {id: $id, name: $name, mastergroupId: $mastergroupId}) {
+                groupInsert(group: {id: $id, name: $name, mastergroupId: $mastergroupId, valid:true}) {
                   msg
                   group {
                     lastchange

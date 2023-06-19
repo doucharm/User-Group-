@@ -1,7 +1,7 @@
 import { EnvelopeOpen } from "react-bootstrap-icons"
 import { MembershipInsert_SearchBar } from "./Adding Member Button"
 import { Adding_Subgroup_Button } from "./Adding Subgroup"
-import { Two_State_Button, DeleteButton } from "./Delete_Button"
+import { TwoStateButton, DeleteButton } from "./Delete_Button"
 import { Trash } from "react-bootstrap-icons"
 import { Role_Select } from "./Role_Selector"
 import { useState } from "react"
@@ -129,27 +129,7 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
 
 const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
 
-    const onClickDeleteMember = async () => { // condition for remove user from membership of group
-        const payload = {
-            id: membership.id,
-            lastchange: membership.lastchange,
-            valid: false // make the user's membership invalid in the group
-        };
-        const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)
-        const old_role = current_role[current_role.length - 1]
-
-        try {
-            await actions.membershipAsyncUpdate(payload);
-            actions.onMemberRemove({ group, membership });
-            // also remove user's role along with the membership
-            if (old_role) {
-                actions.roleAsyncUpdate(old_role)
-            }
-
-        } catch (error) {
-            console.log('Membership update failed:', error);
-        }
-    };
+    
     if (membership.valid) {
         return (
             <tr className="table-success">
@@ -158,7 +138,7 @@ const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
                 <td>{membership.user.surname}</td>
                 <td>{membership.user.email}</td>
                 <td><Role_Select membership={membership} actions={actions} /></td>
-                <td><DeleteButton onClick={onClickDeleteMember} /></td>
+                <td><DeleteButton membership={membership} actions={actions} /></td>
                 <td><Replace_Button group={group} actions={actions} membership={membership}  >Replace</Replace_Button></td>
                 <td><Moving_Member_Button membership={membership} actions={actions} /></td>
             </tr>

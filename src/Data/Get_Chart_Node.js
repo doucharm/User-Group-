@@ -7,6 +7,7 @@ export const Get_Chart_NodeJson = (id) => ({
           {
             id
             name
+            valid
             grouptype
             {
               nameEn

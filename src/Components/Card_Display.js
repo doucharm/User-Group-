@@ -10,11 +10,11 @@ export const Card_Display = ({ group, set_display_id, actions }) => {
     const chart_view=Get_Chart(show_chart)
     return (
         <main>
-            <div class="card  border-success  bg-info mb-3" >
-                <div class="card-header">
+            <div class="card  border-success border-10 border-dark rounded-6  mb-3" >
+                <div class="card-header border-5 rounded border">
                     <Get_Card_Header group={group} set_display_id={set_display_id} actions={actions} /> 
                 </div>
-                <div class="card-body">
+                <div class="card-body border-5 rounded border">
                     <Table_Display group={group} set_display_id={set_display_id} actions={actions} />   
                 </div>
             </div>

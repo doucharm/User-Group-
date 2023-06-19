@@ -14,7 +14,7 @@ export const Get_Each_Node = async ({id,display_id}) => {
       return await Get_Each_Node({id:sgid,display_id});
     };
     const item = await Get_Node(id);
-    const childrenPromises = item.subgroups?.map((sg) => get_help(sg)); // perform recursive functions to get Nodes from smaller subsgroups
+    const childrenPromises = item.subgroups?.filter(sg =>sg.valid).map(get_help); // perform recursive functions to get Nodes from smaller subsgroups
     const all_children = await Promise.all(childrenPromises);
     const Get_Label_Member = (m) => // TreeNode for member only need their name, surname and email
     {
