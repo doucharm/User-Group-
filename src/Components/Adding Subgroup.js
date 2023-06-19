@@ -21,6 +21,7 @@ export const Adding_Subgroup_Button = ({ group, actions }) => {
                     const new_subgroup = json.data.groupInsert.group
                     actions.onAddSubGroup({group,new_subgroup}) //Insert the new subgroup in store
                 }
+
                 return json
             }
         ) 

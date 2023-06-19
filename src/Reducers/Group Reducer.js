@@ -50,6 +50,17 @@ export const Adding_Subgroup = (state, action) => {
     return state;
 };
 
+export const Updating_Subgroup = (state, action) => {
+    let new_subgroup = action.payload.new_subgroup 
+    const g = action.payload.group
+    const group = state[g.id]
+    const old_subgroup = group.subgroups.find(sub => sub.id === new_subgroup.id)
+    group.subgroups = group.subgroups.map(sub => sub.id === new_subgroup.id ? {...old_subgroup, ... new_subgroup}: sub)
+    console.log(group.subgroups)
+    return state
+    
+}
+
 // This function require a payload of a membership that already has the group that we want to push the membership to
 export const GroupMemberAdd = (state, action) => {
     const membership = action.payload;

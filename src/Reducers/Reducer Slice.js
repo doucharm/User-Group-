@@ -1,4 +1,4 @@
-import { Create_Group, Delete_Group, Update_Group, Adding_Subgroup, Hierarchy_Update } from "./Group Reducer";
+import { Create_Group, Delete_Group, Update_Group, Adding_Subgroup, Hierarchy_Update, Updating_Subgroup } from "./Group Reducer";
 import { Adding_Member, Remove_Member, Update_Member, Moving_Member } from "./Member Reducer";
 import { Update_Role } from "./Role Reducer";
 import { Update_User } from "./User Reducer";
@@ -16,6 +16,7 @@ export const GroupSlice = createSlice({
         group_delete: Delete_Group,
         group_update: Update_Group,
         group_add_sub: Adding_Subgroup,
+        group_update_sub: Updating_Subgroup,
 
         memberAdd: Adding_Member,
         memberRemove: Remove_Member,
@@ -70,6 +71,7 @@ export const bindGroupActions = (dispatch) => {
         onGroupAdd: (g) => dispatch(GroupActions.group_add(g)),
         onGroupDelete: (g) => dispatch(GroupActions.group_delete(g)),
         onAddSubGroup: ({ group, new_subgroup }) => dispatch(GroupActions.group_add_sub({ group, new_subgroup })),
+        onUpdateSubGroup: ({ group, new_subgroup }) => dispatch(GroupActions.group_update_sub({ group, new_subgroup })),
 
         onMemberAdd: ({ membership, group }) => dispatch(GroupActions.memberAdd({ membership, group })),
         onMemberRemove: ({ group, membership }) => dispatch(GroupActions.memberRemove({ group, membership })),

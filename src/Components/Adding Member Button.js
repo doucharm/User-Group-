@@ -49,7 +49,6 @@ export const AddingMember_Button = ({user,group,actions}) => {
         }
 
     }
-
     return (
         <button onClick={onclick}><PersonAdd></PersonAdd></button>
     )
