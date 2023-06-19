@@ -8,11 +8,24 @@ import { v1 } from 'uuid'
 
 export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
     const [destination, set_destination] = useState("");
-    const [destinationGroup, set_destinationGroup] = useState(null);
 
     const onInputChange = (e) => {
         set_destination(e.target.value);
     };
+
+    return (
+        <>
+            <input className="form-control-warning" onChange={onInputChange} placeholder="Enter destination group's ID" />
+            <button onClick={toggle_moving}>
+                <RewindCircleFill />
+            </button>
+            <Moving_Condition group={group} item={item} actions={actions} destination={destination} />
+        </>
+    );
+};
+
+export const Moving_Condition = ({ group, item, actions, destination }) => {
+    const [destinationGroup, set_destinationGroup] = useState(null);
 
     useEffect(() => {
 
@@ -44,7 +57,8 @@ export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
                 lastchange: item.lastchange,
                 name: item.name,
                 valid: false,
-                mastergroupId: item.mastergroup.id
+                mastergroupId: item.mastergroup.id,
+                grouptypeId: item.grouptype.id
             };
 
             console.log("Member subgroup:", fetchedpayload.memberships);
@@ -54,24 +68,24 @@ export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
                 name: item.name,
                 mastergroupId: destination,
             };
-            
+
             actions.groupAsyncInsert(payload_arrive)
-            .then(
-                resp => resp.json()
-            )
-            .then(
-                json => {
-                    const msg = json.data.groupInsert.msg
-                    if (msg === "fail") {
-                        console.log("Update failed")
-                    } else {
-                        const new_subgroup = json.data.groupInsert.group
-                        console.log(new_subgroup)
-                        actions.onAddSubGroup({group:destinationGroup.payload,new_subgroup:new_subgroup}) //Insert the new subgroup in store
+                .then(
+                    resp => resp.json()
+                )
+                .then(
+                    json => {
+                        const msg = json.data.groupInsert.msg
+                        if (msg === "fail") {
+                            console.log("Update failed")
+                        } else {
+                            const new_subgroup = json.data.groupInsert.group
+                            console.log(new_subgroup)
+                            actions.onAddSubGroup({ group: destinationGroup.payload, new_subgroup: new_subgroup }) //Insert the new subgroup in store
+                        }
+                        return json
                     }
-                    return json
-                }
-            ) 
+                )
             actions.groupAsyncUpdate(payload_leave);
             actions.onGroupDelete({ group, item });
             fetchedpayload.memberships.forEach((membership) => { //Moving subgroup button also remove all the membership and role inside it
@@ -91,19 +105,12 @@ export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
             console.error("Error fetching item information:", error);
         }
     };
-
     return (
-        <>
-            <input className="form-control-warning" onChange={onInputChange} placeholder="Enter destination group's ID" />
-            <button onClick={toggle_moving}>
-                <RewindCircleFill />
-            </button>
-            <button onClick={onMove}>
-                <RocketTakeoff />
-            </button>
-        </>
-    );
-};
+        <button onClick={onMove}>
+            <RocketTakeoff />
+        </button>
+    )
+}
 
 export const Moving_Subgroup_Button = ({ group, subgroup, actions }) => { // Two state moving subgroup button
     const [moving, set_moving] = useState(false);
