@@ -59,6 +59,10 @@ export const GroupTypeAsyncUpdate = ({ group, id, lastchange, grouptypeId }) => 
                         id
                         name
                         valid
+                        grouptype {
+                            id
+                            nameEn
+                        }
                     }
                     memberships {
                         id
