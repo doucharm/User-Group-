@@ -58,9 +58,10 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
             );
             console.log(check_existance)
             if (!check_existance) {
+
                 actions.userAsyncUpdate(modify_user).then(actions.membershipAsyncInsert(payload)) // If not then we add it to the server and the store
             } else {
-                console.log("existed") // We wont be alble to add the user once more if its already existed
+                console.warn("existed") // We wont be alble to add the user once more if its already existed
             }
 
         }

@@ -2,13 +2,19 @@ import { useState } from "react"
 import {  RewindCircleFill, RocketTakeoff, RocketTakeoffFill } from "react-bootstrap-icons"
 
 import {v1} from 'uuid'
-
+/*
+ * Component for moving a member in a group to another group.
+ * @param {*} membership membership contain both current group and user ID
+ * @param {*} toggle_moving function that toggle the moving button
+ * @param {*} actions global actions
+ * @returns a suitable display component based on the id inputed
+ */
 export const Moving_Member = ({membership,actions,toggle_moving}) =>
 {
     const [destination,set_destination] = useState("")
     const onInputChange  = (e) =>
     {
-        set_destination(e.target.value)
+        set_destination(e.target.value) // set input destination
     }
     return (
         <>
@@ -20,7 +26,7 @@ export const Moving_Member = ({membership,actions,toggle_moving}) =>
 }
 export const Moving_Confirm = ({membership,destination,actions}) =>
 {
-    const onMove = () =>
+    const onMove = () => // perform moving member by invaliding this membership and create a new valid membership in the intended destination
     {
         const payload_leave = 
         {
