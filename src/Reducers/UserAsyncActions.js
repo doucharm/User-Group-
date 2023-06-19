@@ -1,5 +1,7 @@
+import { authorizedFetch } from "Data/authorizedFetch";
 import { UserActions } from "./Reducer Slice"
 import { UserQuery } from "Data/UserQuery";
+
 
 // Ask for the user on server and adds it or update it in the store
 export const UserFetchHelper = (id, query, resultselector, dispatch, getState) => {
@@ -38,38 +40,41 @@ export const UserFetch = (id) => (dispatch, getState) => {
 }
 
 // This mutation will help to update a user to the server, it requires the input as a modified user
-export const UserAsyncUpdate = (user) => (dispatch, getState) => {
-    const userMutationJSON = (user) => {
-        return {
-            query: `mutation($lastchange: DateTime!, $id: ID!, $email: String!, $name: String!, $surname: String!) {
-                userUpdate(
-                  user: {id: $id, lastchange: $lastchange, surname: $surname, email: $email, name: $name}
-                ) {
-                  id
-                  msg
-                  user {
-                    name
-                    surname
-                    email
-                    lastchange
-                  }
-                }
-              }`,
-            variables: user
-        }
+const userUpdateMutationJSON = (user) => {
+    return {
+        query: `mutation($lastchange: DateTime!, $id: ID!, $email: String!, $name: String!, $surname: String!) {
+            userUpdate(
+              user: {id: $id, lastchange: $lastchange, surname: $surname, email: $email, name: $name}
+            ) {
+              id
+              msg
+              user {
+                name
+                surname
+                email
+                lastchange
+              }
+            }
+          }`,
+        variables: user
     }
+}
 
-    const params = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        cache: 'no-cache', 
-        redirect: 'follow', 
-        body: JSON.stringify(userMutationJSON(user))
+const userInsertMutationJSON = (user) => {
+    return {
+        query: `mutation ($id: ID!, $name: String!, $surname: String!,$email: String!) {
+            userInsert(user: {id: $id, name: $name, surname: $surname, email: $email}) {
+              msg
+            }
+          }`,
+        variables: user
     }
+}
+
+export const UserAsyncUpdate = (user) => (dispatch, getState) => {
+
     // Fetching it to server and then updating it to the store
-    return fetch('/api/gql', params)
+    return authorizedFetch('/api/gql', { body: JSON.stringify(userUpdateMutationJSON(user)) })
         .then(
             resp => resp.json()
         )
@@ -89,28 +94,9 @@ export const UserAsyncUpdate = (user) => (dispatch, getState) => {
 
 // This mutation helps inserting a customized user to the user's page
 export const UserAsyncInsert = (user) => (dispatch, getState) => {
-    const userMutationJSON = (user) => {
-        return {
-            query: `mutation ($id: ID!, $name: String!, $surname: String!,$email: String!) {
-                userInsert(user: {id: $id, name: $name, surname: $surname, email: $email}) {
-                  msg
-                }
-              }`,
-            variables: user
-        }
-    }
 
-    const params = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        cache: 'no-cache', 
-        redirect: 'follow', 
-        body: JSON.stringify(userMutationJSON({ ...user }))
-    }
     // And finally fetching it to the server
-    return fetch('/api/gql', params)
+    return fetch('/api/gql', { body: JSON.stringify(userInsertMutationJSON({ ...user })) })
 }
 
 

@@ -6,9 +6,7 @@ import { useSelector } from 'react-redux';
 
 // Replace Button is a combination of Adding Member Button and Delete Button
 // It is used to replace a member of a group with another user
-
-export const Replace_Button = ({ group, actions, membership }) => {
-    const [searchMode, setSearchMode] = useState(false);
+export const Replace_Condition = ({ group, membership, actions }) => {
     const [inputId, setInputId] = useState('');
     const [usersList, setUsersList] = useState([]);
     const users = useSelector((state) => state.users);
@@ -41,13 +39,13 @@ export const Replace_Button = ({ group, actions, membership }) => {
             id: membershipId,
             valid: true,
             user: modifyUser,
-            group: {id:membership.group.id},
+            group: { id: membership.group.id },
             lastchange: Date.now(),
         };
 
         const payload = {
             store_update: {
-                group: {id:membership.group.id},
+                group: { id: membership.group.id },
                 membership: newMembership,
             },
             id: newMembership.id,
@@ -75,7 +73,7 @@ export const Replace_Button = ({ group, actions, membership }) => {
                         if (moving_role.roletype) {
                             const new_role =
                             {
-                                role:moving_role.roletype,
+                                role: moving_role.roletype,
                                 membership: newMembership,
 
                             }
@@ -108,36 +106,41 @@ export const Replace_Button = ({ group, actions, membership }) => {
             </tr>
         );
     };
+    return (
+        <>
+            <form method="GET" id="my_form" onSubmit={handleSubmit}></form>
+            <table className="table table-sm table-info">
+                <caption>Possible users with that name:</caption>
+                <thead>
+                    <label htmlFor="Id" form="my_form">Add new member:</label>
+                    <input
+                        form="my_form"
+                        id="Id"
+                        type="text"
+                        value={inputId}
+                        onChange={handleInputChange}
+                    />
+                    <button type="submit" title="Submit Form" form="my_form"><ArrowLeftRight /></button>
+                    <br></br>
+                    <td>Replace</td>
+                </thead>
+                <tbody>
+                    {usersList?.map((user) => <UserBasic key={user.id} user={user} />)}
+                </tbody>
+            </table>
+        </>
+    );
+}
+
+export const Replace_Button = ({ group, actions, membership }) => {
+    const [searchMode, setSearchMode] = useState(false);
 
     const handleClick = () => {
         setSearchMode(true);
     };
 
     if (searchMode) { // Searchbar using for search the wanted user by name
-        return (
-            <>
-                <form method="GET" id="my_form" onSubmit={handleSubmit}></form>
-                <table className="table table-sm table-info">
-                    <caption>Possible users with that name:</caption>
-                    <thead>
-                        <label htmlFor="Id" form="my_form">Add new member:</label>
-                        <input
-                            form="my_form"
-                            id="Id"
-                            type="text"
-                            value={inputId}
-                            onChange={handleInputChange}
-                        />
-                        <button type="submit" title="Submit Form" form="my_form"><ArrowLeftRight /></button>
-                        <br></br>
-                        <td>Replace</td>
-                    </thead>
-                    <tbody>
-                        {usersList?.map((user) => <UserBasic key={user.id} user={user} />)}
-                    </tbody>
-                </table>
-            </>
-        );
+        <Replace_Condition group={group} membership={membership} actions={actions} />
     } else {
         return (
             <button onClick={handleClick}><ArrowLeftRight /></button>
