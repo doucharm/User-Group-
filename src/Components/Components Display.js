@@ -110,9 +110,9 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
                 <td>{item.id}</td>
                 <td>{item.name}</td>
                 <td>{item.grouptype?.nameEn}</td>
-                <button onClick={() => set_display_id(item.id)}><EnvelopeOpen></EnvelopeOpen></button>
+                <td><button onClick={() => set_display_id(item.id)}><EnvelopeOpen></EnvelopeOpen></button></td>
                 <td><DeleteButton onClick={onClickDeleteGroup} /></td>
-                <Moving_Subgroup_Button group={group} subgroup={item} actions={actions} />
+                <td><Moving_Subgroup_Button group={group} subgroup={item} actions={actions} /></td>
             </tr>
         )
     }

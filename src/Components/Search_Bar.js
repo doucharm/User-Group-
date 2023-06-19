@@ -3,8 +3,12 @@ import { validate } from 'uuid'
 import { fetch_by_letters } from 'Data/UserByLetters';
 import { DoorOpen, Search } from 'react-bootstrap-icons';
 import { Display } from './Display';
+/**
+ * Search bar to handle search input.
+ * @param {*} actions global actions
+ * @returns an ID and it's hook will be passed on to process onto the display components or a list of possible users that match 
+ */
 export const SearchBar = ({actions}) => {
-    console.log('search bar called')
     const [display_id, set_display_id] = useState(null)
     const [foundID, set_found] = useState(false)
     const [inputId, setInputId] = useState('');
@@ -12,23 +16,8 @@ export const SearchBar = ({actions}) => {
     const handleInputChange = (event) => {
         setInputId(event.target.value);
     };
-    const UserBasic = ({ user }) => {
-        const findID = () => {
-            console.log("Event called ")
-            set_display_id(user.id)
-            set_found(true)
-        }
-        return (
-            <tr>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.surname}</td>
-                <td>{user.email}</td>
-                <button onClick={event => findID()}><DoorOpen></DoorOpen></button>
-            </tr>
-        )
-    }
-    const handleSubmit = (event) => {
+
+    const handleSubmit = (event) => {  //process the ID inputed and check if it's a valid ID, a string indicating name or just invalid
         console.log(inputId)
         event.preventDefault();
         if (validate(inputId)) {
@@ -42,7 +31,7 @@ export const SearchBar = ({actions}) => {
     }
     console.log(users_list)
     console.log(foundID)
-    if (users_list.length > 0 && !foundID) {
+    if (users_list.length > 0 && !foundID) { // return a list of user that match the phrase entered
         return (
             <>
                 <form onSubmit={handleSubmit}>
@@ -66,14 +55,14 @@ export const SearchBar = ({actions}) => {
                         <td>     </td>
                     </thead>
                     <tbody>
-                        {users_list?.map((user) => <UserBasic user={user} />)}
+                        {users_list?.map((user) => <UserBasic user={user} set_display_id={set_display_id } set_found={set_found} />)}
                     </tbody>
 
                 </table>
 
             </>
         )
-    } else if (display_id) {
+    } else if (display_id) { // pass the validated ID onto Display.js component
         return (
 
             <>
@@ -112,3 +101,19 @@ export const SearchBar = ({actions}) => {
     }
 
 };
+export const UserBasic = ({ user, set_display_id,set_found}) => { // simple component to display user list and link to open these user
+    const findID = () => {
+
+        set_display_id(user.id)
+        set_found(true)
+    }
+    return (
+        <tr>
+            <td>{user.id}</td>
+            <td>{user.name}</td>
+            <td>{user.surname}</td>
+            <td>{user.email}</td>
+            <button onClick={event => findID()}><DoorOpen></DoorOpen></button>
+        </tr>
+    )
+}

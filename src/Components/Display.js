@@ -1,11 +1,17 @@
 import { Card_Display } from './Card_Display';
 import { useEffect , useState} from 'react';
 import { useSelector } from 'react-redux';
-import { actions, dispatch } from 'pages/Redux Store';
+import {  dispatch } from 'pages/Redux Store';
 import { UserDisplay } from './User_Display';
 import { Get_Hierarchy } from 'Data/Group_Hierarchy';
 import { HierarchyActions } from 'Reducers/Reducer Slice';
-
+/**
+ * This is the main function that decide which component will be shown based on the display_id.
+ * @param {*} display_id variable id of entity which we want to display
+ * @param {*} set_display_id react Hook of the display_id variable
+ * @param {*} actions global actions
+ * @returns a suitable display component based on the id inputed
+ */
 export const Display =  ({ display_id, set_display_id,actions }) => {
     let display = 0 // Local variables to avoid unnecessary fetch
     const groups = useSelector((state) => state.groups);
@@ -15,7 +21,7 @@ export const Display =  ({ display_id, set_display_id,actions }) => {
     const user = users[display_id];
     const hierarchy=useSelector(state => state.hierarchy)
     const [chart, set_chart] = useState(false)
-
+    // fetching necessary data from the store or if not available get it from server
     useEffect(() => {
         if (!group) {
             actions.groupFetch(display_id).then(display = 0).catch(display = 1)
@@ -34,7 +40,7 @@ export const Display =  ({ display_id, set_display_id,actions }) => {
        }
     }, [display_id,hierarchy]);
 
-    if (group && set_chart) {
+    if (group && set_chart) { // display the group and hierarchy chart
         return (
             <>
                 <button onClick={event => console.log(hierarchy)} >Get store </button>
@@ -43,7 +49,7 @@ export const Display =  ({ display_id, set_display_id,actions }) => {
         );
 
     }
-    else if (user) {
+    else if (user) { //display the user 
         return (
             <>
                 <button onClick={event => console.log(user)} >Get store </button>

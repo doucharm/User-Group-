@@ -1,15 +1,16 @@
-  .organizationchart-demo .p-organizationchart .member {
+
+ .organizationchart-demo .p-organizationchart .member { /* template for organization chart */
     padding: 0;
     border: 0 none;
     background-color: #8fe3ae;
-    display: inline-block; /* Added this line */
+    display: inline-block; 
     width: auto;
   }
   .organizationchart-demo .p-organizationchart .group {
     background-color: #0648f1;
     color: #ffffff;
     border-radius: 4px;
-    display: inline-block; /* Added this line */
+    display: inline-block; 
     width: auto;
   }
   
@@ -17,14 +18,14 @@
     background-color: #8f18a1;
     color: #080808;
     border-radius: 4px;
-    display: inline-block; /* Added this line */
+    display: inline-block; 
     width: auto;
   }
   .organizationchart-demo .p-organizationchart .selected {
     background-color: #6dfc00;
     color: #ff0000;
     border-radius: 8px;
-    display: inline-block; /* Added this line */
+    display: inline-block; 
     width: auto;
     
   }
