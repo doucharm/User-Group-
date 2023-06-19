@@ -5,6 +5,9 @@ export const HeaderTextInput = ({ group, actions }) => {
         const payload = {
             id: group.id,
             lastchange: group.lastchange,
+            valid: true,
+            grouptypeId: group.grouptype.id,
+            mastergroupId: group.mastergroup.id,
             name: value
         }
         actions.groupAsyncUpdate(payload) //Update the group's name on sever

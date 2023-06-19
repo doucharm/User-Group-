@@ -1,3 +1,4 @@
+import { authorizedFetch } from "Data/authorizedFetch";
 import { GroupActions } from "./Reducer Slice";
 import { GroupQuery } from "Data/GroupQuery";
 
@@ -37,212 +38,104 @@ export const GroupFetch = (id) => (dispatch, getState) => {
     }
     return bodyfunc()
 }
-// Mutation to update group on server, we pass the neccessary params which is modified to this function
-export const GroupTypeAsyncUpdate = ({ group, id, lastchange, grouptypeId }) => (dispatch, getState) => {
-    const groupMutationJSON = (group) => {
-        return {
-            query: `mutation ($id: ID!, $lastchange: DateTime!, $grouptypeId: ID!) {
-                groupUpdate(group: {id: $id, lastchange: $lastchange, grouptypeId: $grouptypeId}) {
-                  msg
-                  group {
-                    id
-                    name
-                    lastchange
-                    mastergroup {
-                        id
-                    }
-                    grouptype { 
-                        id
-                        nameEn
-                    }
-                    subgroups {
-                        id
-                        name
-                        valid
-                        grouptype {
-                            id
-                            nameEn
-                        }
-                    }
-                    memberships {
-                        id
-                        lastchange
-                        valid
-                        group
-                        {
-                            id
-                        }
-                        user {
-                            id
-                            name
-                            surname
-                            email
-                            lastchange
-                            roles {
-                                lastchange
-                                id
-                                startdate
-                                enddate
-                                group
-                                {
-                                    id
-                                }
-                                valid
-                                roletype {
-                                id
-                                name
-                                nameEn
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-              }`,
-            variables: group
-        }
-    }
 
-    const params = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        redirect: 'follow', // manual, *follow, error
-        body: JSON.stringify(groupMutationJSON({ id, lastchange, grouptypeId }))
-    }
-
-    //After fetching it to the server, we update the group with the new grouptype to store
-    return fetch('/api/gql', params)
-        //return authorizedFetch('/api/gql', params)
-        .then(
-            resp => resp.json()
-        )
-        .then(
-            json => {
-                const msg = json.data.groupUpdate.msg
-                if (msg === "fail") {
-                    console.log("Update selhalo")
-                } else {
-                    //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
-                    const newgroup = json.data.groupUpdate.group
-                    dispatch(GroupActions.group_update({ ...group, ...newgroup }))
-                }
-                return json
+const groupinsertMutationJSON = (group) => {
+    return {
+        query: `mutation ($id: ID!, $name: String!, $mastergroupId: ID!) {
+            groupInsert(group: {id: $id, name: $name, mastergroupId: $mastergroupId}) {
+              msg
+              group {
+                lastchange
+                name
+                id
+                valid
+              }
             }
-        )
+          }`,
+        variables: group
+    }
 }
 // Mutation to insert a new group to the server, this requires a customized group as an input
 export const GroupAsyncInsert = (group) => (dispatch, getState) => {
-    const groupMutationJSON = (group) => {
-        return {
-            query: `mutation ($id: ID!, $name: String!, $mastergroupId: ID!) {
-                groupInsert(group: {id: $id, name: $name, mastergroupId: $mastergroupId}) {
-                  msg
-                  group {
-                    lastchange
-                    name
-                    id
-                    valid
-                  }
-                }
-              }`,
-            variables: group
-        }
-    }
-    const params = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        redirect: 'follow', // manual, *follow, error
-        body: JSON.stringify(groupMutationJSON(group))
-    }
     // Fetch it to the server
-    return fetch('/api/gql', params)
+    return authorizedFetch('/gql', {
+        body: JSON.stringify(groupinsertMutationJSON(group)),
+    })
 }
 
-// Mutation to update group on server, we pass the neccessary params which is modified to this function
-export const GroupAsyncUpdate = ({ group, id, lastchange, name, valid, mastergroupId }) => (dispatch, getState) => {
-    const groupMutationJSON = (group) => {
-        return {
-            query: `mutation ($id: ID!, $lastchange: DateTime!, $name: String!, $valid: Boolean!, $mastergroupId: ID!) {
-                groupUpdate(group: {id: $id, lastchange: $lastchange, name: $name, valid: $valid, mastergroupId: $mastergroupId}) {
-                  msg
-                  id
-                  group {
+
+
+const groupupdateMutationJSON = (group) => {
+    return {
+        query: `mutation ($id: ID!, $lastchange: DateTime!, $name: String!, $valid: Boolean!, $mastergroupId: ID!, $grouptypeId: ID!) {
+            groupUpdate(group: {id: $id, lastchange: $lastchange, name: $name, valid: $valid, mastergroupId: $mastergroupId, grouptypeId: $grouptypeId}) {
+              msg
+              id
+              group {
+                id
+                name
+                lastchange
+                valid
+                mastergroup {
+                    id
+                }
+                grouptype { 
+                    id
+                    nameEn
+                }
+                subgroups {
                     id
                     name
+                    valid
+                    lastchange
+                    mastergroup{
+                        id
+                    }
+                }
+                memberships {
+                    id
                     lastchange
                     valid
-                    mastergroup {
+                    group
+                    {
                         id
                     }
-                    grouptype { 
-                        id
-                        nameEn
-                    }
-                    subgroups {
+                    user {
                         id
                         name
-                        valid
+                        surname
+                        email
                         lastchange
-                        mastergroup{
+                        roles {
+                            lastchange
                             id
-                        }
-                    }
-                    memberships {
-                        id
-                        lastchange
-                        valid
-                        group
-                        {
-                            id
-                        }
-                        user {
+                            startdate
+                            enddate
+                            group
+                            {
+                                id
+                            }
+                            valid
+                            roletype {
                             id
                             name
-                            surname
-                            email
-                            lastchange
-                            roles {
-                                lastchange
-                                id
-                                startdate
-                                enddate
-                                group
-                                {
-                                    id
-                                }
-                                valid
-                                roletype {
-                                id
-                                name
-                                nameEn
-                                }
+                            nameEn
                             }
                         }
                     }
-                  }
                 }
-              }`,
-            variables: group
-        };
+              }
+            }
+          }`,
+        variables: group
     };
-
-    const params = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        redirect: 'follow', // manual, *follow, error
-        body: JSON.stringify(groupMutationJSON({ id, lastchange, name, valid, mastergroupId }))
-    };
+};
+// Mutation to update group on server, we pass the neccessary params which is modified to this function
+export const GroupAsyncUpdate = ({ group, id, lastchange, name, valid, mastergroupId, grouptypeId }) => (dispatch, getState) => {
     // Afterward, we update it to store
-    return fetch('/api/gql', params)
+    return authorizedFetch('/gql', {
+        body: JSON.stringify(groupupdateMutationJSON({ id, lastchange, name, valid, mastergroupId, grouptypeId })),
+    })
         .then(resp => resp.json())
         .then(json => {
             console.log('JSON response:', json)
@@ -258,5 +151,4 @@ export const GroupAsyncUpdate = ({ group, id, lastchange, name, valid, mastergro
         .catch((error) => {
             console.log('Error occurred:', error);
         });
-
 };

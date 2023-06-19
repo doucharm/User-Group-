@@ -4,6 +4,58 @@ import { v1 } from 'uuid';
 import { fetch_by_letters } from 'Data/UserByLetters';
 import { useSelector } from 'react-redux';
 
+export const AddingMember_Button = ({user,group,actions}) => {
+    const onclick = () => {
+        const membership_id = v1() //Generate an id for the membership of that user
+        const modify_user = {
+            ...user,
+            roles: [],
+            membership:
+                [
+                    {
+                        id: membership_id
+                    }
+                ]
+        }
+        // Give the user we modify a specific membership id
+        const membership =
+        {
+            id: membership_id,
+            valid: true,
+            user: modify_user,
+            group: group
+        }
+        // We also correspond the membership of that user the appropriate props
+        const payload = {
+            store_update:
+            {
+                group: group,
+                membership: membership
+            },
+            user_id: modify_user.id,
+            group_id: group.id,
+            id:membership_id
+        }
+        // The payload that requires userid, groupid and the membership id to assign the user to the previously called group
+        const check_existance = group.memberships.find(
+            (m) => m.user.id === payload.user_id && m.valid //Check if the user has already been in the group
+        );
+        console.log(check_existance)
+        if (!check_existance) {
+
+            actions.userAsyncUpdate(modify_user).then(actions.membershipAsyncInsert(payload)) // If not then we add it to the server and the store
+        } else {
+            console.warn("existed") // We wont be alble to add the user once more if its already existed
+        }
+
+    }
+
+    return (
+        <button onClick={onclick}><PersonAdd></PersonAdd></button>
+    )
+    
+}
+
 
 export const MembershipInsert_SearchBar = ({ group, actions }) => {
     const [inputId, setInputId] = useState(''); //Define the input for the search bar
@@ -19,59 +71,7 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
         actions.userFetch(inputId) //Fetch the user by id inputId
         fetch_by_letters(inputId, set_users_list) //Fetch the user by letter which is the inputId
     }
-    const UserBasic = ({ user }) => { //This function return a table that return a row of user that contains an add button to insert the user to the group we're seeing
-
-        const onclick = () => {
-            const membership_id = v1() //Generate an id for the membership of that user
-            const modify_user = {
-                ...user,
-                roles: [],
-                membership:
-                    [
-                        {
-                            id: membership_id
-                        }
-                    ]
-            }
-            // Give the user we modify a specific membership id
-            const membership =
-            {
-                id: membership_id,
-                valid: true,
-                user: modify_user,
-                group: group
-            }
-            // We also correspond the membership of that user the appropriate props
-            const payload = {
-                store_update:
-                {
-                    group: group,
-                    membership: membership
-                },
-                user_id: modify_user.id,
-                group_id: group.id,
-                id:membership_id
-            }
-            // The payload that requires userid, groupid and the membership id to assign the user to the previously called group
-            const check_existance = group.memberships.find(
-                (m) => m.user.id === payload.user_id && m.valid //Check if the user has already been in the group
-            );
-            console.log(check_existance)
-            if (!check_existance) {
-
-                actions.userAsyncUpdate(modify_user).then(actions.membershipAsyncInsert(payload)) // If not then we add it to the server and the store
-            } else {
-                console.warn("existed") // We wont be alble to add the user once more if its already existed
-            }
-
-        }
-        return (
-            <tr>
-                <td>{user.name} {user.surname}</td>
-                <button onClick={onclick}><PersonAdd></PersonAdd></button>
-            </tr>
-        )
-    }
+    
     // Down below we have 2 diffence interface, 1 for when you dont trigger the HandleSubmit and the other is to show all of the users with the relative letters
     if (users_list.length === 0) {
         return (
@@ -112,10 +112,19 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
                         <td>Name</td>
                     </thead>
                     <tbody>
-                        {users_list?.map((user) => <UserBasic user={user} />)}
+                        {users_list?.map((user) => <UserBasic user={user} group={group} actions={actions}/>)}
                     </tbody>
                 </table>
             </>
         )
     }
+}
+
+const UserBasic = ({ user, group, actions }) => { //This function return a table that return a row of user that contains an add button to insert the user to the group we're seeing
+    return (
+        <tr>
+            <td>{user.name} {user.surname}</td> 
+            <AddingMember_Button user = {user} group={group} actions={actions}/>
+        </tr>
+    )
 }
