@@ -42,7 +42,7 @@ export const Get_Each_Node = async ({id,display_id}) => {
           data:
           {
             name:item.name,
-            type:item.grouptype.nameEn
+            type:null
           },
           type:"group",
           className: item.id===display_id? 'selected' : 'group',
@@ -59,7 +59,7 @@ export const Get_Each_Node = async ({id,display_id}) => {
           data:
           {
             name:item.name,
-            type:item.grouptype.nameEn
+            type:null
           },
           type:"group",
           className: item.id===display_id? 'selected' : 'endgroup',

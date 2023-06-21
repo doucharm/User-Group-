@@ -7,7 +7,6 @@ import { useState } from "react"
 import { Replace_Button } from "./Replace_Button"
 import { Moving_Member_Button } from "./Moving_Member"
 import { Moving_Subgroup_Button } from "./Moving_Subgroup"
-import { useSelector } from "react-redux/es"
 
 // This function shows the table display which contains the users of the group
 export const Table_Display = ({ group, set_display_id, actions }) => {

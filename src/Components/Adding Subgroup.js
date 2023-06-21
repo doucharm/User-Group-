@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { DatabaseFillAdd } from 'react-bootstrap-icons';
 import { TwoStateButton } from './Delete_Button';
-import { Adding_Subgroup } from 'Reducers/Group Reducer';
 export const Adding_Subgroup_Button = ({ group, actions }) => {
     const [new_sub, set_new_sub] = useState({ // Create a variable that takes the props id and name from the input below, this return the
         id: "",                     // subgroup with the mastergroup id is the group we're in
@@ -17,7 +16,7 @@ export const Adding_Subgroup_Button = ({ group, actions }) => {
         <>
             <label>New subgroup Id:<input type="text" name="id" value={new_sub.id} placeholder='Enter new sub group id' onChange={handleChange} /> </label>
             <label>New subgroup name:<input type="text" name="name" value={new_sub.name} placeholder='Enter new sub group name' onChange={handleChange} /> </label>
-            <button className='btn btn-sm btn-success' onClick={() => onSubgroupAdd({ new_sub, group, actions })}><DatabaseFillAdd></DatabaseFillAdd></button>
+            <button className='btn btn-sm btn-success' onClick={() => onSubgroupAdd({ new_sub, group, actions })}><DatabaseFillAdd /></button>
         </>
 
     return (
@@ -46,3 +45,4 @@ const onSubgroupAdd = ({ new_sub, group, actions }) => {
             }
         )
 }
+

@@ -11,7 +11,7 @@ export const Card_Display = ({ group, set_display_id, actions }) => {
     return (
         <main>
             <div class="card  border-success border-10 border-dark rounded-6  mb-3" >
-                <div class="card-header border-5 rounded border">
+                <div class="card-header border-5 rounded border bg-secondary">
                     <Get_Card_Header group={group} set_display_id={set_display_id} actions={actions} /> 
                 </div>
                 <div class="card-body border-5 rounded border">
@@ -36,12 +36,10 @@ export const Get_Card_Header = ({ group, set_display_id, actions }) => {
     return (
         <div>
             <MasterGroup />
-        <tr>
-            ID: {group.id} <br />
-            <HeaderTextInput group={group} actions={actions}/>
-            Last change:{group.lastchange} <br />
-            Group type: <GroupType_Select group={group} actions={actions}/> 
-        </tr>
+            <h3 class="text-left font-weight-bold">ID: {group.id} </h3>
+            <h2 class="text-left"><HeaderTextInput group={group} actions={actions}/></h2>
+            <h3 class="text-left font-weight-bold">Last change:{group.lastchange} </h3>
+            <h3 class="text-left"><GroupType_Select group={group} actions={actions}/></h3>
         </div>
     )
 }

@@ -52,10 +52,7 @@ export const AddingMember_Button = ({user,group,actions}) => {
     return (
         <button onClick={onclick}><PersonAdd></PersonAdd></button>
     )
-    
 }
-
-
 export const MembershipInsert_SearchBar = ({ group, actions }) => {
     const [inputId, setInputId] = useState(''); //Define the input for the search bar
     const [users_list, set_users_list] = useState([]) //Convert users in store to array 
