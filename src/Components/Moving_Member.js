@@ -1,15 +1,15 @@
 import { useState } from "react"
-import {  RewindCircleFill, RocketTakeoff, RocketTakeoffFill } from "react-bootstrap-icons"
-
+import { RocketTakeoffFill } from "react-bootstrap-icons"
+import { TwoStateButton } from "./Delete_Button"
 import {v1} from 'uuid'
-/*
+/**
  * Component for moving a member in a group to another group.
  * @param {*} membership membership contain both current group and user ID
  * @param {*} toggle_moving function that toggle the moving button
  * @param {*} actions global actions
- * @returns a suitable display component based on the id inputed
+ * @returns component necessary for entering data
  */
-export const Moving_Member = ({membership,actions,toggle_moving}) =>
+export const MovingMember = ({membership,actions}) =>
 {
     const [destination,set_destination] = useState("")
     const onInputChange  = (e) =>
@@ -19,14 +19,23 @@ export const Moving_Member = ({membership,actions,toggle_moving}) =>
     return (
         <>
         <input className = "form-control-warning "onChange={onInputChange} placeholder="Enter destination group's ID"/>
-        <button onClick={toggle_moving}><RewindCircleFill></RewindCircleFill></button>
-        <Moving_Confirm membership={membership} destination={destination} actions={actions} />
+        <button onClick={()=> onMove({membership,destination,actions})} className=" btn btn-danger"><RocketTakeoffFill></RocketTakeoffFill></button>
         </>
     )
 }
-export const Moving_Confirm = ({membership,destination,actions}) =>
+export const Moving_Member_Button =  ({membership, actions}) =>
 {
-    const onMove = () => // perform moving member by invaliding this membership and create a new valid membership in the intended destination
+    return (
+        <TwoStateButton sec_button={<MovingMember membership={membership} actions={actions}/>} icon={RocketTakeoffFill} />
+    )
+}
+/**
+ * onMove function perform 2 actions: adding a user to a selected group and removing him at current group
+ * @param {*} membership membership contain both current group and user ID
+ * @param {*} destination the group's ID that will receive the user
+ * @param {*} actions global actions
+ */
+export const onMove = ({destination,membership,actions}) => // perform moving member by invaliding this membership and create a new valid membership in the intended destination
     {
         const payload_leave = 
         {
@@ -48,28 +57,7 @@ export const Moving_Confirm = ({membership,destination,actions}) =>
                 membership:null
             }
         }
-
         actions.membershipAsyncInsert(payload_arrive)
         actions.membershipAsyncUpdate(payload_leave)
         actions.onMemberRemove({group:{id:membership.group.id},membership:membership})
     }
-    return (
-        <button onClick={onMove}><RocketTakeoff></RocketTakeoff></button>
-    )
-}
-export const Moving_Member_Button =  ({membership, actions}) =>
-{
-    const [moving,set_moving] = useState(false)
-
-    if(!moving)
-    {
-        return (
-            <button onClick={event => set_moving(true)}><RocketTakeoffFill></RocketTakeoffFill></button>
-        )
-    } else 
-    {
-        return (
-           <Moving_Member membership={membership} actions={actions} toggle_moving={event => set_moving(false)} />
-        )
-    }
-}

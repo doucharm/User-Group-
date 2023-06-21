@@ -92,7 +92,7 @@ export const bindGroupActions = (dispatch) => {
         
         roleFetch: () => dispatch(RoleFetch()),
         roleAsyncInsert: (payload) => {dispatch(RoleAsyncInsert(payload)) },
-        roleAsyncUpdate: (role) => {dispatch(RoleAsyncUpdate(role))},
+        roleAsyncUpdate: (payload) => {dispatch(RoleAsyncUpdate(payload))},
         roletype_insert: (payload) => { dispatch(Role_Type_Insert(payload)) },
 
         hierarchFetch: ({res}) => dispatch(Hierarchy_Update({res}))

@@ -8,7 +8,6 @@ import { useState } from "react"
 import { Replace_Button } from "./Replace_Button"
 import { Moving_Member_Button } from "./Moving_Member"
 import { Moving_Subgroup_Button } from "./Moving_Subgroup"
-import { useSelector } from "react-redux/es"
 
 // This function shows the table display which contains the users of the group
 export const Table_Display = ({ group, set_display_id, actions }) => {
@@ -111,7 +110,7 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
                 <td>{item.name}</td>
                 <td>{item.grouptype?.nameEn}</td>
                 <td><button onClick={() => set_display_id(item.id)}><EnvelopeOpen></EnvelopeOpen></button></td>
-                <td><DeleteButton onClick={onClickDeleteGroup} /></td>
+                <td><DeleteButton onClick={onClickDeleteGroup} actions={actions}/></td>
                 <td><Moving_Subgroup_Button group={group} subgroup={item} actions={actions} /></td>
             </tr>
         )

@@ -43,7 +43,7 @@ export const Display =  ({ display_id, set_display_id,actions }) => {
     if (group && set_chart) { // display the group and hierarchy chart
         return (
             <>
-                <button onClick={event => console.log(hierarchy)} >Get store </button>
+                <button onClick={event => console.log(group)} >Get store </button>
                 <Card_Display group={group} set_display_id={set_display_id} actions={actions} />
             </>
         );
