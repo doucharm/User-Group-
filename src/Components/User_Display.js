@@ -51,20 +51,12 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                         <p>
                             <strong>Groups:</strong>
                             <br />
-                            {user?.membership?.map((membership, index) => { // Showing the groups that user is in and the role of user in that group
+                            {user?.membership?.map((membership, index) => {
                                 if (membership.valid) {
                                     let latestRole = null;
                                     if (membership.group.roles && membership.group.roles.length > 0) {
-                                        const sortedRoles = [...membership.group.roles].sort((a, b) => {
-                                            // Because we can change the role of the membership
-                                            // So the user display need to be updated to show the latest role based on lastchange
-                                            const dateA = new Date(a.lastchange);
-                                            const dateB = new Date(b.lastchange);
-
-                                            return dateB - dateA;
-                                        });
-
-                                        latestRole = sortedRoles[0];
+                                        const roles = membership.group.roles;
+                                        latestRole = roles[roles.length - 1];
                                     }
 
                                     return (
@@ -73,13 +65,13 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                                             {latestRole ? (
                                                 latestRole.roletype?.nameEn
                                             ) : (
-                                                <span>No roles found</span> // user has membership in the group but not role
+                                                <span>No roles found</span>
                                             )}
-                                            {index !== user.membership.length - 1 && <br /> /* If there is no more group that the user belong to then break*/}
+                                            {index !== user.membership.length - 1 && <br />}
                                         </span>
                                     );
                                 }
-                                return null
+                                return null;
                             })}
                         </p>
                     </div>

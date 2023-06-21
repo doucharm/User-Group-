@@ -64,7 +64,14 @@ const userInsertMutationJSON = (user) => {
     return {
         query: `mutation ($id: ID!, $name: String!, $surname: String!,$email: String!) {
             userInsert(user: {id: $id, name: $name, surname: $surname, email: $email}) {
+              id
               msg
+              user{
+                id
+                name
+                surname
+                email
+              }
             }
           }`,
         variables: user
@@ -96,7 +103,7 @@ export const UserAsyncUpdate = (user) => (dispatch, getState) => {
 export const UserAsyncInsert = (user) => (dispatch, getState) => {
 
     // And finally fetching it to the server
-    return fetch('/api/gql', { body: JSON.stringify(userInsertMutationJSON({ ...user })) })
+    return authorizedFetch('/api/gql', { body: JSON.stringify(userInsertMutationJSON({ ...user })) })
 }
 
 

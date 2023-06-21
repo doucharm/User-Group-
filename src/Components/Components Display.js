@@ -1,8 +1,7 @@
 import { EnvelopeOpen } from "react-bootstrap-icons"
 import { MembershipInsert_SearchBar } from "./Adding Member Button"
 import { Adding_Subgroup_Button } from "./Adding Subgroup"
-import { TwoStateButton, DeleteButton } from "./Delete_Button"
-import { Trash } from "react-bootstrap-icons"
+import { DeleteButton, DeleteGroupButton } from "./Delete_Button"
 import { Role_Select } from "./Role_Selector"
 import { useState } from "react"
 import { Replace_Button } from "./Replace_Button"
@@ -72,37 +71,6 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
 
 // This return a row of each subgroups existed in the large group
 const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subgroup }) => {
-    const onClickDeleteGroup = async () => { //The condition for delete the subgroup
-        try {
-            const fetchedItem = await actions.groupFetch(item.id); // get the wanted subgroup data
-            const fetchedpayload = fetchedItem.payload // because the data is wrapped in payload so that we need to get their payload
-            const payload = {
-                id: item.id,
-                lastchange: item.lastchange,
-                name: item.name,
-                valid: false, // make the wanted subgroup invalid in the mastergroup
-                mastergroupId: item.mastergroup.id
-            };
-            await actions.groupAsyncUpdate(payload);
-            actions.onGroupDelete({ group, item });
-            // Also remove all the membership and roles inside the wanted subgroup
-            fetchedpayload.memberships.forEach((membership) => {
-                const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)
-                const old_role = current_role[current_role.length - 1]
-                actions.membershipAsyncUpdate({
-                    id: membership.id,
-                    lastchange: membership.lastchange,
-                    valid: false
-                });
-                actions.onMemberRemove({ group: { id: item.id, lastchange: item.lastchange }, membership: membership });
-                if (old_role) {
-                    actions.roleAsyncUpdate(old_role)
-                }
-            });
-        } catch (error) {
-            console.error("Error fetching item information:", error);
-        }
-    };
 
     if (item.valid) {
         return (
@@ -111,7 +79,7 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
                 <td>{item.name}</td>
                 <td>{item.grouptype?.nameEn}</td>
                 <td><button onClick={() => set_display_id(item.id)}><EnvelopeOpen></EnvelopeOpen></button></td>
-                <td><DeleteButton onClick={onClickDeleteGroup} /></td>
+                <td><DeleteGroupButton item={item} group={group} actions={actions} /></td>
                 <td><Moving_Subgroup_Button group={group} subgroup={item} actions={actions} /></td>
             </tr>
         )
@@ -129,7 +97,7 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
 
 const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
 
-    
+
     if (membership.valid) {
         return (
             <tr className="table-success">
