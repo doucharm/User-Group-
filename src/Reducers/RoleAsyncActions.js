@@ -38,8 +38,7 @@ export const RoleFetch = () => (dispatch, getState) => {
 
 // This mutation assign a membership with a new role, and after fetching it to the server, it also updates the membership that holds the new role
 export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
-    const roleMutationJSON = (payload) => {
-        console.log("payload into role_insert",payload)
+    const roleInsertJSON = (payload) => {
         return {
             query: `mutation($groupId: ID!, $userId: ID!, $roletypeID: ID!,$id: ID!) {
             roleInsert(role: {
@@ -75,16 +74,8 @@ export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
         }
     }
 
-  const params = {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      cache: 'no-cache', 
-      redirect: 'follow', 
-      body: JSON.stringify(roleMutationJSON(payload))
-  }
-    return fetch('/api/gql', params)
+
+    authorizedFetch('/gql',{body: JSON.stringify(roleInsertJSON(payload))})
     .then((resp) => resp.json())
         .then((json) => {
             const msg = json.data?.roleInsert?.msg;
@@ -142,7 +133,6 @@ const roleMutationJSON = (role) => {
 
 export const RoleAsyncUpdate = ({role,membership}) =>  (dispatch, getState) => 
 {
-  console.log("load",role,membership)
   authorizedFetch('/gql',{body: JSON.stringify(roleMutationJSON(role))})
     .then(resp => resp.json())
     .then(
@@ -161,36 +151,29 @@ export const RoleAsyncUpdate = ({role,membership}) =>  (dispatch, getState) =>
     )
 }
 // Mutation to insert a new role into roletype page, we're not using it at the moment. This is for further developement
-export const Role_Type_Insert = (payload) => (dispatch, getState) => {
-    const roletypeMutationJSON = (roletype) => {
-        return {
-            query: `mutation($id: ID!, $name: String!, $nameEn: String!) {
-              roleTypeInsert(roleType: {
-              id: $id,
-              name:$name,
-              nameEn: $nameEn
-          }){
-              msg
-              id
-              roleType
-              {
-                id
-                name
-                nameEn
-              }
-          }
-          }`,
-            variables: roletype
-            }
+const roletypeInsertJSON = (roletype) => {
+  return {
+      query: `mutation($id: ID!, $name: String!, $nameEn: String!) {
+        roleTypeInsert(roleType: {
+        id: $id,
+        name:$name,
+        nameEn: $nameEn
+    }){
+        msg
+        id
+        roleType
+        {
+          id
+          name
+          nameEn
         }
-    const params = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        redirect: 'follow', // manual, *follow, error
-        body: JSON.stringify(roletypeMutationJSON(payload))
     }
-    return fetch('/api/gql', params)
+    }`,
+      variables: roletype
+      }
   }
+
+export const Role_Type_Insert = (payload) => 
+{
+  authorizedFetch('/gql',{body: JSON.stringify(roletypeInsertJSON(payload))})
+}

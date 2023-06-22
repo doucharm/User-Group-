@@ -1,0 +1,88 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: auto;
+  }
+  .card-header {
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px;
+    background-image: linear-gradient(-60deg,rgb(36, 36, 4), #7d4343, #9724ab);
+  }
+  
+  .card-body {
+    padding: 20px;
+    width: auto;
+    background-image: linear-gradient(120deg, #d4fc79 6%, #96e6a1 50%);
+  }
+  .calendar{
+    background-image: linear-gradient(120deg, #080808 6%, #96e6a1 50%);
+  }
+  
+  .button {
+    background-color: #4d19ae;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #931c53;
+  }
+  
+  h3 {
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .text-display{
+    color: white
+  }
+  h2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .text-left {
+    text-align: left;
+  }
+  
+  .font-weight-bold {
+    font-weight: bold;
+  }
+  .table-display {
+    width: 100%;
+  }
+  
+  .table-display table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+  
+  .table-display th,
+  .table-display td {
+    padding: 10px;
+    border: 1px solid #c99121;
+  }
+  
+  .table-display th {
+    background-color: #4bb84e;
+    font-weight: bold;
+  }
+  
+  .table-display td {
+    background-color: #7a2525;
+  }
+  
+  .table-display tr:nth-child(even) td {
+    background-color: #2f6397;
+  }
+  

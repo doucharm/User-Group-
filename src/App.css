@@ -1,6 +1,13 @@
 .App {
   text-align: center;
 }
+body {
+  background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fcb36e8f-1bf0-4798-be15-1aab02921650/dfm36bk-09d8128d-f920-45ea-a2f8-bfd0bddafb28.png/v1/fill/w_1143,h_699/_render__makima___chainsaw_man_by_preludegfx_dfm36bk-pre.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTI4NCIsInBhdGgiOiJcL2ZcL2ZjYjM2ZThmLTFiZjAtNDc5OC1iZTE1LTFhYWIwMjkyMTY1MFwvZGZtMzZiay0wOWQ4MTI4ZC1mOTIwLTQ1ZWEtYTJmOC1iZmQwYmRkYWZiMjgucG5nIiwid2lkdGgiOiI8PTIwOTgifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.ImhrpdZ26wSArPqwCARg6gOHIJ6khILTxawPs9Lh37Q");
+  background-repeat: no-repeat;
+  background-position: center top -10%;
+  background-color: linear-gradient(to right, #b67e36, #41bb0d);;
+}
+
 
 .App-logo {
   height: 40vmin;
@@ -27,6 +34,14 @@
 
 .App-link {
   color: #309ebd;
+}
+
+.table-memberdisplay
+{
+ background-image: linear-gradient(-60deg,#16a085 0%,#70de26 19%,#39baa0 42%,#a02c2c 71%,); 
+}
+.abc{
+ background-image: yellow; 
 }
 
 @keyframes App-logo-spin {

@@ -16,11 +16,8 @@ const onRoleChange= ({current_role,selectedRole,membership,actions}) =>
         if(selectedRole)
         { 
         actions.roleAsyncInsert({membership:membership,role:selectedRole})
-
         }
-        
-        
-        
+
     }
 const Make_New_Role = ({membership,actions}) => {
 
@@ -58,7 +55,7 @@ export const Role_Select = ({membership,actions}) =>
             <Make_New_Role actions={actions} membership={membership} />
         </DropdownButton>
         <br/>
-        <DatePickerComponent  current_role={current_role} membership={membership} actions={actions} />
+        <DatePickerComponent className="calender" current_role={current_role} membership={membership} actions={actions} />
         </>
     )
 }
