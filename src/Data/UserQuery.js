@@ -14,6 +14,70 @@ export const UserQueryJSON = (id) => ({
                   group {
                     name
                     id
+                    lastchange
+                    valid
+                    grouptype { 
+                        id
+                        nameEn
+                    }
+                    subgroups {
+                        id
+                        name
+                        lastchange
+                        valid
+                        mastergroup{
+                            id
+                        }
+                        grouptype
+                        {
+                            nameEn
+                        }
+                    }
+                    memberships {
+                        id
+                        lastchange
+                        valid
+                        group
+                        {
+                            id
+                            roles{
+                                lastchange
+                                id
+                                roletype{
+                                    nameEn
+                                }
+                                group{
+                                    id
+                                }
+                            }
+                        }
+                        user {
+                            id
+                            name
+                            surname
+                            email
+                            lastchange
+                            roles {
+                                lastchange
+                                id
+                                startdate
+                                enddate
+                                group
+                                {
+                                    id
+                                    memberships{
+                                        id
+                                    }
+                                }
+                                valid
+                                roletype {
+                                  id
+                                  name
+                                  nameEn
+                                }
+                              }
+                        }
+                    }
                     roles {
                         lastchange
                         id

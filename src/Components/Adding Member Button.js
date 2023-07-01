@@ -40,7 +40,6 @@ export const AddingMember_Button = ({user,group,actions}) => {
         const check_existance = group.memberships.find(
             (m) => m.user.id === payload.user_id && m.valid //Check if the user has already been in the group
         );
-        console.log(check_existance)
         if (!check_existance) {
 
             actions.userAsyncUpdate(modify_user).then(actions.membershipAsyncInsert(payload)) // If not then we add it to the server and the store

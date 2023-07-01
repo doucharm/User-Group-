@@ -44,7 +44,7 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
             <br />
             <h3>List of subgroups</h3>
             <br />
-            <table className="table table-hover table-bordered table-warning table-stripped">
+            <table className="table table-hover table-bordered table-warning table-stripped table-responsive">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -106,7 +106,7 @@ const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
                 <td>{membership.user.email}</td>
                 <td><Role_Select membership={membership} actions={actions} /></td>
                 <td><DeleteButton membership={membership} actions={actions} /></td>
-                <td><Replace_Button group={group} actions={actions} membership={membership}  >Replace</Replace_Button></td>
+                <td><Replace_Button group={group} actions={actions} membership={membership}></Replace_Button></td>
                 <td><Moving_Member_Button membership={membership} actions={actions} /></td>
             </tr>
         )

@@ -50,7 +50,6 @@ export const Moving_Condition = ({ group, item, actions, destination }) => {
     const onMove = async () => {
         try {
             const fetchedItem = await actions.groupFetch(item.id); // get the wanted subgroup data
-            console.log("Item information:", fetchedItem);
             const fetchedpayload = fetchedItem.payload // Because the information of the subgroup is wrapped inside payload, so we must use payload
             const payload_leave = {
                 id: item.id,
@@ -80,7 +79,6 @@ export const Moving_Condition = ({ group, item, actions, destination }) => {
                             console.log("Update failed")
                         } else {
                             const new_subgroup = json.data.groupInsert.group
-                            console.log(new_subgroup)
                             actions.onAddSubGroup({ group: destinationGroup.payload, new_subgroup: new_subgroup }) //Insert the new subgroup in store
                         }
                         return json

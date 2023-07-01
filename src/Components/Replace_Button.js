@@ -140,7 +140,7 @@ export const Replace_Button = ({ group, actions, membership }) => {
     };
 
     if (searchMode) { // Searchbar using for search the wanted user by name
-        <Replace_Condition group={group} membership={membership} actions={actions} />
+        return <Replace_Condition group={group} membership={membership} actions={actions} />
     } else {
         return (
             <button onClick={handleClick}><ArrowLeftRight /></button>
