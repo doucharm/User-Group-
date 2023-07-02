@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Components/Components Display.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Components/Components Display.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { EnvelopeOpen } from "react-bootstrap-icons"
+import { MembershipInsert_SearchBar } from "./Adding Member Button"
+import { Adding_Subgroup_Button } from "./Adding Subgroup"
+import { DeleteButton } from "./Delete_Button"
+import { DeleteGroupButton } from "./Delete_Subgroup_Button"
+import { Role_Select } from "./Role_Selector"
+import { useState } from "react"
+import { Replace_Button } from "./Replace_Button"
+import { Moving_Member_Button } from "./Moving_Member"
+import { Moving_Subgroup_Button } from "./Moving_Subgroup"
+/**
+ * This function shows the table display which contains the users of the group
+ * @param {*} group The group we are showing
+ * @param {*} set_display_id This is a part of the useState to change the group we are showing
+ * @param {*} actions Actions needed to update our group in store and on server
+ * @returns A table that displays all of the members and subgroups that the group contains
+ */
+export const Table_Display = ({ group, set_display_id, actions }) => {
+    const [show_old_member, set_show_member] = useState(false) //useState to declare whether we're showing the deleted members or not
+    const [show_old_subgroup, set_show_subgroup] = useState(false) ////useState to declare whether we're showing the deleted subgroups or not
+    // Returning all of the members and subgroups of the group we're accessing by mapping through its memberships and subgroups
+    // We also add some functional buttons into this table which we'll figure out later
+    return (
+        &lt;div>
+            &lt;h3>List of members: &lt;/h3>
+            &lt;br />
+            &lt;table className="table table-hover table-bordered table-light table-stripped">
+                &lt;thead>
+                    &lt;tr>
+                        &lt;th>ID&lt;/th>
+                        &lt;th>Name&lt;/th>
+                        &lt;th>Surname&lt;/th>
+                        &lt;th>Email&lt;/th>
+                        &lt;th>Role&lt;/th>
+                        &lt;th>Delete&lt;/th>
+                        &lt;th>Replace&lt;/th>
+                        &lt;th>Move&lt;/th>
+                    &lt;/tr>
+                &lt;/thead>
+                &lt;tbody>
+                    &lt;>
+                        {group?.memberships?.map(item => &lt;Get_Member_Row key={item.id} group={group} membership={item} show_old_member={show_old_member} actions={actions} />)}
+                        &lt;br />
+                        &lt;button onClick={event => set_show_member(!show_old_member)}>Toggle&lt;/button>
+                        &lt;MembershipInsert_SearchBar group={group} actions={actions} />
+                    &lt;/>
+                &lt;/tbody>
+            &lt;/table>
+            &lt;br />
+            &lt;br />
+            &lt;h3>List of subgroups&lt;/h3>
+            &lt;br />
+            &lt;table className="table table-hover table-bordered table-warning table-stripped table-responsive">
+                &lt;thead>
+                    &lt;tr>
+                        &lt;th>ID&lt;/th>
+                        &lt;th>Name&lt;/th>
+                        &lt;th>Type&lt;/th>
+                        &lt;th>Details&lt;/th>
+                        &lt;th>Delete&lt;/th>
+                        &lt;th>Move&lt;/th>
+                    &lt;/tr>
+                &lt;/thead>
+                &lt;tbody>
+                    &lt;>
+                        {group?.subgroups?.map(item => &lt;Get_Sub_Group_Row group={group} item={item} set_display_id={set_display_id} actions={actions} show_old_subgroup={show_old_subgroup} />)}
+                        &lt;Adding_Subgroup_Button group={group} actions={actions} />
+                        &lt;br />
+                        &lt;button onClick={() => set_show_subgroup(!show_old_subgroup)}>Show Old Subs&lt;/button>
+                    &lt;/>
+                &lt;/tbody>
+            &lt;/table>
+        &lt;/div>
+    )
+}
+/**
+ * This return a row of each subgroups existed in the large group
+ * @param {*} group The group we are showing
+ * @param {*} item The subgroups of the group we get by mapping through the group.subgroups
+ * @param {*} set_display_id This is a part of the useState to change the group we are showing
+ * @param {*} actions Actions needed to update our group in store and on server
+ * @param {*} show_old_subgroup Part of the use state to declare if we want to show the deleted subgroups
+ * @returns A row that has the subgroup's details
+ */
+const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subgroup }) => {
+
+    if (item.valid) {
+        return (
+            &lt;tr>
+                &lt;td>{item.id}&lt;/td>
+                &lt;td>{item.name}&lt;/td>
+                &lt;td>{item.grouptype?.nameEn}&lt;/td>
+                &lt;td>&lt;button onClick={() => set_display_id(item.id)}>&lt;EnvelopeOpen>&lt;/EnvelopeOpen>&lt;/button>&lt;/td>
+                &lt;td>&lt;DeleteGroupButton item={item} group={group} actions={actions} />&lt;/td>
+                &lt;td>&lt;Moving_Subgroup_Button group={group} subgroup={item} actions={actions} />&lt;/td>
+            &lt;/tr>
+        )
+    }
+    else if (show_old_subgroup) {
+        return (
+            &lt;tr className="table-warning">
+                &lt;td>{item.id}&lt;/td>
+                &lt;td>{item.name}&lt;/td>
+                &lt;td>Deleted&lt;/td>
+            &lt;/tr>
+        )
+    }
+}
+/**
+ * This return a row of each memberships existed in the large group
+ * @param {*} group The group we are showing
+ * @param {*} membership The memberships of the group we get by mapping through the group.memberships
+ * @param {*} actions Actions needed to update our group in store and on server
+ * @param {*} show_old_member Part of the use state to declare if we want to show the deleted memberships
+ * @returns A row that has the membership's details
+ */
+const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
+
+
+    if (membership.valid) {
+        return (
+            &lt;tr className="table-success">
+                &lt;td>{membership.user.id}&lt;/td>
+                &lt;td>{membership.user.name}&lt;/td>
+                &lt;td>{membership.user.surname}&lt;/td>
+                &lt;td>{membership.user.email}&lt;/td>
+                &lt;td>&lt;Role_Select membership={membership} actions={actions} />&lt;/td>
+                &lt;td>&lt;DeleteButton membership={membership} actions={actions} />&lt;/td>
+                &lt;td>&lt;Replace_Button group={group} actions={actions} membership={membership}>&lt;/Replace_Button>&lt;/td>
+                &lt;td>&lt;Moving_Member_Button membership={membership} actions={actions} />&lt;/td>
+            &lt;/tr>
+        )
+    }
+    else if (show_old_member) {
+        return (
+            &lt;tr className="table-warning">
+                &lt;td>{membership.user.id}&lt;/td>
+                &lt;td>{membership.user.name}&lt;/td>
+                &lt;td>{membership.user.surname}&lt;/td>
+                &lt;td>{membership.user.email}&lt;/td>
+            &lt;/tr>
+        )
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddingMember_Button">AddingMember_Button</a></li><li><a href="global.html#Adding_Member">Adding_Member</a></li><li><a href="global.html#Adding_Subgroup">Adding_Subgroup</a></li><li><a href="global.html#Adding_Subgroup_Button">Adding_Subgroup_Button</a></li><li><a href="global.html#Adding_User_Button">Adding_User_Button</a></li><li><a href="global.html#CreateDelayer">CreateDelayer</a></li><li><a href="global.html#Create_Group">Create_Group</a></li><li><a href="global.html#Delete_Group">Delete_Group</a></li><li><a href="global.html#Display">Display</a></li><li><a href="global.html#Get_Chart">Get_Chart</a></li><li><a href="global.html#Get_Each_Node">Get_Each_Node</a></li><li><a href="global.html#Get_Hierarchy">Get_Hierarchy</a></li><li><a href="global.html#Get_Member_Row">Get_Member_Row</a></li><li><a href="global.html#Get_Node">Get_Node</a></li><li><a href="global.html#Get_Sub_Group_Row">Get_Sub_Group_Row</a></li><li><a href="global.html#GroupAsyncInsert">GroupAsyncInsert</a></li><li><a href="global.html#GroupAsyncUpdate">GroupAsyncUpdate</a></li><li><a href="global.html#GroupFetch">GroupFetch</a></li><li><a href="global.html#GroupFetchHelper">GroupFetchHelper</a></li><li><a href="global.html#GroupMemberAdd">GroupMemberAdd</a></li><li><a href="global.html#GroupQuery">GroupQuery</a></li><li><a href="global.html#GroupQueryJSON">GroupQueryJSON</a></li><li><a href="global.html#GroupTypePage">GroupTypePage</a></li><li><a href="global.html#GroupTypePageFetch">GroupTypePageFetch</a></li><li><a href="global.html#GroupTypePageJSON">GroupTypePageJSON</a></li><li><a href="global.html#GroupType_Select">GroupType_Select</a></li><li><a href="global.html#HeaderTextInput">HeaderTextInput</a></li><li><a href="global.html#Hierarchy_Update">Hierarchy_Update</a></li><li><a href="global.html#MembershipAsyncInsert">MembershipAsyncInsert</a></li><li><a href="global.html#MembershipInsert_SearchBar">MembershipInsert_SearchBar</a></li><li><a href="global.html#MovingMember">MovingMember</a></li><li><a href="global.html#Moving_Condition">Moving_Condition</a></li><li><a href="global.html#Moving_Member">Moving_Member</a></li><li><a href="global.html#Moving_Subgroup">Moving_Subgroup</a></li><li><a href="global.html#Remove_Member">Remove_Member</a></li><li><a href="global.html#Replace_Condition">Replace_Condition</a></li><li><a href="global.html#RoleQuery">RoleQuery</a></li><li><a href="global.html#RoleQueryJSON">RoleQueryJSON</a></li><li><a href="global.html#SearchBar">SearchBar</a></li><li><a href="global.html#Table_Display">Table_Display</a></li><li><a href="global.html#TextInput">TextInput</a></li><li><a href="global.html#TwoStateButton">TwoStateButton</a></li><li><a href="global.html#Update_Group">Update_Group</a></li><li><a href="global.html#Update_Member">Update_Member</a></li><li><a href="global.html#Updating_Subgroup">Updating_Subgroup</a></li><li><a href="global.html#UserBasic">UserBasic</a></li><li><a href="global.html#UserQuery">UserQuery</a></li><li><a href="global.html#UserQueryJSON">UserQueryJSON</a></li><li><a href="global.html#UserbyLetters">UserbyLetters</a></li><li><a href="global.html#UserbyLettersFetch">UserbyLettersFetch</a></li><li><a href="global.html#UserbyLettersJSON">UserbyLettersJSON</a></li><li><a href="global.html#authorizedFetch">authorizedFetch</a></li><li><a href="global.html#fetch_by_letters">fetch_by_letters</a></li><li><a href="global.html#groupMutationJSON">groupMutationJSON</a></li><li><a href="global.html#group_type_fetch">group_type_fetch</a></li><li><a href="global.html#groupinsertMutationJSON">groupinsertMutationJSON</a></li><li><a href="global.html#groupupdateMutationJSON">groupupdateMutationJSON</a></li><li><a href="global.html#membershipInsertJSON">membershipInsertJSON</a></li><li><a href="global.html#onClickDeleteGroup">onClickDeleteGroup</a></li><li><a href="global.html#onClickDeleteMember">onClickDeleteMember</a></li><li><a href="global.html#onMove">onMove</a></li><li><a href="global.html#onSubgroupAdd">onSubgroupAdd</a></li><li><a href="global.html#onUserAdd">onUserAdd</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Jul 02 2023 22:21:40 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

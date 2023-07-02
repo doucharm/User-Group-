@@ -1,7 +1,8 @@
-
-// Mutation to insert a new grouptype, we will use it for further development of the project
-// At the time we're not calling it anywhere
-
+/**
+ * Mutation to insert a new grouptype, we will use it for further development of the project. At the time we're not calling it anywhere
+ * @param {*} group 
+ * @returns 
+ */
 const groupMutationJSON = (group) => {
   return {
       query: `mutation ($id: ID!, $name: String!, $nameEn: String!) {

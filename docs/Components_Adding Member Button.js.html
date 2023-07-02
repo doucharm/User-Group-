@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Components/Adding Member Button.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Components/Adding Member Button.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState } from 'react';
+import { PersonAdd, Search } from 'react-bootstrap-icons';
+import { v1 } from 'uuid';
+import { fetch_by_letters } from 'Data/UserByLetters';
+import { useSelector } from 'react-redux';
+
+/**
+ * This button adds an user as the membership to the group we are accessing to
+ * @param {*} user The user we use to add to a group
+ * @param {*} group The group we want to add that user to
+ * @param {*} actions The actions needed to proceed with the button (both in store and on server)
+ * @returns a button with the onclick we define below and it has the icon of Person Add
+ */
+export const AddingMember_Button = ({user,group,actions}) => {
+    const onclick = () => {
+        const membership_id = v1() //Generate an id for the membership of that user
+        const modify_user = {
+            ...user,
+            roles: [],
+            membership:
+                [
+                    {
+                        id: membership_id
+                    }
+                ]
+        }
+        // Give the user we modify a specific membership id
+        const membership =
+        {
+            id: membership_id,
+            valid: true,
+            user: modify_user,
+            group: group
+        }
+        // We also correspond the membership of that user the appropriate props
+        const payload = {
+            store_update:
+            {
+                group: group,
+                membership: membership
+            },
+            user_id: modify_user.id,
+            group_id: group.id,
+            id:membership_id
+        }
+        // The payload that requires userid, groupid and the membership id to assign the user to the previously called group
+        const check_existance = group.memberships.find(
+            (m) => m.user.id === payload.user_id &amp;&amp; m.valid //Check if the user has already been in the group
+        );
+        if (!check_existance) {
+
+            actions.userAsyncUpdate(modify_user).then(actions.membershipAsyncInsert(payload)) // If not then we add it to the server and the store
+        } else {
+            console.warn("existed") // We wont be alble to add the user once more if its already existed
+        }
+
+    }
+    return (
+        &lt;button onClick={onclick}>&lt;PersonAdd>&lt;/PersonAdd>&lt;/button>
+    )
+}
+
+/**
+ * This is the display of a name search bar, we use this to find for the user we need to add it in to our group
+ * @param {*} group The group we want to add that user to
+ * @param {*} actions The actions needed to take the data on server and proceed with it
+ * @returns A table with a form in it, the rows would be the users we found with the letter provided on our form
+ */
+export const MembershipInsert_SearchBar = ({ group, actions }) => {
+    const [inputId, setInputId] = useState(''); //Define the input for the search bar
+    const [users_list, set_users_list] = useState([]) //Convert users in store to array 
+    const users = useSelector((state) => state.users)
+    const user = users[inputId] //Get the user we need with the corresponding inputId
+
+    const handleInputChange = (event) => {
+        setInputId(event.target.value) //Set the inputId to what we type on the search bar form 
+    }
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        actions.userFetch(inputId) //Fetch the user by id inputId
+        fetch_by_letters(inputId, set_users_list) //Fetch the user by letter which is the inputId
+    }
+    
+    // Down below we have 2 diffence interface, 1 for when you dont trigger the HandleSubmit and the other is to show all of the users with the relative letters
+    if (users_list.length === 0) {
+        return (
+            &lt;>
+                &lt;form method="GET" id="my_form" onSubmit={handleSubmit} >&lt;/form>
+                &lt;table class="table table-sm table-info">
+                    &lt;thead>
+                        &lt;label htmlFor="Id" form='my_form'>Add new member:&lt;/label>
+                        &lt;input
+                            form="my_form"
+                            id="Id"
+                            type="text"
+                            value={inputId}
+                            onChange={handleInputChange}
+                        />
+                        &lt;button type="submit" title="Submit Form" form='my_form'>&lt;Search>&lt;/Search>&lt;/button>
+                    &lt;/thead>
+                &lt;/table>
+            &lt;/>
+        )
+    } else {
+        return (
+            &lt;>
+                &lt;form method="GET" id="my_form" onSubmit={handleSubmit} >&lt;/form>
+                &lt;table class="table table-sm table-info">
+                    &lt;caption>  Possible users with that name: &lt;/caption>
+                    &lt;thead>
+                        &lt;label htmlFor="Id" form='my_form'>Add new member:&lt;/label>
+                        &lt;input
+                            form="my_form"
+                            id="Id"
+                            type="text"
+                            value={inputId}
+                            onChange={handleInputChange}
+                        />
+                        &lt;button type="submit" title="Submit Form" form='my_form'>&lt;Search>&lt;/Search>&lt;/button>
+                        &lt;br>&lt;/br>
+                        &lt;td>Name&lt;/td>
+                    &lt;/thead>
+                    &lt;tbody>
+                        {users_list?.map((user) => &lt;UserBasic user={user} group={group} actions={actions}/>)}
+                    &lt;/tbody>
+                &lt;/table>
+            &lt;/>
+        )
+    }
+}
+/**
+ * This function return a table that return a row of user that contains an add button to insert the user to the group we're seeing
+ * @param {*} user The user we are showing
+ * @param {*} group The group we want to add that user to
+ * @param {*} actions The actions needed in the AddingMember_Button function
+ * @returns Table rows in html form
+ */
+const UserBasic = ({ user, group, actions }) => { 
+    return (
+        &lt;tr>
+            &lt;td>{user.name} {user.surname}&lt;/td> 
+            &lt;AddingMember_Button user = {user} group={group} actions={actions}/>
+        &lt;/tr>
+    )
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddingMember_Button">AddingMember_Button</a></li><li><a href="global.html#Adding_Member">Adding_Member</a></li><li><a href="global.html#Adding_Subgroup">Adding_Subgroup</a></li><li><a href="global.html#Adding_Subgroup_Button">Adding_Subgroup_Button</a></li><li><a href="global.html#Adding_User_Button">Adding_User_Button</a></li><li><a href="global.html#CreateDelayer">CreateDelayer</a></li><li><a href="global.html#Create_Group">Create_Group</a></li><li><a href="global.html#Delete_Group">Delete_Group</a></li><li><a href="global.html#Display">Display</a></li><li><a href="global.html#Get_Chart">Get_Chart</a></li><li><a href="global.html#Get_Each_Node">Get_Each_Node</a></li><li><a href="global.html#Get_Hierarchy">Get_Hierarchy</a></li><li><a href="global.html#Get_Member_Row">Get_Member_Row</a></li><li><a href="global.html#Get_Node">Get_Node</a></li><li><a href="global.html#Get_Sub_Group_Row">Get_Sub_Group_Row</a></li><li><a href="global.html#GroupAsyncInsert">GroupAsyncInsert</a></li><li><a href="global.html#GroupAsyncUpdate">GroupAsyncUpdate</a></li><li><a href="global.html#GroupFetch">GroupFetch</a></li><li><a href="global.html#GroupFetchHelper">GroupFetchHelper</a></li><li><a href="global.html#GroupMemberAdd">GroupMemberAdd</a></li><li><a href="global.html#GroupQuery">GroupQuery</a></li><li><a href="global.html#GroupQueryJSON">GroupQueryJSON</a></li><li><a href="global.html#GroupTypePage">GroupTypePage</a></li><li><a href="global.html#GroupTypePageFetch">GroupTypePageFetch</a></li><li><a href="global.html#GroupTypePageJSON">GroupTypePageJSON</a></li><li><a href="global.html#GroupType_Select">GroupType_Select</a></li><li><a href="global.html#HeaderTextInput">HeaderTextInput</a></li><li><a href="global.html#Hierarchy_Update">Hierarchy_Update</a></li><li><a href="global.html#MembershipAsyncInsert">MembershipAsyncInsert</a></li><li><a href="global.html#MembershipInsert_SearchBar">MembershipInsert_SearchBar</a></li><li><a href="global.html#MovingMember">MovingMember</a></li><li><a href="global.html#Moving_Condition">Moving_Condition</a></li><li><a href="global.html#Moving_Member">Moving_Member</a></li><li><a href="global.html#Moving_Subgroup">Moving_Subgroup</a></li><li><a href="global.html#Remove_Member">Remove_Member</a></li><li><a href="global.html#Replace_Condition">Replace_Condition</a></li><li><a href="global.html#RoleQuery">RoleQuery</a></li><li><a href="global.html#RoleQueryJSON">RoleQueryJSON</a></li><li><a href="global.html#SearchBar">SearchBar</a></li><li><a href="global.html#Table_Display">Table_Display</a></li><li><a href="global.html#TextInput">TextInput</a></li><li><a href="global.html#TwoStateButton">TwoStateButton</a></li><li><a href="global.html#Update_Group">Update_Group</a></li><li><a href="global.html#Update_Member">Update_Member</a></li><li><a href="global.html#Updating_Subgroup">Updating_Subgroup</a></li><li><a href="global.html#UserBasic">UserBasic</a></li><li><a href="global.html#UserQuery">UserQuery</a></li><li><a href="global.html#UserQueryJSON">UserQueryJSON</a></li><li><a href="global.html#UserbyLetters">UserbyLetters</a></li><li><a href="global.html#UserbyLettersFetch">UserbyLettersFetch</a></li><li><a href="global.html#UserbyLettersJSON">UserbyLettersJSON</a></li><li><a href="global.html#authorizedFetch">authorizedFetch</a></li><li><a href="global.html#fetch_by_letters">fetch_by_letters</a></li><li><a href="global.html#groupMutationJSON">groupMutationJSON</a></li><li><a href="global.html#group_type_fetch">group_type_fetch</a></li><li><a href="global.html#groupinsertMutationJSON">groupinsertMutationJSON</a></li><li><a href="global.html#groupupdateMutationJSON">groupupdateMutationJSON</a></li><li><a href="global.html#membershipInsertJSON">membershipInsertJSON</a></li><li><a href="global.html#onClickDeleteGroup">onClickDeleteGroup</a></li><li><a href="global.html#onClickDeleteMember">onClickDeleteMember</a></li><li><a href="global.html#onMove">onMove</a></li><li><a href="global.html#onSubgroupAdd">onSubgroupAdd</a></li><li><a href="global.html#onUserAdd">onUserAdd</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Jul 02 2023 22:21:40 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Components/Delete_Button.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Components/Delete_Button.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState } from 'react';
+import { XOctagonFill, Trash } from 'react-bootstrap-icons';
+/**
+ * This is Two States Button with confirmation (two state button).
+ * @param {*} icon the icon that indicate what this button do
+ * @param {*} sec_button second state of the button
+ * @returns 
+ */
+export const TwoStateButton = ({ sec_button, icon: Icon }) => {
+  const [state, setState] = useState(false);
+  if (!state) {
+    return (
+      &lt;button className='btn btn-sm btn-warning' onClick={(event) => setState(!state)}>
+        &lt;Icon />
+      &lt;/button>
+    );
+  } else { // return one button for cancelation and another component that perform the intended action
+    return (
+      &lt;>
+        &lt;button className='btn btn-sm btn-warning' onClick={(event) => setState(!state)}>
+          &lt;XOctagonFill>&lt;/XOctagonFill>
+        &lt;/button>
+        {sec_button}
+      &lt;/>
+    );
+  }
+};
+/**
+* function to invalidate membership and the role that membership/user're having
+* @param {*} membership membership to be invalidated
+*/
+const onClickDeleteMember = ({ membership, actions }) => { // 
+  const payload = {
+    id: membership.id,
+    lastchange: membership.lastchange,
+    valid: false // make the user's membership invalid in the group
+  };
+  const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id &amp;&amp; item.valid === true)?.splice(-1)[0]
+  try {
+    actions.membershipAsyncUpdate(payload);
+    actions.onMemberRemove({ group: { id: membership.group.id }, membership });
+    // also remove user's role along with the membership
+    if (current_role) {
+      console.log("current role removed")
+      actions.roleAsyncUpdate({ role: { ...current_role, valid: false }, membership: { ...membership, valid: false } })
+    }
+  } catch (error) {
+    console.log('Membership update failed:', error);
+  }
+};
+export const DeleteButton = ({ membership, actions }) => {
+  const Icon = Trash
+  const button_Delete = &lt;button className='btn btn-sm btn-danger' onClick={() => onClickDeleteMember({ membership, actions })}>&lt;Icon /> &lt;/button>
+  return (
+    &lt;TwoStateButton sec_button={button_Delete} icon={Icon} />
+  )
+}
+
+
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddingMember_Button">AddingMember_Button</a></li><li><a href="global.html#Adding_Member">Adding_Member</a></li><li><a href="global.html#Adding_Subgroup">Adding_Subgroup</a></li><li><a href="global.html#Adding_Subgroup_Button">Adding_Subgroup_Button</a></li><li><a href="global.html#Adding_User_Button">Adding_User_Button</a></li><li><a href="global.html#CreateDelayer">CreateDelayer</a></li><li><a href="global.html#Create_Group">Create_Group</a></li><li><a href="global.html#Delete_Group">Delete_Group</a></li><li><a href="global.html#Display">Display</a></li><li><a href="global.html#Get_Chart">Get_Chart</a></li><li><a href="global.html#Get_Each_Node">Get_Each_Node</a></li><li><a href="global.html#Get_Hierarchy">Get_Hierarchy</a></li><li><a href="global.html#Get_Member_Row">Get_Member_Row</a></li><li><a href="global.html#Get_Node">Get_Node</a></li><li><a href="global.html#Get_Sub_Group_Row">Get_Sub_Group_Row</a></li><li><a href="global.html#GroupAsyncInsert">GroupAsyncInsert</a></li><li><a href="global.html#GroupAsyncUpdate">GroupAsyncUpdate</a></li><li><a href="global.html#GroupFetch">GroupFetch</a></li><li><a href="global.html#GroupFetchHelper">GroupFetchHelper</a></li><li><a href="global.html#GroupMemberAdd">GroupMemberAdd</a></li><li><a href="global.html#GroupQuery">GroupQuery</a></li><li><a href="global.html#GroupQueryJSON">GroupQueryJSON</a></li><li><a href="global.html#GroupTypePage">GroupTypePage</a></li><li><a href="global.html#GroupTypePageFetch">GroupTypePageFetch</a></li><li><a href="global.html#GroupTypePageJSON">GroupTypePageJSON</a></li><li><a href="global.html#GroupType_Select">GroupType_Select</a></li><li><a href="global.html#HeaderTextInput">HeaderTextInput</a></li><li><a href="global.html#Hierarchy_Update">Hierarchy_Update</a></li><li><a href="global.html#MembershipAsyncInsert">MembershipAsyncInsert</a></li><li><a href="global.html#MembershipInsert_SearchBar">MembershipInsert_SearchBar</a></li><li><a href="global.html#MovingMember">MovingMember</a></li><li><a href="global.html#Moving_Condition">Moving_Condition</a></li><li><a href="global.html#Moving_Member">Moving_Member</a></li><li><a href="global.html#Moving_Subgroup">Moving_Subgroup</a></li><li><a href="global.html#Remove_Member">Remove_Member</a></li><li><a href="global.html#Replace_Condition">Replace_Condition</a></li><li><a href="global.html#RoleQuery">RoleQuery</a></li><li><a href="global.html#RoleQueryJSON">RoleQueryJSON</a></li><li><a href="global.html#SearchBar">SearchBar</a></li><li><a href="global.html#Table_Display">Table_Display</a></li><li><a href="global.html#TextInput">TextInput</a></li><li><a href="global.html#TwoStateButton">TwoStateButton</a></li><li><a href="global.html#Update_Group">Update_Group</a></li><li><a href="global.html#Update_Member">Update_Member</a></li><li><a href="global.html#Updating_Subgroup">Updating_Subgroup</a></li><li><a href="global.html#UserBasic">UserBasic</a></li><li><a href="global.html#UserQuery">UserQuery</a></li><li><a href="global.html#UserQueryJSON">UserQueryJSON</a></li><li><a href="global.html#UserbyLetters">UserbyLetters</a></li><li><a href="global.html#UserbyLettersFetch">UserbyLettersFetch</a></li><li><a href="global.html#UserbyLettersJSON">UserbyLettersJSON</a></li><li><a href="global.html#authorizedFetch">authorizedFetch</a></li><li><a href="global.html#fetch_by_letters">fetch_by_letters</a></li><li><a href="global.html#groupMutationJSON">groupMutationJSON</a></li><li><a href="global.html#group_type_fetch">group_type_fetch</a></li><li><a href="global.html#groupinsertMutationJSON">groupinsertMutationJSON</a></li><li><a href="global.html#groupupdateMutationJSON">groupupdateMutationJSON</a></li><li><a href="global.html#membershipInsertJSON">membershipInsertJSON</a></li><li><a href="global.html#onClickDeleteGroup">onClickDeleteGroup</a></li><li><a href="global.html#onClickDeleteMember">onClickDeleteMember</a></li><li><a href="global.html#onMove">onMove</a></li><li><a href="global.html#onSubgroupAdd">onSubgroupAdd</a></li><li><a href="global.html#onUserAdd">onUserAdd</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Jul 02 2023 22:21:40 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Components/Moving_Subgroup.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Components/Moving_Subgroup.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState, useEffect } from "react";
+import { RewindCircleFill, RocketTakeoff, RocketTakeoffFill } from "react-bootstrap-icons";
+
+import { v1 } from 'uuid'
+
+// Moving subgroup button is a combination of Adding subgroup button and Delete subgroup button
+// The subgroup is added to the destination group and deleted from the original group
+
+/**
+ * Component for moving a subgroup in a group to another group.
+ * @param {*} group mastergroup contain wanted subgroup
+ * @param {*} item subgroup contain it's own, mastergroup, membership ID
+ * @param {*} toggle_moving function that toggle the moving button
+ * @param {*} actions global actions
+ * @returns component necessary for entering data
+ */
+
+export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
+    const [destination, set_destination] = useState("");
+
+    const onInputChange = (e) => {
+        set_destination(e.target.value);
+    };
+
+    return (
+        &lt;>
+            &lt;input className="form-control-warning" onChange={onInputChange} placeholder="Enter destination group's ID" />
+            &lt;button onClick={toggle_moving}>
+                &lt;RewindCircleFill />
+            &lt;/button>
+            &lt;Moving_Condition group={group} item={item} actions={actions} destination={destination} />
+        &lt;/>
+    );
+};
+/**
+ * Moving_Condition function perform 2 main actions: adding a wanted subgroup to a selected group and removing it at current group
+ * @param {*} group mastergroup contain wanted subgroup
+ * @param {*} item subgroup contain it's own, mastergroup, membership ID
+ * @param {*} destination the group's ID that will receive the wanted subgroup
+ * @param {*} actions global actions
+ */
+export const Moving_Condition = ({ group, item, actions, destination }) => {
+    const [destinationGroup, set_destinationGroup] = useState(null);
+
+    useEffect(() => {
+
+        const getDestinationGroup = () => {
+            actions.groupFetch(destination) //get the destination group data
+                .then((groupData) => {
+                    set_destinationGroup(groupData);
+                })
+                .catch((error) => {
+                    console.error("Error fetching destination group:", error);
+                });
+        };
+
+        if (destination) {
+            getDestinationGroup();
+        } else {
+            set_destinationGroup(null);
+        }
+    }, [destination]);
+
+    const onMove = async () => {
+        try {
+            const fetchedItem = await actions.groupFetch(item.id); // get the wanted subgroup data
+            const fetchedpayload = fetchedItem.payload // Because the information of the subgroup is wrapped inside payload, so we must use payload
+            const payload_leave = {
+                id: item.id,
+                lastchange: item.lastchange,
+                name: item.name,
+                valid: false,
+                mastergroupId: item.mastergroup.id,
+                grouptypeId: item.grouptype.id
+            };
+            console.log("Member subgroup:", fetchedpayload.memberships);
+
+            const payload_arrive = { // The moved subgroup with the new id in the destination group
+                id: v1(),
+                name: item.name,
+                mastergroupId: destination,
+            };
+
+            actions.groupAsyncInsert(payload_arrive)
+                .then(
+                    resp => resp.json()
+                )
+                .then(
+                    json => {
+                        const msg = json.data.groupInsert.msg
+                        if (msg === "fail") {
+                            console.log("Update failed")
+                        } else {
+                            const new_subgroup = json.data.groupInsert.group
+                            actions.onAddSubGroup({ group: destinationGroup.payload, new_subgroup: new_subgroup }) //Insert the new subgroup in store
+                        }
+                        return json
+                    }
+                )
+            actions.groupAsyncUpdate(payload_leave);
+            actions.onGroupDelete({ group, item });
+            fetchedpayload.memberships.forEach((membership) => { //Moving subgroup button also remove all the membership and role inside it
+                const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id &amp;&amp; item.valid === true)?.splice(-1)[0]
+                actions.membershipAsyncUpdate({
+                    id: membership.id,
+                    lastchange: membership.lastchange,
+                    valid: false
+                });
+                actions.onMemberRemove({ group: { id: item.id, lastchange: item.lastchange }, membership: membership });
+                if (current_role) {
+                    console.log("current role removed")
+                    actions.roleAsyncUpdate({ role: { ...current_role, valid: false }, membership: { ...membership, valid: false } })
+                }
+            });
+        } catch (error) {
+            console.error("Error fetching item information:", error);
+        }
+    };
+    return (
+        &lt;button onClick={onMove}>
+            &lt;RocketTakeoff />
+        &lt;/button>
+    )
+}
+
+export const Moving_Subgroup_Button = ({ group, subgroup, actions }) => { // Two state moving subgroup button
+    const [moving, set_moving] = useState(false);
+
+    if (!moving) {
+        return (
+            &lt;button onClick={event => set_moving(true)}>
+                &lt;RocketTakeoffFill />
+            &lt;/button>
+        );
+    } else {
+        return &lt;Moving_Subgroup group={group} item={subgroup} actions={actions} toggle_moving={event => set_moving(false)} />;
+    }
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddingMember_Button">AddingMember_Button</a></li><li><a href="global.html#Adding_Member">Adding_Member</a></li><li><a href="global.html#Adding_Subgroup">Adding_Subgroup</a></li><li><a href="global.html#Adding_Subgroup_Button">Adding_Subgroup_Button</a></li><li><a href="global.html#Adding_User_Button">Adding_User_Button</a></li><li><a href="global.html#CreateDelayer">CreateDelayer</a></li><li><a href="global.html#Create_Group">Create_Group</a></li><li><a href="global.html#Delete_Group">Delete_Group</a></li><li><a href="global.html#Display">Display</a></li><li><a href="global.html#Get_Chart">Get_Chart</a></li><li><a href="global.html#Get_Each_Node">Get_Each_Node</a></li><li><a href="global.html#Get_Hierarchy">Get_Hierarchy</a></li><li><a href="global.html#Get_Member_Row">Get_Member_Row</a></li><li><a href="global.html#Get_Node">Get_Node</a></li><li><a href="global.html#Get_Sub_Group_Row">Get_Sub_Group_Row</a></li><li><a href="global.html#GroupAsyncInsert">GroupAsyncInsert</a></li><li><a href="global.html#GroupAsyncUpdate">GroupAsyncUpdate</a></li><li><a href="global.html#GroupFetch">GroupFetch</a></li><li><a href="global.html#GroupFetchHelper">GroupFetchHelper</a></li><li><a href="global.html#GroupMemberAdd">GroupMemberAdd</a></li><li><a href="global.html#GroupQuery">GroupQuery</a></li><li><a href="global.html#GroupQueryJSON">GroupQueryJSON</a></li><li><a href="global.html#GroupTypePage">GroupTypePage</a></li><li><a href="global.html#GroupTypePageFetch">GroupTypePageFetch</a></li><li><a href="global.html#GroupTypePageJSON">GroupTypePageJSON</a></li><li><a href="global.html#GroupType_Select">GroupType_Select</a></li><li><a href="global.html#HeaderTextInput">HeaderTextInput</a></li><li><a href="global.html#Hierarchy_Update">Hierarchy_Update</a></li><li><a href="global.html#MembershipAsyncInsert">MembershipAsyncInsert</a></li><li><a href="global.html#MembershipInsert_SearchBar">MembershipInsert_SearchBar</a></li><li><a href="global.html#MovingMember">MovingMember</a></li><li><a href="global.html#Moving_Condition">Moving_Condition</a></li><li><a href="global.html#Moving_Member">Moving_Member</a></li><li><a href="global.html#Moving_Subgroup">Moving_Subgroup</a></li><li><a href="global.html#Remove_Member">Remove_Member</a></li><li><a href="global.html#Replace_Condition">Replace_Condition</a></li><li><a href="global.html#RoleQuery">RoleQuery</a></li><li><a href="global.html#RoleQueryJSON">RoleQueryJSON</a></li><li><a href="global.html#SearchBar">SearchBar</a></li><li><a href="global.html#Table_Display">Table_Display</a></li><li><a href="global.html#TextInput">TextInput</a></li><li><a href="global.html#TwoStateButton">TwoStateButton</a></li><li><a href="global.html#Update_Group">Update_Group</a></li><li><a href="global.html#Update_Member">Update_Member</a></li><li><a href="global.html#Updating_Subgroup">Updating_Subgroup</a></li><li><a href="global.html#UserBasic">UserBasic</a></li><li><a href="global.html#UserQuery">UserQuery</a></li><li><a href="global.html#UserQueryJSON">UserQueryJSON</a></li><li><a href="global.html#UserbyLetters">UserbyLetters</a></li><li><a href="global.html#UserbyLettersFetch">UserbyLettersFetch</a></li><li><a href="global.html#UserbyLettersJSON">UserbyLettersJSON</a></li><li><a href="global.html#authorizedFetch">authorizedFetch</a></li><li><a href="global.html#fetch_by_letters">fetch_by_letters</a></li><li><a href="global.html#groupMutationJSON">groupMutationJSON</a></li><li><a href="global.html#group_type_fetch">group_type_fetch</a></li><li><a href="global.html#groupinsertMutationJSON">groupinsertMutationJSON</a></li><li><a href="global.html#groupupdateMutationJSON">groupupdateMutationJSON</a></li><li><a href="global.html#membershipInsertJSON">membershipInsertJSON</a></li><li><a href="global.html#onClickDeleteGroup">onClickDeleteGroup</a></li><li><a href="global.html#onClickDeleteMember">onClickDeleteMember</a></li><li><a href="global.html#onMove">onMove</a></li><li><a href="global.html#onSubgroupAdd">onSubgroupAdd</a></li><li><a href="global.html#onUserAdd">onUserAdd</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Jul 02 2023 22:21:40 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
