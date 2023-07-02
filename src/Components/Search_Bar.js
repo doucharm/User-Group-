@@ -16,7 +16,6 @@ export const SearchBar = ({actions}) => {
     const handleInputChange = (event) => {
         setInputId(event.target.value);
     };
-
     const handleSubmit = (event) => {  //process the ID inputed and check if it's a valid ID, a string indicating name or just invalid
         console.log(inputId)
         event.preventDefault();
@@ -34,17 +33,7 @@ export const SearchBar = ({actions}) => {
     if (users_list.length > 0 && !foundID) { // return a list of user that match the phrase entered
         return (
             <>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="inputId">Enter ID:</label>
-                    <input
-                        id="inputId"
-                        type="text"
-                        value={inputId}
-                        onChange={handleInputChange}
-                    />
-                    <button type="submit" title="Submit Form"><Search></Search></button>
-                </form>
-
+                <SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
                 <table class="table table-sm table-info">
                     <caption>  Possible users with that name: </caption>
                     <thead>
@@ -57,52 +46,34 @@ export const SearchBar = ({actions}) => {
                     <tbody>
                         {users_list?.map((user) => <UserBasic user={user} set_display_id={set_display_id } set_found={set_found} />)}
                     </tbody>
-
                 </table>
-
             </>
         )
     } else if (display_id) { // pass the validated ID onto Display.js component
         return (
-
             <>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="inputId">Enter ID:</label>
-                    <input
-                        id="inputId"
-                        type="text"
-                        value={inputId}
-                        onChange={handleInputChange}
-                    />
-                    <button type="submit" title="Submit Form"><Search></Search></button>
-                </form>
-
+                <SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
                 <Display display_id={display_id} set_display_id={set_display_id} actions={actions} />
             </>
-
-
         )
     } else {
         return (
-            <>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="inputId">Enter ID:</label>
-                <input
-                    id="inputId"
-                    type="text"
-                    value={inputId}
-                    onChange={handleInputChange}
-                />
-                <button type="submit" title="Submit Form"><Search></Search></button>
-            </form>
-            </>
+           <SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
         )
     }
 
 };
+const SearchBarDisplay = ({inputId,handleInputChange,handleSubmit}) =>
+{
+    return (
+        <>
+        <input className='input1' id="inputID" type='text' value={inputId} onChange={handleInputChange} />
+        <button className='button1' onClick={handleSubmit}><Search></Search></button>
+        </>
+    )
+}
 export const UserBasic = ({ user, set_display_id,set_found}) => { // simple component to display user list and link to open these user
     const findID = () => {
-
         set_display_id(user.id)
         set_found(true)
     }

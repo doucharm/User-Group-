@@ -77,7 +77,7 @@ export const Replace_Condition = ({ group, membership, actions }) => {
                                 membership: newMembership,
 
                             }
-                            actions.roleAsyncUpdate(moving_role)
+                            actions.roleAsyncUpdate({role:{...moving_role,valid:false},membership:{...membership,valid:false}})
                             actions.roleAsyncInsert(new_role)
                         }
                     }

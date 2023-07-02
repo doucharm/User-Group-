@@ -29,7 +29,7 @@ export const TwoStateButton = ({ sec_button, icon: Icon }) => {
 * function to invalidate membership and the role that membership/user're having
 * @param {*} membership membership to be invalidated
 */
-const onClickDeleteMember = async ({ membership, actions }) => { // 
+const onClickDeleteMember =({ membership, actions }) => { // 
   const payload = {
     id: membership.id,
     lastchange: membership.lastchange,
@@ -37,11 +37,13 @@ const onClickDeleteMember = async ({ membership, actions }) => { //
   };
   const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)?.splice(-1)[0]
   try {
-    await actions.membershipAsyncUpdate(payload);
+    actions.membershipAsyncUpdate(payload);
     actions.onMemberRemove({ group: { id: membership.group.id }, membership });
     // also remove user's role along with the membership
-    if (current_role) {
-      actions.roleAsyncUpdate(current_role)
+    if (current_role) 
+    {
+      console.log("current role removed")
+      actions.roleAsyncUpdate({role:{...current_role,valid:false}, membership:{...membership,valid:false}})
     }
   } catch (error) {
     console.log('Membership update failed:', error);
@@ -72,16 +74,15 @@ const onClickDeleteGroup = async ({ item, group, actions }) => { //The condition
     actions.onGroupDelete({ group, item });
     // Also remove all the membership and roles inside the wanted subgroup
     fetchedpayload.memberships.forEach((membership) => {
-      const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)
-      const old_role = current_role[current_role.length - 1]
+      const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)?.splice(-1)[0]
       actions.membershipAsyncUpdate({
         id: membership.id,
         lastchange: membership.lastchange,
         valid: false
       });
       actions.onMemberRemove({ group: { id: item.id, lastchange: item.lastchange }, membership: membership });
-      if (old_role) {
-        actions.roleAsyncUpdate(old_role)
+      if (current_role) {
+        actions.roleAsyncUpdate({role:{...current_role,valid:false}, membership:{...membership,valid:false}})
       }
     });
   } catch (error) {

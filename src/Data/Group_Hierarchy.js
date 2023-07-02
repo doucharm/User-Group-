@@ -16,23 +16,6 @@ export const Get_Each_Node = async ({id,display_id}) => {
     const item = await Get_Node(id);
     const childrenPromises = item.subgroups?.filter(sg =>sg.valid).map(get_help); // perform recursive functions to get Nodes from smaller subsgroups
     const all_children = await Promise.all(childrenPromises);
-    const Get_Label_Member = (m) => // TreeNode for member only need their name, surname and email
-    {
-      return (
-      { 
-
-        data:{
-          name: `${m.user.name} ${m.user.surname}`, 
-          email: m.user.email
-            },
-        type: 'member',
-        className: m.user.id===display_id? 'selected' : 'member',
-        style: { borderRadius: '12px' },
-      }
-    )
-    }
-    const members_label = item.memberships.filter(m => m.valid).map(Get_Label_Member);
-    all_children.push(...members_label)
     if (all_children.length>0) // if the group has children ( members or subgroups )
     {
       const data = 
@@ -42,7 +25,6 @@ export const Get_Each_Node = async ({id,display_id}) => {
           data:
           {
             name:item.name,
-            type:null
           },
           type:"group",
           className: item.id===display_id? 'selected' : 'group',
@@ -59,7 +41,6 @@ export const Get_Each_Node = async ({id,display_id}) => {
           data:
           {
             name:item.name,
-            type:null
           },
           type:"group",
           className: item.id===display_id? 'selected' : 'endgroup',
@@ -93,26 +74,13 @@ export const Get_Chart = (show_chart) =>
 if ( show_chart && hierarchy_list[0] )
   {
       const nodeTemplate = (node) => { // node template to display information
-          if (node.type === 'member') 
-          {
-              return (
-                  <div className="flex flex-column">
-                      <div className="flex flex-column align-items-center">
-                          <span className=" mb-2">{node.data.name}</span>
-                          <br />
-                          <span>{node.data.email}</span>
-                      </div>
-                  </div>
-              );
-          }
-          else if (node.type === 'group') 
+       if (node.type === 'group') 
           {
               return (
                   <div className="flex flex-column">
                       <div className="flex flex-column align-items-center">
                           <span className="font-bold mb-3">{node.data.name}</span>
                           <br />
-                          <span>{node.data.type}</span>
                       </div>
                   </div>
               );
@@ -120,13 +88,12 @@ if ( show_chart && hierarchy_list[0] )
       };
       return (
         <div className="organizationchart-demo">
-            <div className="card bg-warning">
+            <div className="chart-bg">
                 <OrganizationChart value={hierarchy_list} nodeTemplate={nodeTemplate} className="company"></OrganizationChart>
             </div>
         </div>
     )
   }
-
  else if ( !show_chart )
  {
   return ;

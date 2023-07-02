@@ -1,32 +1,27 @@
-
- .organizationchart-demo .p-organizationchart .member { /* template for organization chart */
-    padding: 0;
-    border: 0 none;
-    background-color: #8fe3ae;
-    display: inline-block; 
-    width: auto;
-  }
-  .organizationchart-demo .p-organizationchart .group {
-    background-color: #0648f1;
+.organizationchart-demo
+{
+  width: auto;
+  background-color: whitesmoke;
+}
+.chart-bg
+{
+  background-image: linear-gradient(-60deg, #e2b3b3 , #bac4e5, #a0cebf );
+}
+.organizationchart-demo .p-organizationchart .group {
+    background-color: #6cd045;
     color: #ffffff;
     border-radius: 4px;
-    display: inline-block; 
-    width: auto;
-  }
-  
-  .organizationchart-demo .p-organizationchart .endgroup {
-    background-color: #8f18a1;
-    color: #080808;
-    border-radius: 4px;
-    display: inline-block; 
-    width: auto;
-  }
-  .organizationchart-demo .p-organizationchart .selected {
-    background-color: #6dfc00;
-    color: #ff0000;
+    width: auto; 
+}
+.organizationchart-demo .p-organizationchart .endgroup {
+    background-color: rgb(57, 175, 219);
+    color: #501212;
+    width: 121px;
+}
+.organizationchart-demo .p-organizationchart .selected {
+    background-color: #86d947;
+    color: #220505;
     border-radius: 8px;
-    display: inline-block; 
     width: auto;
-    
-  }
+}
   

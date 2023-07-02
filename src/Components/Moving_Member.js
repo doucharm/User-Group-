@@ -57,6 +57,12 @@ export const onMove = ({destination,membership,actions}) => // perform moving me
                 membership:null
             }
         }
+
+        const current_role=membership?.user.roles?.filter((item) => item.group?.id===membership.group?.id && item.valid===true).splice(-1)[0]
+        if(current_role)
+        {
+        actions.roleAsyncUpdate({role:{...current_role,valid:false}, membership:{...membership,valid:false}}) // remove the role that this user has when moved
+        }
         actions.membershipAsyncInsert(payload_arrive)
         actions.membershipAsyncUpdate(payload_leave)
         actions.onMemberRemove({group:{id:membership.group.id},membership:membership})

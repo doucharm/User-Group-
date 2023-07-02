@@ -84,7 +84,7 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                                                 <td>{membership.group.name}</td>
                                                 <td>{latestRole ? latestRole.roletype?.nameEn : <span>No roles found</span>}</td>
                                                 <button
-                                                    onClick={() => handleDetails(membership.group)}
+                                                    onClick={() => setUserId(membership.group.id)}
                                                 >
                                                     <DoorOpen></DoorOpen>
                                                 </button>

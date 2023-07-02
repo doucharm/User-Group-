@@ -95,6 +95,7 @@ export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
 
 // This mutation will update a role and fetch it to server, it'll help when you want to change the role of a membership
 const roleMutationJSON = (role) => {
+  console.log("role in", role)
   const { enddate, ...restPayload } = role;
   return {
     query: `
@@ -133,6 +134,7 @@ const roleMutationJSON = (role) => {
 
 export const RoleAsyncUpdate = ({role,membership}) =>  (dispatch, getState) => 
 {
+
   authorizedFetch('/gql',{body: JSON.stringify(roleMutationJSON(role))})
     .then(resp => resp.json())
     .then(
@@ -144,7 +146,6 @@ export const RoleAsyncUpdate = ({role,membership}) =>  (dispatch, getState) =>
                 const new_updated_role=json.data.roleUpdate?.role
                 const updated_rolelist=membership.user?.roles?.map(r => r.id===new_updated_role.id ? new_updated_role : r)
                 const updated_membership={...membership,user:{...membership.user,roles:updated_rolelist}}
-                console.log("updated membership",updated_membership)
                 dispatch(GroupActions.memberUpdate({membership:updated_membership,group:{id:updated_membership.group.id}}))
             }
         }
