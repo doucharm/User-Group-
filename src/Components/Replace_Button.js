@@ -67,7 +67,6 @@ export const Replace_Condition = ({ user, group, membership, actions }) => {
         const checkExistence = group.memberships.find(
             (m) => m.user.id === payload.user_id && m.valid  // Check if the user is already membership of the group
         );
-        console.log(checkExistence);
         if (!checkExistence) { // if not then insert new user and remove old user from the group
             actions
                 .userAsyncUpdate(modifyUser)
