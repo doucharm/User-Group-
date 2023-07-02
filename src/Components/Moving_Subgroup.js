@@ -59,7 +59,6 @@ export const Moving_Condition = ({ group, item, actions, destination }) => {
                 mastergroupId: item.mastergroup.id,
                 grouptypeId: item.grouptype.id
             };
-
             console.log("Member subgroup:", fetchedpayload.memberships);
 
             const payload_arrive = { // The moved subgroup with the new id in the destination group
@@ -87,16 +86,16 @@ export const Moving_Condition = ({ group, item, actions, destination }) => {
             actions.groupAsyncUpdate(payload_leave);
             actions.onGroupDelete({ group, item });
             fetchedpayload.memberships.forEach((membership) => { //Moving subgroup button also remove all the membership and role inside it
-                const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)
-                const old_role = current_role[current_role.length - 1]
+                const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true)?.splice(-1)[0]
                 actions.membershipAsyncUpdate({
                     id: membership.id,
                     lastchange: membership.lastchange,
                     valid: false
                 });
                 actions.onMemberRemove({ group: { id: item.id, lastchange: item.lastchange }, membership: membership });
-                if (old_role) {
-                    actions.roleAsyncUpdate(old_role)
+                if (current_role) {
+                    console.log("current role removed")
+                    actions.roleAsyncUpdate({ role: { ...current_role, valid: false }, membership: { ...membership, valid: false } })
                 }
             });
         } catch (error) {

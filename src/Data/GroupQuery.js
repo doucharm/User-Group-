@@ -25,6 +25,7 @@ export const GroupQueryJSON = (id) => ({
                     }
                     grouptype
                     {
+                        id
                         nameEn
                     }
                 }

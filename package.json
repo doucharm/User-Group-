@@ -1,8 +1,8 @@
 {
-  "name": "project_a",
+  "name": "@my-package/project_a",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/ui",
+  "homepage": "http:///ui",
   "proxy": "http://localhost:31180/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "5.2.3",
     "datepicker": "^0.0.0",
+    "my-package": "^0.0.0",
     "primereact": "^9.5.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.1.2",
@@ -47,5 +48,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "description": "Process:",
+  "main": "index.js",
+  "author": "NhatDungHieu",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
