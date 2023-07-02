@@ -7,8 +7,13 @@ import { useState } from "react"
 import { Replace_Button } from "./Replace_Button"
 import { Moving_Member_Button } from "./Moving_Member"
 import { Moving_Subgroup_Button } from "./Moving_Subgroup"
-
-// This function shows the table display which contains the users of the group
+/**
+ * This function shows the table display which contains the users of the group
+ * @param {*} group The group we are showing
+ * @param {*} set_display_id This is a part of the useState to change the group we are showing
+ * @param {*} actions Actions needed to update our group in store and on server
+ * @returns A table that displays all of the members and subgroups that the group contains
+ */
 export const Table_Display = ({ group, set_display_id, actions }) => {
     const [show_old_member, set_show_member] = useState(false) //useState to declare whether we're showing the deleted members or not
     const [show_old_subgroup, set_show_subgroup] = useState(false) ////useState to declare whether we're showing the deleted subgroups or not
@@ -67,8 +72,15 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
         </div>
     )
 }
-
-// This return a row of each subgroups existed in the large group
+/**
+ * This return a row of each subgroups existed in the large group
+ * @param {*} group The group we are showing
+ * @param {*} item The subgroups of the group we get by mapping through the group.subgroups
+ * @param {*} set_display_id This is a part of the useState to change the group we are showing
+ * @param {*} actions Actions needed to update our group in store and on server
+ * @param {*} show_old_subgroup Part of the use state to declare if we want to show the deleted subgroups
+ * @returns A row that has the subgroup's details
+ */
 const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subgroup }) => {
 
     if (item.valid) {
@@ -93,7 +105,14 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
         )
     }
 }
-
+/**
+ * This return a row of each memberships existed in the large group
+ * @param {*} group The group we are showing
+ * @param {*} membership The memberships of the group we get by mapping through the group.memberships
+ * @param {*} actions Actions needed to update our group in store and on server
+ * @param {*} show_old_member Part of the use state to declare if we want to show the deleted memberships
+ * @returns A row that has the membership's details
+ */
 const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
 
 

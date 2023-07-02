@@ -128,7 +128,6 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
         )
     }
 }
-
 /**
  * This function return a table that return a row of user that contains an add button to insert the user to the group we're seeing
  * @param {*} user The user we are showing

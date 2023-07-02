@@ -56,8 +56,13 @@ export const DeleteButton = ({ membership, actions }) => {
   )
 }
 
-
-const onClickDeleteGroup = async ({ item, group, actions }) => { //The condition for delete the subgroup
+/**
+ * This function works as the onclick contion for our subgroup delete group
+ * @param {*} item The subgroup we want to delete
+ * @param {*} group The group that contains that subgroup
+ * @param {*} actions The actions needed to update in store and on server
+ */
+const onClickDeleteGroup = async ({ item, group, actions }) => { 
   try {
     const fetchedItem = await actions.groupFetch(item.id); // get the wanted subgroup data
     const fetchedpayload = fetchedItem.payload // because the data is wrapped in payload so that we need to get their payload
@@ -90,6 +95,13 @@ const onClickDeleteGroup = async ({ item, group, actions }) => { //The condition
   }
 };
 
+/**
+ * This works as the subgroup delete button
+ * @param {*} item The subgroup we want to delete 
+ * @param {*} group The group that contains that subgroup
+ * @param {*} actions The actions needed to update our app in store and on server
+ * @returns A two-state button for deleting subgroup
+ */
 export const DeleteGroupButton = ({ item, group, actions }) => {
   const Icon = Trash
   const button_Delete = <button className='btn btn-sm btn-danger' onClick={() => onClickDeleteGroup({ item, group, actions })}><Icon /> </button>
