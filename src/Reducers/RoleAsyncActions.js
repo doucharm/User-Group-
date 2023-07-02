@@ -37,44 +37,43 @@ export const RoleFetch = () => (dispatch, getState) => {
 }
 
 // This mutation assign a membership with a new role, and after fetching it to the server, it also updates the membership that holds the new role
+const roleInsertJSON = (payload) => {
+  return {
+      query: `mutation($groupId: ID!, $userId: ID!, $roletypeID: ID!,$id: ID!) {
+      roleInsert(role: {
+      id: $id,
+      groupId: $groupId,
+      userId: $userId,
+      roletypeId: $roletypeID
+      valid:true
+  }){
+      msg
+      role {
+          lastchange
+          id
+          startdate
+          enddate
+          roletype {
+            id
+            nameEn
+          }
+          group
+          {
+              id
+          }
+          valid
+        }
+  }
+  }`,
+      variables:      { id:v1(), 
+                        groupId:payload.membership.group.id,
+                        userId:payload.membership.user.id,
+                        roletypeID:payload.role.id
+                      }
+  }
+}
+
 export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
-    const roleInsertJSON = (payload) => {
-        return {
-            query: `mutation($groupId: ID!, $userId: ID!, $roletypeID: ID!,$id: ID!) {
-            roleInsert(role: {
-            id: $id,
-            groupId: $groupId,
-            userId: $userId,
-            roletypeId: $roletypeID
-            valid:true
-        }){
-            msg
-            role {
-                lastchange
-                id
-                startdate
-                enddate
-                roletype {
-                  id
-                  nameEn
-                }
-                group
-                {
-                    id
-                }
-                valid
-              }
-        }
-        }`,
-            variables:      { id:v1(), 
-                              groupId:payload.membership.group.id,
-                              userId:payload.membership.user.id,
-                              roletypeID:payload.role.id
-                            }
-        }
-    }
-
-
     authorizedFetch('/gql',{body: JSON.stringify(roleInsertJSON(payload))})
     .then((resp) => resp.json())
         .then((json) => {
