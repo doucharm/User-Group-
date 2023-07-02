@@ -1,5 +1,8 @@
 import { authorizedFetch } from "./authorizedFetch"
-// This query asks for all of the group types on sever
+/**
+ * This query asks for all of the group types on sever
+ * @returns The data of grouptype page on server
+ */
 export const GroupTypePageJSON = () => ({
     "query":
     `query  {
@@ -12,12 +15,21 @@ export const GroupTypePageJSON = () => ({
           }
         }`,
 })
-// Then we fetch it from sever
+/**
+ * This function fetch the grouptype page from the server
+ * @returns promise
+ */
 export const GroupTypePage = () =>
     authorizedFetch('/gql', {
         body: JSON.stringify(GroupTypePageJSON()),
     })
-    // This functions declare what we would do with the data we get from server, in this case the grouptype page
+   
+/**
+ * This functions declare what we would do with the data we get from server, in this case the grouptype page
+ * @param {*} query The promise, in this case GroupTypePage
+ * @param {*} selector Choose the appropriate data 
+ * @returns promise
+*/
 export const GroupTypePageFetch = (query,selector) => {
         const p = query()
         .then(
@@ -30,7 +42,12 @@ export const GroupTypePageFetch = (query,selector) => {
         )
         return p
       }
-      // In the function below we call the previous function that require the query and the selector in which are GroupTypePage and the selector is the data.groupTypePage
+      
+/**
+ * In the function below we call the previous function that require the query and the selector in which are GroupTypePage and the selector is the data.groupTypePage
+ * @param {*} set_group_type Part of the useState to deliver the data we got from server to an array
+ * @returns promise
+ */
 export const group_type_fetch = (set_group_type) => 
 {
         const selector = (json) => json.data.groupTypePage

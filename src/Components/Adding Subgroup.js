@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { DatabaseFillAdd } from 'react-bootstrap-icons';
 import { TwoStateButton } from './Delete_Button';
 /**
- * 
- * @param {*} group
- * @param {*} actions The actions needed to
+ * This is a button to add a new group as the subgroup of the group we are accessing
+ * @param {*} group The group being showed
+ * @param {*} actions The actions in store and on sever
  * @returns A two_state button to add a new subgroup to our group or to cancel doing it
  */
 export const Adding_Subgroup_Button = ({ group, actions }) => {
@@ -31,6 +31,7 @@ export const Adding_Subgroup_Button = ({ group, actions }) => {
 }
 
 /**
+ * This works as the onclick of our button above
  * Pushing the new group onto the server
  * @param {*} new_sub the group that is going to be created 
  * @returns promise

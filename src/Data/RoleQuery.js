@@ -1,5 +1,9 @@
 import { authorizedFetch } from "./authorizedFetch"
-// This function asks for all the roles from the server
+
+/**
+ * This function asks for all the roles from the server
+ * @returns roletype page
+ */
 export const RoleQueryJSON = () => ({
   "query":
     `query {
@@ -10,7 +14,10 @@ export const RoleQueryJSON = () => ({
           }
         }`
 })
-// Fetch it with authorizedFetch
+/**
+ * Overwrite the default params with the RoleQueryJSON
+ * @returns promise
+ */
 export const RoleQuery = () =>
   authorizedFetch('/gql', {
     body: JSON.stringify(RoleQueryJSON()),
