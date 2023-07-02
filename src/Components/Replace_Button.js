@@ -167,7 +167,7 @@ export const MembershipInsert_SearchBar = ({ group, membership, actions }) => {
                             value={inputId}
                             onChange={handleInputChange}
                         />
-                        <button type="submit" title="Submit Form" form="my_form"><ArrowLeftRight /></button>
+                        <button type="submit" title="Submit Form" form="my_form"><Search /></button>
                     </thead>
                     <tbody>
                         {usersList?.map((user) => <UserBasic key={user.id} user={user} group={group} membership={membership} actions={actions} />)}

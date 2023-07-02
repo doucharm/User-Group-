@@ -1,7 +1,7 @@
 {
   "name": "@my-package/project_a",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "homepage": "http:///ui",
   "proxy": "http://localhost:31180/",
   "dependencies": {
@@ -27,6 +27,13 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/doucharm/UserGroup.git"
   },
   "scripts": {
     "start": "react-scripts start",
