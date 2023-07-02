@@ -6,6 +6,15 @@ import { v1 } from 'uuid'
 // Moving subgroup button is a combination of Adding subgroup button and Delete subgroup button
 // The subgroup is added to the destination group and deleted from the original group
 
+/**
+ * Component for moving a subgroup in a group to another group.
+ * @param {*} group mastergroup contain wanted subgroup
+ * @param {*} item subgroup contain it's own, mastergroup, membership ID
+ * @param {*} toggle_moving function that toggle the moving button
+ * @param {*} actions global actions
+ * @returns component necessary for entering data
+ */
+
 export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
     const [destination, set_destination] = useState("");
 
@@ -23,7 +32,13 @@ export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
         </>
     );
 };
-
+/**
+ * Moving_Condition function perform 2 main actions: adding a wanted subgroup to a selected group and removing it at current group
+ * @param {*} group mastergroup contain wanted subgroup
+ * @param {*} item subgroup contain it's own, mastergroup, membership ID
+ * @param {*} destination the group's ID that will receive the wanted subgroup
+ * @param {*} actions global actions
+ */
 export const Moving_Condition = ({ group, item, actions, destination }) => {
     const [destinationGroup, set_destinationGroup] = useState(null);
 
@@ -45,7 +60,6 @@ export const Moving_Condition = ({ group, item, actions, destination }) => {
             set_destinationGroup(null);
         }
     }, [destination]);
-    console.log('destinategroup', destinationGroup)
 
     const onMove = async () => {
         try {
