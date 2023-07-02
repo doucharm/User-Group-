@@ -29,7 +29,7 @@ export const TwoStateButton = ({ sec_button, icon: Icon }) => {
 * function to invalidate membership and the role that membership/user're having
 * @param {*} membership membership to be invalidated
 */
-const onClickDeleteMember =({ membership, actions }) => { // 
+const onClickDeleteMember = ({ membership, actions }) => { // 
   const payload = {
     id: membership.id,
     lastchange: membership.lastchange,
@@ -40,10 +40,9 @@ const onClickDeleteMember =({ membership, actions }) => { //
     actions.membershipAsyncUpdate(payload);
     actions.onMemberRemove({ group: { id: membership.group.id }, membership });
     // also remove user's role along with the membership
-    if (current_role) 
-    {
+    if (current_role) {
       console.log("current role removed")
-      actions.roleAsyncUpdate({role:{...current_role,valid:false}, membership:{...membership,valid:false}})
+      actions.roleAsyncUpdate({ role: { ...current_role, valid: false }, membership: { ...membership, valid: false } })
     }
   } catch (error) {
     console.log('Membership update failed:', error);
@@ -83,7 +82,7 @@ const onClickDeleteGroup = async ({ item, group, actions }) => { //The condition
       });
       actions.onMemberRemove({ group: { id: item.id, lastchange: item.lastchange }, membership: membership });
       if (current_role) {
-        actions.roleAsyncUpdate({role:{...current_role,valid:false}, membership:{...membership,valid:false}})
+        actions.roleAsyncUpdate({ role: { ...current_role, valid: false }, membership: { ...membership, valid: false } })
       }
     });
   } catch (error) {
