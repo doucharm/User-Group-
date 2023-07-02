@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { DatabaseFillAdd } from 'react-bootstrap-icons';
 import { TwoStateButton } from './Delete_Button';
+/**
+ * 
+ * @param {*} group
+ * @param {*} actions The actions needed to
+ * @returns A two_state button to add a new subgroup to our group or to cancel doing it
+ */
 export const Adding_Subgroup_Button = ({ group, actions }) => {
     const [new_sub, set_new_sub] = useState({ // Create a variable that takes the props id and name from the input below, this return the
         id: "",                     // subgroup with the mastergroup id is the group we're in
