@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { Component, useState } from 'react';
 import { XOctagonFill, Trash } from 'react-bootstrap-icons';
 /**
  * This is Two States Button with confirmation (two state button).
  * @param {*} icon the icon that indicate what this button do
- * @param {*} sec_button second state of the button
- * @returns A two-state button in html form
+ * @param {Component} sec_button second state of the button
+ * @returns 
  */
 export const TwoStateButton = ({ sec_button, icon: Icon }) => {
   const [state, setState] = useState(false);
@@ -17,9 +17,7 @@ export const TwoStateButton = ({ sec_button, icon: Icon }) => {
   } else { // return one button for cancelation and another component that perform the intended action
     return (
       <>
-        <button className='btn btn-sm btn-warning' onClick={(event) => setState(!state)}>
-          <XOctagonFill></XOctagonFill>
-        </button>
+        <button className='btn btn-sm btn-warning' onClick={(event) => setState(!state)}><XOctagonFill></XOctagonFill></button> 
         {sec_button}
       </>
     );

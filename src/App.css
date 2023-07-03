@@ -2,8 +2,8 @@
   text-align: center;
 }
 body {
+  background-image: url("https://www.aqualibs.com/images/top1iaplc2022.jpg");
   background-repeat: no-repeat;
-  background-position: center top -10%;
   background-color: linear-gradient(to right, #b67e36, #41bb0d);;
 }
 

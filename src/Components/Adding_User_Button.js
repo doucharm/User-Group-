@@ -24,11 +24,13 @@ export const AddingUserButton = ({ actions }) => {
     return (
         <>
             <table>
+                <tbody>
                 <tr>
                     <td><label>User's first name:<input type="text" name="name" value={new_user.name} placeholder='Enter user first name' onChange={handleChange} /> </label></td>
                     <td><label>User's surname:<input type="text" name="surname" value={new_user.surname} placeholder='Enter user surname' onChange={handleChange} /> </label></td>
                     <td><label>User's email address:<input type="text" name="email" value={new_user.email} placeholder='Enter user email' onChange={handleChange} /> </label></td>
                 </tr>
+                </tbody>
             </table>
             <button className='btn btn-sm btn-primary' onClick={() => onUserAdd({ new_user, actions })}><PersonAdd></PersonAdd></button>
         </>

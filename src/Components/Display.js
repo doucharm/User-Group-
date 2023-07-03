@@ -16,7 +16,6 @@ export const Display =  ({ display_id, set_display_id,actions }) => {
     let display = 0 // Local variables to avoid unnecessary fetch
     const groups = useSelector((state) => state.groups);
     const users = useSelector((state) => state.users);
-    
     const group = groups[display_id];
     const user = users[display_id];
     const hierarchy=useSelector(state => state.hierarchy)
@@ -24,19 +23,19 @@ export const Display =  ({ display_id, set_display_id,actions }) => {
     // fetching necessary data from the store or if not available get it from server
     useEffect(() => {
         if (!group) {
-            actions.groupFetch(display_id).then(display = 0).catch(display = 1)
+            actions.groupFetch(display_id).then(display = 0).catch(display = 1) // fetching group and save it into the store for display
         }
     }, [display_id, group]);
     useEffect(() => {
         if (!user && display === 1) {
-            actions.userFetch(display_id).finally(display = 0)
+            actions.userFetch(display_id).finally(display = 0) // fetch user's info from the server and push it into the store
         }
     }, [display_id, user]);
     useEffect(() => {
        if(!chart)
        {
         Get_Hierarchy(display_id).then(res => dispatch(HierarchyActions.hierarchy_update(res)))
-        set_chart(true)
+        set_chart(true) // fetch the hierarchy from the server
        }
     }, [display_id,hierarchy]);
 

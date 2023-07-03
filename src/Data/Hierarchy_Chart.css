@@ -11,6 +11,7 @@
     background-color: #6cd045;
     color: #ffffff;
     border-radius: 4px;
+    margin-bottom: 50px;
     width: auto; 
 }
 .organizationchart-demo .p-organizationchart .endgroup {
@@ -22,6 +23,7 @@
     background-color: #86d947;
     color: #220505;
     border-radius: 8px;
+    margin-bottom: 50px;
     width: auto;
 }
   

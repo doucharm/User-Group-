@@ -43,7 +43,7 @@ export const onMove = ({destination,membership,actions}) => // perform moving me
             lastchange:membership.lastchange,
             valid:false
         }
-        const payload_arrive = //adding this user into another group
+        const payload_arrive = //adding this user into another group by generating a new membership 
         {
             group_id:destination,
             user_id:membership.user.id,
@@ -71,6 +71,6 @@ export const onMove = ({destination,membership,actions}) => // perform moving me
         }
         catch
         {
-            window.alert("Moving failed, check destination")
+            window.alert("Moving failed, invalid destination")
         }
     }
