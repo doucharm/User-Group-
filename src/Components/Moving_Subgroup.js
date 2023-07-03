@@ -67,16 +67,16 @@ export const Moving_Condition = ({ group, item, actions, destination }) => {
             const fetchedItem = await actions.groupFetch(item.id); // get the wanted subgroup data
             const fetchedpayload = fetchedItem.payload // Because the information of the subgroup is wrapped inside payload, so we must use payload
             const payload_leave = {
-                id: item.id,
-                lastchange: item.lastchange,
-                name: item.name,
-                valid: false,
-                mastergroupId: item.mastergroup.id,
-                grouptypeId: item.grouptype.id
+                id: fetchedpayload.id,
+                lastchange: fetchedpayload.lastchange,
+                name: fetchedpayload.name,
+                valid: false, // make the wanted subgroup invalid in the mastergroup
+                mastergroupId: fetchedpayload.mastergroup.id,
+                grouptypeId: fetchedpayload.grouptype.id
             };
             const payload_arrive = { // The moved subgroup with the new id in the destination group
                 id: v1(),
-                name: item.name,
+                name: fetchedpayload.name,
                 mastergroupId: destination,
             };
 
