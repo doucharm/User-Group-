@@ -35,7 +35,7 @@ export const GroupType_Select = ({ group, actions }) => {
   }
   // Show the possible options for the group type once you press it
   return (
-    <DropdownButton id="dropdown-basic-button" title={group.grouptype?.nameEn}>
+    <DropdownButton id="dropdown-basic-button" title={group?.grouptype?.nameEn ? group?.grouptype?.nameEn:"N/A"}>
       {group_type?.map(grouptype => (<Dropdown.Item key={grouptype.id} onClick={() => onGroupTypeInsert({ group, grouptype })} >{grouptype.nameEn}</Dropdown.Item>))}
     </DropdownButton>
   )

@@ -106,7 +106,7 @@ export const Moving_Condition = ({ group, item, actions, destination }) => {
                 });
                 actions.onMemberRemove({ group: { id: item.id, lastchange: item.lastchange }, membership: membership });
                 if (current_role) {
-                    console.log("current role removed")
+
                     actions.roleAsyncUpdate({ role: { ...current_role, valid: false }, membership: { ...membership, valid: false } })
                 }
             });
