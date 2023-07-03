@@ -46,7 +46,7 @@ export const Update_Member = (state, action) => {
     const m = action.payload.membership
     const group = state[g.id]
     group.memberships = group.memberships.map(membership => membership.id === m.id ? { ...membership, ...m } : membership)
-    console.log(group.memberships)
+
     return state
 }
 
