@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextInput } from './Text_Input';
 import { Adding_User_Button } from './Adding_User_Button';
 import { DoorOpen } from 'react-bootstrap-icons';
+import { Modal, Button } from 'react-bootstrap';
+
 
 export const UserDisplay = ({ user, setUserId, actions }) => {
     // This component is used for displaying the information of user and changing the information of user
+    const [showModal, setShowModal] = useState(false);
+
+    const handleClose = () => {
+        setShowModal(false);
+    };
+
+    const handleShow = () => {
+        setShowModal(true);
+    };
+
     const onChangeInput = (field, value) => {
         const updatedUser = { ...user, [field]: value };
         actions.userAsyncUpdate(updatedUser).then((json) =>
@@ -49,11 +61,13 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                                 onChange={(value) => onChangeInput('email', value)}
                             />
                         </p>
-                        <table class="table table-hover table-bordered table-warning table-stripped">
+                        <table className="table table-hover table-bordered table-warning table-stripped">
                             <thead>
                                 <tr>
                                     <th>Group</th>
                                     <th>Latest Role</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
                                     <th>Details</th>
                                 </tr>
                             </thead>
@@ -69,11 +83,15 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                                             <tr key={membership.group.id}>
                                                 <td>{membership.group.name}</td>
                                                 <td>{latestRole ? latestRole.roletype?.nameEn : <span>No roles found</span>}</td>
-                                                <button
-                                                    onClick={() => setUserId(membership.group.id)}
-                                                >
-                                                    <DoorOpen></DoorOpen>
-                                                </button>
+                                                <td>{membership.startdate ? membership.startdate : 'N/A'}</td>
+                                                <td>{membership.enddate ? membership.enddate : 'N/A'}</td>
+                                                <td>
+                                                    <button
+                                                        onClick={() => setUserId(membership.group.id)}
+                                                    >
+                                                        <DoorOpen />
+                                                    </button>
+                                                </td>
                                             </tr>
                                         );
                                     }
@@ -86,14 +104,22 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
             </div>
             <div className="card mt-4">
                 <div className="card-body">
-                    <h5 className="card-title">Add User</h5>
-                    <Adding_User_Button actions={actions} />
+                    <Button variant="primary" onClick={handleShow}>
+                        Add User
+                    </Button>
                 </div>
             </div>
+
+            <Modal show={showModal} onHide={handleClose} size="lg">
+                <Modal.Header closeButton>
+                    <Modal.Title>Add User</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Adding_User_Button actions={actions} />
+                </Modal.Body>
+            </Modal>
         </div>
     );
 };
-
-
 
 

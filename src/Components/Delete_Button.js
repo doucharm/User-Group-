@@ -41,7 +41,6 @@ const onClickDeleteMember = ({ membership, actions }) => { //
     actions.onMemberRemove({ group: { id: membership.group.id }, membership });
     // also remove user's role along with the membership
     if (current_role) {
-      console.log("current role removed")
       actions.roleAsyncUpdate({ role: { ...current_role, valid: false }, membership: { ...membership, valid: false } })
     }
   } catch (error) {

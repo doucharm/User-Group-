@@ -15,6 +15,8 @@ export const UserQueryJSON = (id) => ({
                 lastchange
                 membership {
                   valid
+                  startdate
+                  enddate
                   group {
                     name
                     id

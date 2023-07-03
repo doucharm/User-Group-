@@ -8,7 +8,7 @@ import { Display } from './Display';
  * @param {*} actions global actions
  * @returns an ID and it's hook will be passed on to process onto the display components or a list of possible users that match 
  */
-export const SearchBar = ({actions}) => {
+export const SearchBar = ({ actions }) => {
     const [display_id, set_display_id] = useState(null)
     const [foundID, set_found] = useState(false)
     const [inputId, setInputId] = useState('');
@@ -17,34 +17,32 @@ export const SearchBar = ({actions}) => {
         setInputId(event.target.value);
     };
     const handleSubmit = (event) => {  //process the ID inputed and check if it's a valid ID, a string indicating name or just invalid
-        console.log(inputId)
         event.preventDefault();
         if (validate(inputId)) {
             set_display_id(inputId)
             set_found(true)
-        } else
-        {
-            fetch_by_letters(inputId,set_users_list)
+        } else {
+            fetch_by_letters(inputId, set_users_list)
             set_found(false)
         }
     }
-    console.log(users_list)
-    console.log(foundID)
     if (users_list.length > 0 && !foundID) { // return a list of user that match the phrase entered
         return (
             <>
                 <SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
-                <table class="table table-sm table-info">
+                <table className="table table-stripped table-bordered table-sm table-info">
                     <caption>  Possible users with that name: </caption>
                     <thead>
-                        <td>ID</td>
-                        <td>Name</td>
-                        <td>Surname</td>
-                        <td>Email</td>
-                        <td>     </td>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Email</th>
+                            <th>Details</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        {users_list?.map((user) => <UserBasic user={user} set_display_id={set_display_id } set_found={set_found} />)}
+                        {users_list?.map((user) => <UserBasic key={user.id} user={user} set_display_id={set_display_id} set_found={set_found} />)}
                     </tbody>
                 </table>
             </>
@@ -58,21 +56,20 @@ export const SearchBar = ({actions}) => {
         )
     } else {
         return (
-           <SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
+            <SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
         )
     }
 
 };
-const SearchBarDisplay = ({inputId,handleInputChange,handleSubmit}) =>
-{
+const SearchBarDisplay = ({ inputId, handleInputChange, handleSubmit }) => {
     return (
         <>
-        <input className='input1' id="inputID" type='text' value={inputId} onChange={handleInputChange} />
-        <button className='button1' onClick={handleSubmit}><Search></Search></button>
+            <input className='input1' id="inputID" type='text' value={inputId} onChange={handleInputChange} />
+            <button className='button1' onClick={handleSubmit}><Search></Search></button>
         </>
     )
 }
-export const UserBasic = ({ user, set_display_id,set_found}) => { // simple component to display user list and link to open these user
+export const UserBasic = ({ user, set_display_id, set_found }) => { // simple component to display user list and link to open these user
     const findID = () => {
         set_display_id(user.id)
         set_found(true)
@@ -83,7 +80,9 @@ export const UserBasic = ({ user, set_display_id,set_found}) => { // simple comp
             <td>{user.name}</td>
             <td>{user.surname}</td>
             <td>{user.email}</td>
-            <button onClick={event => findID()}><DoorOpen></DoorOpen></button>
+            <td>
+                <button onClick={event => findID()}><DoorOpen></DoorOpen></button>
+            </td>
         </tr>
     )
 }

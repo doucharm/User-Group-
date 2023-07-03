@@ -1,4 +1,5 @@
 import { GroupActions } from "./Reducer Slice"
+import { authorizedFetch } from "Data/authorizedFetch";
 /**
  * Mutation to insert an existed user from userPage to push it into a group's membership
  * @param {*} membership the new membership we need to push into the group's membership
@@ -61,11 +62,11 @@ const membershipInsertJSON = (membership) => {
  * @returns the membership we insert
  */
 export const MembershipAsyncInsert = ({ store_update, group_id, user_id, id }) => (dispatch, getState) => {
-  
+
   // After that we add that membership to that group's membership in the store
   return authorizedFetch('/gql', {
     body: JSON.stringify(membershipInsertJSON({ group_id, user_id, id })),
-})
+  })
     .then((resp) => resp.json())
     .then((json) => {
       const msg = json.data?.membershipInsert?.msg;
@@ -118,5 +119,5 @@ export const MembershipAsyncUpdate = (payload) => (dispatch, getState) => {
   // Then we fetch it to the server with the params is the mutation above
   return authorizedFetch('/gql', {
     body: JSON.stringify(membershipUpdateJSON(payload)),
-})
+  })
 };
