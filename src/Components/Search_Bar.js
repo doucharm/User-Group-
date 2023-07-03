@@ -10,14 +10,13 @@ import { Display } from './Display';
  */
 export const SearchBar = ({actions}) => {
     const [display_id, set_display_id] = useState(null)
-    const [foundID, set_found] = useState(false)
+    const [foundID, set_found] = useState(false) // if entered information isn't in uuid form
     const [inputId, setInputId] = useState('');
     const [users_list, set_users_list] = useState([])
     const handleInputChange = (event) => {
         setInputId(event.target.value);
     };
     const handleSubmit = (event) => {  //process the ID inputed and check if it's a valid ID, a string indicating name or just invalid
-        console.log(inputId)
         event.preventDefault();
         if (validate(inputId)) {
             set_display_id(inputId)
@@ -28,8 +27,6 @@ export const SearchBar = ({actions}) => {
             set_found(false)
         }
     }
-    console.log(users_list)
-    console.log(foundID)
     if (users_list.length > 0 && !foundID) { // return a list of user that match the phrase entered
         return (
             <>
@@ -41,10 +38,9 @@ export const SearchBar = ({actions}) => {
                         <td>Name</td>
                         <td>Surname</td>
                         <td>Email</td>
-                        <td>     </td>
                     </thead>
                     <tbody>
-                        {users_list?.map((user) => <UserBasic user={user} set_display_id={set_display_id } set_found={set_found} />)}
+                        {users_list?.map((user) => <UserBasic key={user.id} user={user} set_display_id={set_display_id } set_found={set_found} />)}
                     </tbody>
                 </table>
             </>
@@ -63,6 +59,11 @@ export const SearchBar = ({actions}) => {
     }
 
 };
+/**
+ * Component SearchBar include a text input for information and a search button
+ * @param {string} inputID displaying the ID that's in the box
+ * @returns {Component} an ID and it's hook will be passed on to process onto the display components or a list of possible users that match 
+ */
 const SearchBarDisplay = ({inputId,handleInputChange,handleSubmit}) =>
 {
     return (
@@ -78,12 +79,11 @@ export const UserBasic = ({ user, set_display_id,set_found}) => { // simple comp
         set_found(true)
     }
     return (
-        <tr>
+        <tr onClick={e => findID()}>
             <td>{user.id}</td>
             <td>{user.name}</td>
             <td>{user.surname}</td>
-            <td>{user.email}</td>
-            <button onClick={event => findID()}><DoorOpen></DoorOpen></button>
+            <td>{user.email}</td>         
         </tr>
     )
 }

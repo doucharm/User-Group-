@@ -37,13 +37,13 @@ export const Moving_Member_Button =  ({membership, actions}) =>
  */
 export const onMove = ({destination,membership,actions}) => // perform moving member by invaliding this membership and create a new valid membership in the intended destination
     {
-        const payload_leave = 
+        const payload_leave = // old membership to invalidate, indicating that this user is no longer in this group
         {
             id:membership.id,
             lastchange:membership.lastchange,
             valid:false
         }
-        const payload_arrive = 
+        const payload_arrive = //adding this user into another group
         {
             group_id:destination,
             user_id:membership.user.id,
@@ -59,11 +59,18 @@ export const onMove = ({destination,membership,actions}) => // perform moving me
         }
 
         const current_role=membership?.user.roles?.filter((item) => item.group?.id===membership.group?.id && item.valid===true).splice(-1)[0]
-        if(current_role)
+        try
+        {
+        if(current_role) // removing the current role of this user in this group
         {
         actions.roleAsyncUpdate({role:{...current_role,valid:false}, membership:{...membership,valid:false}}) // remove the role that this user has when moved
         }
         actions.membershipAsyncInsert(payload_arrive)
         actions.membershipAsyncUpdate(payload_leave)
         actions.onMemberRemove({group:{id:membership.group.id},membership:membership})
+        }
+        catch
+        {
+            window.alert("Moving failed, check destination")
+        }
     }

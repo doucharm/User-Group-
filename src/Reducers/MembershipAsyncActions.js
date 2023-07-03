@@ -115,7 +115,6 @@ const membershipUpdateJSON = (payload) => {
  * @returns promise
  */
 export const MembershipAsyncUpdate = (payload) => (dispatch, getState) => {
-  console.log("membershippayload", payload)
   // Then we fetch it to the server with the params is the mutation above
   return authorizedFetch('/gql', {
     body: JSON.stringify(membershipUpdateJSON(payload)),

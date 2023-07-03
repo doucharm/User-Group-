@@ -94,7 +94,6 @@ export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
 
 // This mutation will update a role and fetch it to server, it'll help when you want to change the role of a membership
 const roleMutationJSON = (role) => {
-  console.log("role in", role)
   const { enddate, ...restPayload } = role;
   return {
     query: `
@@ -133,7 +132,6 @@ const roleMutationJSON = (role) => {
 
 export const RoleAsyncUpdate = ({role,membership}) =>  (dispatch, getState) => 
 {
-
   authorizedFetch('/gql',{body: JSON.stringify(roleMutationJSON(role))})
     .then(resp => resp.json())
     .then(

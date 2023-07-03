@@ -31,9 +31,7 @@ export const Get_Chart_NodeJson = (id) => ({
 })
 //Standard procedures to fetch and handle value
 export const groupByID = (id) =>
-    authorizedFetch('/gql', {
-        body: JSON.stringify(Get_Chart_NodeJson(id)),
-    })
+    authorizedFetch('/gql', {body: JSON.stringify(Get_Chart_NodeJson(id)),})
 export const Get_Node_Chart = (id, query, selector) => {
     const p = query(id)
         .then(
