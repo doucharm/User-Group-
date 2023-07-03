@@ -1,6 +1,6 @@
 import { EnvelopeOpen } from "react-bootstrap-icons"
 import { MembershipInsert_SearchBar } from "./Adding Member Button"
-import { Adding_Subgroup_Button } from "./Adding Subgroup"
+import { AddingSubgroupButton } from "./Adding_Subgroup"
 import { DeleteButton } from "./Delete_Button"
 import { DeleteGroupButton } from "./Delete_Subgroup_Button"
 import { Role_Select } from "./Role_Selector"
