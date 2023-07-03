@@ -84,7 +84,7 @@ export const Updating_Subgroup = (state, action) => {
     const g = action.payload.group
     const group = state[g.id]
     const old_subgroup = group.subgroups.find(sub => sub.id === new_subgroup.id)
-    group.subgroups = group.subgroups.map(sub => sub.id === new_subgroup.id ? {...old_subgroup, ... new_subgroup}: sub)
+    group.subgroups = group.subgroups.map(sub => sub.id === new_subgroup.id ? {...old_subgroup, ...new_subgroup}: sub)
     return state
 }
 

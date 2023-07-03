@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { PersonAdd } from "react-bootstrap-icons";
-import { TwoStateButton } from "./Delete_Button";
 import { v1 } from 'uuid';
 /**
  * This button add a new user to the user's page on sever 
  * @param {*} actions The actions needed for the Adding user button to update our web in store and on sever
  * @returns A two-state button with the icon PersonAdd
  */
-export const Adding_User_Button = ({ actions }) => {
+export const AddingUserButton = ({ actions }) => {
     // Adding user button used for add new user to store and server with basic information: id, name , surname, email with two state
     const [new_user, set_new_user] = useState({
         id: v1(),

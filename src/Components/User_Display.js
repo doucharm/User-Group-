@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextInput } from './Text_Input';
-import { Adding_User_Button } from './Adding_User_Button';
+import { AddingUserButton } from './Adding_User_Button';
 import { DoorOpen } from 'react-bootstrap-icons';
 import { Modal, Button } from 'react-bootstrap';
 
@@ -74,11 +74,11 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                             <tbody>
                                 {user?.membership?.map((membership) => {
                                     if (membership.valid) {
-                                        let latestRole = null;
-                                        if (membership.group.roles && membership.group.roles.length > 0) {
-                                            const roles = membership.group.roles;
-                                            latestRole = roles[roles.length - 1];
-                                        }
+                                        const rolesForGroup = membership.user.roles.filter(
+                                            (role) => role.group?.id === membership.group.id
+                                        );
+                                        const latestRole = rolesForGroup.length > 0 ? rolesForGroup[rolesForGroup.length - 1] : null;
+
                                         return (
                                             <tr key={membership.group.id}>
                                                 <td>{membership.group.name}</td>
@@ -86,9 +86,7 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                                                 <td>{membership.startdate ? membership.startdate : 'N/A'}</td>
                                                 <td>{membership.enddate ? membership.enddate : 'N/A'}</td>
                                                 <td>
-                                                    <button
-                                                        onClick={() => setUserId(membership.group.id)}
-                                                    >
+                                                    <button onClick={() => setUserId(membership.group.id)}>
                                                         <DoorOpen />
                                                     </button>
                                                 </td>
@@ -115,7 +113,7 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
                     <Modal.Title>Add User</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Adding_User_Button actions={actions} />
+                    <AddingUserButton actions={actions} />
                 </Modal.Body>
             </Modal>
         </div>

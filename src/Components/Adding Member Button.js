@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
  * @param {*} actions The actions needed to proceed with the button (both in store and on server)
  * @returns a button with the onclick we define below and it has the icon of Person Add
  */
-export const AddingMember_Button = ({user,group,actions}) => {
+export const AddingMember_Button = ({ user, group, actions }) => {
     const onclick = () => {
         const membership_id = v1() //Generate an id for the membership of that user
         const modify_user = {
@@ -41,7 +41,7 @@ export const AddingMember_Button = ({user,group,actions}) => {
             },
             user_id: modify_user.id,
             group_id: group.id,
-            id:membership_id
+            id: membership_id
         }
         // The payload that requires userid, groupid and the membership id to assign the user to the previously called group
         const check_existance = group.memberships.find(
@@ -80,7 +80,7 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
         actions.userFetch(inputId) //Fetch the user by id inputId
         fetch_by_letters(inputId, set_users_list) //Fetch the user by letter which is the inputId
     }
-    
+
     // Down below we have 2 diffence interface, 1 for when you dont trigger the HandleSubmit and the other is to show all of the users with the relative letters
     if (users_list.length === 0) {
         return (
@@ -118,10 +118,10 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
                         />
                         <button type="submit" title="Submit Form" form='my_form'><Search></Search></button>
                         <br></br>
-                        <td>Name</td>
+                        <td>Insert</td>
                     </thead>
                     <tbody>
-                        {users_list?.map((user) => <UserBasic user={user} group={group} actions={actions}/>)}
+                        {users_list?.map((user) => <UserBasic user={user} group={group} actions={actions} />)}
                     </tbody>
                 </table>
             </>
@@ -135,11 +135,11 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
  * @param {*} actions The actions needed in the AddingMember_Button function
  * @returns Table rows in html form
  */
-const UserBasic = ({ user, group, actions }) => { 
+const UserBasic = ({ user, group, actions }) => {
     return (
         <tr>
-            <td>{user.name} {user.surname}</td> 
-            <AddingMember_Button user = {user} group={group} actions={actions}/>
+            <td>{user.name} {user.surname}</td>
+            <AddingMember_Button user={user} group={group} actions={actions} />
         </tr>
     )
 }

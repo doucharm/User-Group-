@@ -15,7 +15,7 @@ export const Replace_Button = ({ group, actions, membership }) => {
     };
 
     if (searchMode) { // Searchbar using for search the wanted user by name
-        return <MembershipInsert_SearchBar group={group} membership={membership} actions={actions} />
+        return <MembershipInsertSearchBar group={group} membership={membership} actions={actions} />
     } else {
         return (
             <button onClick={handleClick}><ArrowLeftRight /></button>
@@ -30,7 +30,7 @@ export const Replace_Button = ({ group, actions, membership }) => {
  * @param {*} actions The actions needed to proceed with the button (both in store and on server)
  * @returns 
  */
-export const Replace_Condition = ({ user, group, membership, actions }) => {
+export const ReplaceCondition = ({ user, group, membership, actions }) => {
     const handleReplace = () => {
         const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true) // Keep the current role of the user for the new user
         let moving_role = ""
@@ -114,13 +114,10 @@ export const Replace_Condition = ({ user, group, membership, actions }) => {
  * @param {*} actions The actions needed to take the data on server and proceed with it
  * @returns A table with a form in it, the rows would be the users we found with the letter provided on our form
  */
-export const MembershipInsert_SearchBar = ({ group, membership, actions }) => {
+export const MembershipInsertSearchBar = ({ group, membership, actions }) => {
     const [inputId, setInputId] = useState(''); //Define the input for the search bar
     const [usersList, setUsersList] = useState([]); //Convert users in store to array
-    const users = useSelector((state) => state.users)
-    const user = users[inputId] //Get the user we need with the corresponding inputId
-
-
+    
     const handleInputChange = (event) => {
         setInputId(event.target.value);
     };
@@ -196,7 +193,7 @@ const UserBasic = ({ user, group, membership, actions }) => {
     return (
         <tr>
             <td>{user.name} {user.surname}</td>
-            <td><Replace_Condition user={user} group={group} membership={membership} actions={actions} /></td>
+            <td><ReplaceCondition user={user} group={group} membership={membership} actions={actions} /></td>
         </tr>
     );
 };

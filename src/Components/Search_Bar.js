@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { validate } from 'uuid'
 import { fetch_by_letters } from 'Data/UserByLetters';
-import { DoorOpen, Search } from 'react-bootstrap-icons';
+import { Search } from 'react-bootstrap-icons';
 import { Display } from './Display';
 /**
  * Search bar to handle search input.
@@ -30,7 +30,7 @@ export const SearchBar = ({ actions }) => {
         return (
             <>
                 <SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
-                <table className="table table-stripped table-bordered table-sm table-info">
+                <table className="table table-stripped table-bordered table-sm table-info table-responsive table-hover">
                     <caption>  Possible users with that name: </caption>
                     <thead>
                         <tr>

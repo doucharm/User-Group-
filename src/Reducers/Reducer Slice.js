@@ -1,5 +1,5 @@
 import { Create_Group, Delete_Group, Update_Group, Adding_Subgroup, Hierarchy_Update, Updating_Subgroup } from "./Group Reducer";
-import { Adding_Member, Remove_Member, Update_Member, Moving_Member } from "./Member Reducer";
+import { Adding_Member, Remove_Member, Update_Member } from "./Member Reducer";
 import { Update_Role } from "./Role Reducer";
 import { Update_User } from "./User Reducer";
 import { GroupAsyncInsert, GroupFetch, GroupAsyncUpdate } from "./GroupAsyncAction";
