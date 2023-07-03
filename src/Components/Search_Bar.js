@@ -21,16 +21,10 @@ export const SearchBar = ({ actions }) => {
         if (validate(inputId)) {
             set_display_id(inputId)
             set_found(true)
-<<<<<<< HEAD
         } else
         {
             fetch_by_letters(inputId,set_users_list)
             set_found(false) 
-=======
-        } else {
-            fetch_by_letters(inputId, set_users_list)
-            set_found(false)
->>>>>>> 986abaa99174e66112d20266204a6d73d7f3b59b
         }
     }
     if (users_list.length > 0 && !foundID) { // return a list of users that match the phrase entered
@@ -39,18 +33,7 @@ export const SearchBar = ({ actions }) => {
                 <SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
                 <table className="table table-stripped table-bordered table-sm table-info table-responsive table-hover">
                     <caption>  Possible users with that name: </caption>
-<<<<<<< HEAD
                     <thead><td>ID</td><td>Name</td><td>Surname</td><td>Email</td></thead>
-=======
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Surname</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
->>>>>>> 986abaa99174e66112d20266204a6d73d7f3b59b
                     <tbody>
                         {users_list?.map((user) => <UserBasic key={user.id} user={user} set_display_id={set_display_id} set_found={set_found} />)}
                     </tbody>
