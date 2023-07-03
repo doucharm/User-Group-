@@ -1,5 +1,5 @@
 {
-  "name": "mypackage",
+  "name": "package-ug",
   "version": "0.1.0",
   "private": false,
   "homepage": "http:///ui",
@@ -29,13 +29,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "jsdoc": "^4.0.2"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/doucharm/UserGroup.git"
-  },
+  
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -61,8 +55,7 @@
       "last 1 safari version"
     ]
   },
-  "description": "Process:",
-  "main": "index.js",
-  "author": "NhatDungHieu",
-  "license": "ISC"
+  "directories": {
+    "doc": "docs"
+  }
 }
