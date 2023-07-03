@@ -7,16 +7,17 @@ import { TextInput } from "./Text_Input"
  * @returns The Text input that shows the name of our group
  */
 export const HeaderTextInput = ({ group, actions }) => {
+   
     const onchange = (value) => {
+        console.log(group)
         const payload = {
             id: group.id,
             lastchange: group.lastchange,
             valid: true,
             grouptypeId: group.grouptype.id,
-            mastergroupId: group.mastergroup.id,
             name: value
         }
-        actions.groupAsyncUpdate(payload) //Update the group's name on sever
+        actions.groupNameAsyncUpdate(payload) //Update the group's name on sever
             .then(json=>console.log("GroupNameInput", json.data.groupUpdate.msg))
     }
     return (

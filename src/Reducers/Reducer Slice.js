@@ -2,7 +2,7 @@ import { Create_Group, Delete_Group, Update_Group, Adding_Subgroup, Hierarchy_Up
 import { Adding_Member, Remove_Member, Update_Member } from "./Member Reducer";
 import { Update_Role } from "./Role Reducer";
 import { Update_User } from "./User Reducer";
-import { GroupAsyncInsert, GroupFetch, GroupAsyncUpdate } from "./GroupAsyncAction";
+import { GroupAsyncInsert, GroupFetch, GroupAsyncUpdate, GroupNameAsyncUpdate } from "./GroupAsyncAction";
 import { MembershipAsyncUpdate, MembershipAsyncInsert } from "./MembershipAsyncActions";
 import { RoleAsyncInsert, RoleAsyncUpdate, RoleFetch, Role_Type_Insert } from "./RoleAsyncActions";
 import { UserAsyncInsert, UserAsyncUpdate, UserFetch } from "./UserAsyncActions";
@@ -88,6 +88,7 @@ export const bindGroupActions = (dispatch) => {
         onUpdateUser: (user) => dispatch(UserActions.users_update(user)),
         groupFetch: (id) => dispatch(GroupFetch(id)),
         groupAsyncUpdate: (group) => dispatch(GroupAsyncUpdate(group)),
+        groupNameAsyncUpdate: (group) => dispatch(GroupNameAsyncUpdate(group)),
         groupAsyncInsert: (group) => dispatch(GroupAsyncInsert(group)),
         
         //editing user's information
