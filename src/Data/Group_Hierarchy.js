@@ -6,7 +6,7 @@ import './Hierarchy_Chart.css'
  * Function Get_Each_Node is an async function that get ONE group from the server
  * @param {*} id this ID is passed onto a query to perform fetch
  * @param {*} display_id the id that is displayed will have a special node
- * @returns a TreeNode with attributes needed to draw chart
+ * @returns {Promise} a TreeNode with attributes needed to draw chart
  */
 export const Get_Each_Node = async ({id,display_id}) => {
     const get_help = async (sg) => {

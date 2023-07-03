@@ -6,10 +6,10 @@ import { useSelector } from 'react-redux';
 
 /**
  * This button adds an user as the membership to the group we are accessing to
- * @param {*} user The user we use to add to a group
- * @param {*} group The group we want to add that user to
- * @param {*} actions The actions needed to proceed with the button (both in store and on server)
- * @returns a button with the onclick we define below and it has the icon of Person Add
+ * @param {Object} user The user we use to add to a group
+ * @param {Object} group The group we want to add that user to
+ * @param {Object} actions The actions needed to proceed with the button (both in store and on server)
+ * @returns {JSX.Element} a button with the onclick we define below and it has the icon of Person Add
  */
 export const AddingMember_Button = ({ user, group, actions }) => {
     const onclick = () => {
@@ -62,9 +62,9 @@ export const AddingMember_Button = ({ user, group, actions }) => {
 
 /**
  * This is the display of a name search bar, we use this to find for the user we need to add it in to our group
- * @param {*} group The group we want to add that user to
- * @param {*} actions The actions needed to take the data on server and proceed with it
- * @returns A table with a form in it, the rows would be the users we found with the letter provided on our form
+ * @param {Object} group The group we want to add that user to
+ * @param {Object} actions The actions needed to take the data on server and proceed with it
+ * @returns {JSX.Element} A table with a form in it, the rows would be the users we found with the letter provided on our form
  */
 export const MembershipInsert_SearchBar = ({ group, actions }) => {
     const [inputId, setInputId] = useState(''); // Define the input for the search bar
@@ -137,10 +137,10 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
   
 /**
  * This function return a table that return a row of user that contains an add button to insert the user to the group we're seeing
- * @param {*} user The user we are showing
- * @param {*} group The group we want to add that user to
- * @param {*} actions The actions needed in the AddingMember_Button function
- * @returns Table rows in html form
+ * @param {Object} user The user we are showing
+ * @param {Object} group The group we want to add that user to
+ * @param {Object} actions The actions needed in the AddingMember_Button function
+ * @returns {JSX.Element} Table rows in html form
  */
 const UserBasic = ({ user, group, actions }) => {
     return (

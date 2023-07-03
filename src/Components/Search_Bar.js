@@ -5,8 +5,8 @@ import { Search } from 'react-bootstrap-icons';
 import { Display } from './Display';
 /**
  * Search bar to handle search input.
- * @param {*} actions global actions
- * @returns an ID and it's hook will be passed on to process onto the display components or a list of possible users that match 
+ * @param {Object} actions global actions
+ * @returns {JSX.Element} an ID and it's hook will be passed on to process onto the display components or a list of possible users that match 
  */
 export const SearchBar = ({ actions }) => {
     const [display_id, set_display_id] = useState(null)
@@ -21,10 +21,9 @@ export const SearchBar = ({ actions }) => {
         if (validate(inputId)) {
             set_display_id(inputId)
             set_found(true)
-        } else
-        {
-            fetch_by_letters(inputId,set_users_list)
-            set_found(false) 
+        } else {
+            fetch_by_letters(inputId, set_users_list)
+            set_found(false)
         }
     }
     if (users_list.length > 0 && !foundID) { // return a list of users that match the phrase entered
@@ -48,7 +47,7 @@ export const SearchBar = ({ actions }) => {
             </>
         )
     } else { // when no id is entered leave the ID box blank
-        return (<SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} /> )
+        return (<SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />)
     }
 
 };

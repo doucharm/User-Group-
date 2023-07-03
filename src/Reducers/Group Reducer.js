@@ -2,8 +2,8 @@ import { v1 } from 'uuid';
 /**
  * This function create a new group and we can call it with by id using state[item.id].
  * The payload needed is the new group that has all of the structure for a normal group
- * @param {*} state all of the groups in store
- * @param {*} action contains all of the payload's details needed to modify our state
+ * @param {Object} state all of the groups in store
+ * @param {Object} action contains all of the payload's details needed to modify our state
  * @returns state
  */
 export const Create_Group = (state, action) => {
@@ -19,8 +19,8 @@ export const Create_Group = (state, action) => {
 /**
  * This function is not deleting the subgroup directly but change the valid of that group to false.
  * The payload for this will be the large group that holds the subgroup and the subgroup itself
- * @param {*} state all of the groups in store
- * @param {*} action contains all of the payload's details needed to modify our state
+ * @param {Object} state all of the groups in store
+ * @param {Object} action contains all of the payload's details needed to modify our state
  * @returns state
  */
 export const Delete_Group = (state, action) => {
@@ -39,8 +39,8 @@ export const Delete_Group = (state, action) => {
 
 /**
  * This function update the group that needs modification by calling it with the modified group, then it will modify the oldItem with the newItem using spreading
- * @param {*} state all of the groups in store
- * @param {*} action contains all of the payload's details needed to modify our state
+ * @param {Object} state all of the groups in store
+ * @param {Object} action contains all of the payload's details needed to modify our state
  * @returns state
  */
 export const Update_Group = (state, action) => {
@@ -56,8 +56,8 @@ export const Update_Group = (state, action) => {
 
 /**
  * This function require two params in payload which are the new_subgroup and the group we want to put it in
- * @param {*} state all of the groups in store
- * @param {*} action contains all of the payload's details needed to modify our state
+ * @param {Object} state all of the groups in store
+ * @param {Object} action contains all of the payload's details needed to modify our state
  * @returns state
  */
 export const Adding_Subgroup = (state, action) => {
@@ -76,8 +76,8 @@ export const Adding_Subgroup = (state, action) => {
 
 /**
  * This function update the old sub_group with the new sub_group's props
- * @param {*} state all of the groups in store
- * @param {*} action contains all of the payload's details needed to modify our state
+ * @param {Object} state all of the groups in store
+ * @param {Object} action contains all of the payload's details needed to modify our state
  * @returns state
  */
 
@@ -92,8 +92,8 @@ export const Updating_Subgroup = (state, action) => {
 
 /**
  * This function require a payload of a membership that already has the group that we want to push the membership to
- * @param {*} state all of the groups in store
- * @param {*} action contains all of the payload's details needed to modify our state
+ * @param {Object} state all of the groups in store
+ * @param {Object} action contains all of the payload's details needed to modify our state
  * @returns state
  */
 
@@ -106,8 +106,8 @@ export const GroupMemberAdd = (state, action) => {
 
 /**
  * this function update the hierarchy based on the changes happens to our app
- * @param {*} state all of the groups in store
- * @param {*} action contains all of the payload's details needed to modify our state
+ * @param {Object} state all of the groups in store
+ * @param {Object} action contains all of the payload's details needed to modify our state
  * @returns state
  */
 export const Hierarchy_Update = (state, action) => {

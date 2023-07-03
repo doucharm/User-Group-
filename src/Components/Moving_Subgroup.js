@@ -8,11 +8,11 @@ import { v1 } from 'uuid'
 
 /**
  * Component for moving a subgroup in a group to another group.
- * @param {*} group mastergroup contain wanted subgroup
- * @param {*} item subgroup contain it's own, mastergroup, membership ID
- * @param {*} toggle_moving function that toggle the moving button
- * @param {*} actions global actions
- * @returns component necessary for entering data
+ * @param {Object} group mastergroup contain wanted subgroup
+ * @param {Object} item subgroup contain it's own, mastergroup, membership ID
+ * @param {Object} toggle_moving function that toggle the moving button
+ * @param {Object} actions global actions
+ * @returns {Component} component necessary for entering data
  */
 
 export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
@@ -34,10 +34,11 @@ export const Moving_Subgroup = ({ group, item, actions, toggle_moving }) => {
 };
 /**
  * Moving_Condition function perform 2 main actions: adding a wanted subgroup to a selected group and removing it at current group
- * @param {*} group mastergroup contain wanted subgroup
- * @param {*} item subgroup contain it's own, mastergroup, membership ID
- * @param {*} destination the group's ID that will receive the wanted subgroup
- * @param {*} actions global actions
+ * @param {Object} group mastergroup contain wanted subgroup
+ * @param {Object} item subgroup contain it's own, mastergroup, membership ID
+ * @param {Object} destination the group's ID that will receive the wanted subgroup
+ * @param {Object} actions global actions
+ * @return {JSX.Element}
  */
 export const Moving_Condition = ({ group, item, actions, destination }) => {
     const [destinationGroup, set_destinationGroup] = useState(null);

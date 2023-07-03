@@ -173,7 +173,11 @@ export const GroupAsyncUpdate = ({ group, id, lastchange, name, valid, mastergro
         });
 };
 
-
+/**
+ * Mutation to modified an existed group's name
+ * @param {*} group The group with the modified props
+ * @returns data of the group with modified props
+ */
 const groupnameupdateMutationJSON = (group) => {
     return {
         query: `mutation ($id: ID!, $lastchange: DateTime!, $name: String!, $valid: Boolean!, $grouptypeId: ID!) {
@@ -240,6 +244,12 @@ const groupnameupdateMutationJSON = (group) => {
     };
 };
 
+
+/**
+ * Mutation to update group (name) on server, we pass the neccessary params which is modified to this function
+ * @param {*} payload This contains the group we're modifying, its id, lastchange, name, valid and the grouptypeId
+ * @returns promise
+ */
 export const GroupNameAsyncUpdate = ({ group, id, lastchange, name, valid, grouptypeId }) => (dispatch, getState) => {
     // Afterward, we update it to store
     return authorizedFetch('/gql', {

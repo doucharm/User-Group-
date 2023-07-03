@@ -3,8 +3,8 @@ import { PersonAdd } from "react-bootstrap-icons";
 import { v1 } from 'uuid';
 /**
  * This button add a new user to the user's page on sever 
- * @param {*} actions The actions needed for the Adding user button to update our web in store and on sever
- * @returns A two-state button with the icon PersonAdd
+ * @param {Object} actions The actions needed for the Adding user button to update our web in store and on sever
+ * @returns {JSX.Element} A two-state button with the icon PersonAdd
  */
 export const AddingUserButton = ({ actions }) => {
     // Adding user button used for add new user to store and server with basic information: id, name , surname, email with two state
@@ -38,7 +38,7 @@ export const AddingUserButton = ({ actions }) => {
 }
 /**
  * Pushing the new user onto the server
- * @param {*} new_user the user that is going to be created 
+ * @param {Object} new_user the user that is going to be created 
  * @returns promise
  */
 const onUserAdd = ({ new_user, actions }) => {
