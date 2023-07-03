@@ -1,6 +1,6 @@
 import { EnvelopeOpen } from "react-bootstrap-icons"
 import { MembershipInsert_SearchBar } from "./Adding Member Button"
-import { Adding_Subgroup_Button } from "./Adding Subgroup"
+import { AddingSubgroupButton } from "./Adding_Subgroup"
 import { DeleteButton, DeleteGroupButton } from "./Delete_Button"
 import { Role_Select } from "./Role_Selector"
 import { useState } from "react"
@@ -58,7 +58,7 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
                 <tbody>
                     <>
                         {group?.subgroups?.map(item => <Get_Sub_Group_Row group={group} item={item} set_display_id={set_display_id} actions={actions} show_old_subgroup={show_old_subgroup} />)}
-                        <Adding_Subgroup_Button group={group} actions={actions} />
+                        <AddingSubgroupButton group={group} actions={actions} />
                         <br />
                         <button onClick={() => set_show_subgroup(!show_old_subgroup)}>Show Old Subs</button>
                     </>

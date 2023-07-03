@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { DatabaseFillAdd } from 'react-bootstrap-icons';
 import { TwoStateButton } from './Delete_Button';
-export const Adding_Subgroup_Button = ({ group, actions }) => {
+/**
+ * Pushing the new group onto the server
+ * @param {Object} group master group of the group that will be created
+ * @param {Object} actions actions what will be used when creating subgroup -> actions.onAddSubGroup
+ * @returns {Component} TwoState Button will be used here to hide details
+ */
+export const AddingSubgroupButton = ({ group, actions }) => {
     const [new_sub, set_new_sub] = useState({ // Create a variable that takes the props id and name from the input below, this return the
         id: "",                     // subgroup with the mastergroup id is the group we're in
         name: "",
@@ -26,7 +32,8 @@ export const Adding_Subgroup_Button = ({ group, actions }) => {
 
 /**
  * Pushing the new group onto the server
- * @param {*} new_sub the group that is going to be created 
+ * @param {Object} new_sub the group that is going to be created
+ * @param {Object} group master group of the group that will be created
  * @returns promise
  */
 const onSubgroupAdd = ({ new_sub, group, actions }) => {

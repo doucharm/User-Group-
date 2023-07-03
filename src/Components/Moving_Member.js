@@ -1,13 +1,13 @@
-import { useState } from "react"
+import { Component, useState } from "react"
 import { RocketTakeoffFill } from "react-bootstrap-icons"
 import { TwoStateButton } from "./Delete_Button"
 import {v1} from 'uuid'
 /**
  * Component for moving a member in a group to another group.
- * @param {*} membership membership contain both current group and user ID
- * @param {*} toggle_moving function that toggle the moving button
+ * @param {Object} membership membership contain both current group and user ID
+ * @param {Object} toggle_moving function that toggle the moving button
  * @param {*} actions global actions
- * @returns component necessary for entering data
+ * @returns {Component} component necessary for entering data
  */
 export const MovingMember = ({membership,actions}) =>
 {
@@ -16,9 +16,9 @@ export const MovingMember = ({membership,actions}) =>
     {
         set_destination(e.target.value) // set input destination
     }
-    return (
+    return ( // an input box for id and an confirm button
         <>
-        <input className = "form-control-warning "onChange={onInputChange} placeholder="Enter destination group's ID"/>
+        <input className = "form-control-warning "onChange={onInputChange} placeholder="Enter destination group's ID"/> 
         <button onClick={()=> onMove({membership,destination,actions})} className=" btn btn-danger"><RocketTakeoffFill></RocketTakeoffFill></button>
         </>
     )
@@ -30,7 +30,7 @@ export const Moving_Member_Button =  ({membership, actions}) =>
     )
 }
 /**
- * onMove function perform 2 actions: adding a user to a selected group and removing him at current group
+ * onMove function perform 2 actions: adding a user to a selected group and removing him at current group* removing both membership and current role
  * @param {*} membership membership contain both current group and user ID
  * @param {*} destination the group's ID that will receive the user
  * @param {*} actions global actions
