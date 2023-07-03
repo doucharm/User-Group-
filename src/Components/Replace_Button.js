@@ -31,7 +31,7 @@ export const Replace_Button = ({ group, actions, membership }) => {
  */
 export const ReplaceCondition = ({ user, group, membership, actions }) => {
     const handleReplace = () => {
-        const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true) // Keep the current role of the user for the new user
+        const current_role = membership?.user.roles?.filter((item) => item.group?.id === membership.group?.id && item.valid === true) 
         let moving_role = ""
         if (current_role.length > 0) {
             moving_role = current_role[current_role.length - 1]
@@ -83,7 +83,7 @@ export const ReplaceCondition = ({ user, group, membership, actions }) => {
                         if (moving_role.roletype) {
                             const new_role =
                             {
-                                role: moving_role.roletype,
+                                role: moving_role.roletype, // Keep the current role of the user for the new user
                                 membership: newMembership,
 
                             }
@@ -111,12 +111,12 @@ export const ReplaceCondition = ({ user, group, membership, actions }) => {
  * @param {Object} group The group we want to add that user to
  * @param {Object} membership the membership with the row we want to assign that user to
  * @param {Object} actions The actions needed to take the data on server and proceed with it
- * @returns {JSON.Element} A table with a form in it, the rows would be the users we found with the letter provided on our form
+ * @returns {JSX.Element} A table with a form in it, the rows would be the users we found with the letter provided on our form
  */
 export const MembershipInsertSearchBar = ({ group, membership, actions }) => {
     const [inputId, setInputId] = useState(''); //Define the input for the search bar
     const [usersList, setUsersList] = useState([]); //Convert users in store to array
-    
+
     const handleInputChange = (event) => {
         setInputId(event.target.value);
     };

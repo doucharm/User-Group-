@@ -13,7 +13,7 @@ import { Modal, Button } from 'react-bootstrap';
  */
 
 export const UserDisplay = ({ user, setUserId, actions }) => {
-    // This component is used for displaying the information of user and changing the information of user
+
     const [showModal, setShowModal] = useState(false);
 
     const handleClose = () => {
@@ -23,7 +23,7 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
     const handleShow = () => {
         setShowModal(true);
     };
-
+    // This component is used for displaying the information of user and changing the information of user
     const onChangeInput = (field, value) => {
         const updatedUser = { ...user, [field]: value };
         actions.userAsyncUpdate(updatedUser).then((json) =>

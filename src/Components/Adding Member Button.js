@@ -91,11 +91,9 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
             Add new member:
           </label>
           <input form="my_form" id="Id" type="text" value={inputId} onChange={handleInputChange} />
-          
           <button type="submit" title="Submit Form" form="my_form">
             <Search></Search>
           </button>
-          
           <table className="table table-sm table-info">
             <thead></thead>
           </table>
