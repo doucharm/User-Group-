@@ -28,7 +28,7 @@ export const GroupFetchHelper = (id, query, resultselector, dispatch, getState) 
 /**
 * Fetch the group from server checks its type and asks once more for detailed data. Finally puts the result in the store.
 * @param {*} id 
-* @returns 
+* @returns promise
 */
 export const GroupFetch = (id) => (dispatch, getState) => {
     const groupSelector = (json) => json.data.groupById

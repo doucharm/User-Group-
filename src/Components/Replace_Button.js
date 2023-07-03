@@ -28,7 +28,7 @@ export const Replace_Button = ({ group, actions, membership }) => {
  * @param {*} group The group we want to add that user to
  * @param {*} membership the membership of the old user with his role
  * @param {*} actions The actions needed to proceed with the button (both in store and on server)
- * @returns 
+ * @returns A two-state replace button
  */
 export const ReplaceCondition = ({ user, group, membership, actions }) => {
     const handleReplace = () => {
@@ -99,7 +99,7 @@ export const ReplaceCondition = ({ user, group, membership, actions }) => {
 
 
         } else {
-            console.log("existed");
+            window.alert("Existed!");
         }
     };
     return (

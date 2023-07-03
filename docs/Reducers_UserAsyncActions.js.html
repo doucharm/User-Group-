@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: Components/Display.js</title>
+    <title>JSDoc: Source: Reducers/UserAsyncActions.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: Components/Display.js</h1>
+    <h1 class="page-title">Source: Reducers/UserAsyncActions.js</h1>
 
     
 
@@ -26,74 +26,138 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Card_Display } from './Card_Display';
-import { useEffect , useState} from 'react';
-import { useSelector } from 'react-redux';
-import {  dispatch } from 'pages/Redux Store';
-import { UserDisplay } from './User_Display';
-import { Get_Hierarchy } from 'Data/Group_Hierarchy';
-import { HierarchyActions } from 'Reducers/Reducer Slice';
+            <pre class="prettyprint source linenums"><code>import { authorizedFetch } from "Data/authorizedFetch";
+import { UserActions } from "./Reducer Slice"
+import { UserQuery } from "Data/UserQuery";
+
+
+
 /**
- * This is the main function that decide which component will be shown based on the display_id.
- * @param {*} display_id variable id of entity which we want to display
- * @param {*} set_display_id react Hook of the display_id variable
- * @param {*} actions global actions
- * @returns a suitable display component based on the id inputed
+ * sk for the user on server and adds it or update it in the store
+ * @param {*} id 
+ * @returns promise
  */
-export const Display =  ({ display_id, set_display_id,actions }) => {
-    let display = 0 // Local variables to avoid unnecessary fetch
-    const groups = useSelector((state) => state.groups);
-    const users = useSelector((state) => state.users);
+export const UserFetchHelper = (id, query, resultselector, dispatch, getState) => {
     
-    const group = groups[display_id];
-    const user = users[display_id];
-    const hierarchy=useSelector(state => state.hierarchy)
-    const [chart, set_chart] = useState(false)
-    // fetching necessary data from the store or if not available get it from server
-    useEffect(() => {
-        if (!group) {
-            actions.groupFetch(display_id).then(display = 0).catch(display = 1)
-        }
-    }, [display_id, group]);
-    useEffect(() => {
-        if (!user &amp;&amp; display === 1) {
-            actions.userFetch(display_id).finally(display = 0)
-        }
-    }, [display_id, user]);
-    useEffect(() => {
-       if(!chart)
-       {
-        Get_Hierarchy(display_id).then(res => dispatch(HierarchyActions.hierarchy_update(res)))
-        set_chart(true)
-       }
-    }, [display_id,hierarchy]);
-
-    if (group &amp;&amp; set_chart) { // display the group and hierarchy chart
-        return (
-            &lt;>
-                &lt;button onClick={event => console.log(group)} >Get store &lt;/button>
-                &lt;Card_Display group={group} set_display_id={set_display_id} actions={actions} />
-            &lt;/>
-        );
-
-    }
-    else if (user) { //display the user 
-        return (
-            &lt;>
-                &lt;button onClick={event => console.log(user)} >Get store &lt;/button>
-                &lt;UserDisplay user={user} setUserId={set_display_id} actions={actions} />
-
-            &lt;/>
+    const p = query(id)
+        .then(
+            response => response.json(),
+            error => error
         )
-    } else {
-        return (
-            &lt;>
-                &lt;button onClick={event => console.log(group)} >Get store &lt;/button>
-                &lt;div>No matched ID found&lt;/div>
-            &lt;/>
+        .then(
+            json => resultselector(json),
+            error => error
         )
+        .then(
+            json => dispatch(UserActions.users_update(json)),
+            error => error
+        )
+    return p
+}
+
+/**
+ * Fetch the user from server. Finally puts the result in the store.
+ * @param {*} id The user's id
+ * @returns promise
+ */
+export const UserFetch = (id) => (dispatch, getState) => {
+    const userSelector = (json) => json.data.userById
+    const bodyfunc = async () => {
+        let userData = await UserFetchHelper(id, UserQuery, userSelector, dispatch, getState)
+        return userData
     }
-};</code></pre>
+    return bodyfunc()
+}
+
+
+/**
+ * This mutation will help to update a user to the server, it requires the input as a modified user
+ * @param {*} user The updated user
+ * @returns updated user on server
+ */
+const userUpdateMutationJSON = (user) => {
+    return {
+        query: `mutation($lastchange: DateTime!, $id: ID!, $email: String!, $name: String!, $surname: String!) {
+            userUpdate(
+              user: {id: $id, lastchange: $lastchange, surname: $surname, email: $email, name: $name}
+            ) {
+              id
+              msg
+              user {
+                name
+                surname
+                email
+                lastchange
+              }
+            }
+          }`,
+        variables: user
+    }
+}
+
+
+/**
+ * This mutation will help to insert a user to the server, it requires the input as a new user
+ * @param {*} user The new user
+ * @returns updated user on server
+ */
+const userInsertMutationJSON = (user) => {
+    return {
+        query: `mutation ($id: ID!, $name: String!, $surname: String!,$email: String!) {
+            userInsert(user: {id: $id, name: $name, surname: $surname, email: $email}) {
+              id
+              msg
+              user{
+                id
+                name
+                surname
+                email
+              }
+            }
+          }`,
+        variables: user
+    }
+}
+
+/**
+ * This function fetch the userUpdateMutationJSON(user) with authorizedFetch and then declare what we do with it later
+ * @param {*} user The updated user
+ * @returns promise
+ */
+export const UserAsyncUpdate = (user) => (dispatch, getState) => {
+
+    // Fetching it to server and then updating it to the store
+    return authorizedFetch('/api/gql', { body: JSON.stringify(userUpdateMutationJSON(user)) })
+        .then(
+            resp => resp.json()
+        )
+        .then(
+            json => {
+                const msg = json.data.userUpdate.msg
+                if (msg === "fail") {
+                    console.log("Update selhalo")
+                } else {
+                    const lastchange = json.data.userUpdate.user.lastchange
+                    dispatch(UserActions.users_update({ ...user, lastchange: lastchange }))
+                }
+                return json
+            }
+        )
+}
+
+/**
+ * This function fetch the userInsertMutationJSON({ ...user }) with authorizedFetch 
+ * @param {*} user The new user
+ * @returns promise
+ */
+export const UserAsyncInsert = (user) => (dispatch, getState) => {
+
+    // And finally fetching it to the server
+    return authorizedFetch('/api/gql', { body: JSON.stringify(userInsertMutationJSON({ ...user })) })
+}
+
+
+</code></pre>
         </article>
     </section>
 

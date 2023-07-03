@@ -29,50 +29,47 @@
             <pre class="prettyprint source linenums"><code>import { useState } from 'react';
 import { validate } from 'uuid'
 import { fetch_by_letters } from 'Data/UserByLetters';
-import { DoorOpen, Search } from 'react-bootstrap-icons';
+import { Search } from 'react-bootstrap-icons';
 import { Display } from './Display';
 /**
  * Search bar to handle search input.
  * @param {*} actions global actions
  * @returns an ID and it's hook will be passed on to process onto the display components or a list of possible users that match 
  */
-export const SearchBar = ({actions}) => {
+export const SearchBar = ({ actions }) => {
     const [display_id, set_display_id] = useState(null)
-    const [foundID, set_found] = useState(false)
+    const [foundID, set_found] = useState(false) // if entered information isn't in uuid form
     const [inputId, setInputId] = useState('');
     const [users_list, set_users_list] = useState([])
     const handleInputChange = (event) => {
         setInputId(event.target.value);
     };
     const handleSubmit = (event) => {  //process the ID inputed and check if it's a valid ID, a string indicating name or just invalid
-        console.log(inputId)
         event.preventDefault();
         if (validate(inputId)) {
             set_display_id(inputId)
             set_found(true)
-        } else
-        {
-            fetch_by_letters(inputId,set_users_list)
+        } else {
+            fetch_by_letters(inputId, set_users_list)
             set_found(false)
         }
     }
-    console.log(users_list)
-    console.log(foundID)
     if (users_list.length > 0 &amp;&amp; !foundID) { // return a list of user that match the phrase entered
         return (
             &lt;>
                 &lt;SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
-                &lt;table class="table table-sm table-info">
+                &lt;table className="table table-stripped table-bordered table-sm table-info table-responsive table-hover">
                     &lt;caption>  Possible users with that name: &lt;/caption>
                     &lt;thead>
-                        &lt;td>ID&lt;/td>
-                        &lt;td>Name&lt;/td>
-                        &lt;td>Surname&lt;/td>
-                        &lt;td>Email&lt;/td>
-                        &lt;td>     &lt;/td>
+                        &lt;tr>
+                            &lt;th>ID&lt;/th>
+                            &lt;th>Name&lt;/th>
+                            &lt;th>Surname&lt;/th>
+                            &lt;th>Email&lt;/th>
+                        &lt;/tr>
                     &lt;/thead>
                     &lt;tbody>
-                        {users_list?.map((user) => &lt;UserBasic user={user} set_display_id={set_display_id } set_found={set_found} />)}
+                        {users_list?.map((user) => &lt;UserBasic key={user.id} user={user} set_display_id={set_display_id} set_found={set_found} />)}
                     &lt;/tbody>
                 &lt;/table>
             &lt;/>
@@ -86,32 +83,35 @@ export const SearchBar = ({actions}) => {
         )
     } else {
         return (
-           &lt;SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
+            &lt;SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
         )
     }
 
 };
-const SearchBarDisplay = ({inputId,handleInputChange,handleSubmit}) =>
-{
+/**
+ * Component SearchBar include a text input for information and a search button
+ * @param {string} inputID displaying the ID that's in the box
+ * @returns {Component} an ID and it's hook will be passed on to process onto the display components or a list of possible users that match 
+ */
+const SearchBarDisplay = ({ inputId, handleInputChange, handleSubmit }) => {
     return (
         &lt;>
-        &lt;input className='input1' id="inputID" type='text' value={inputId} onChange={handleInputChange} />
-        &lt;button className='button1' onClick={handleSubmit}>&lt;Search>&lt;/Search>&lt;/button>
+            &lt;input className='input1' id="inputID" type='text' value={inputId} onChange={handleInputChange} />
+            &lt;button className='button1' onClick={handleSubmit}>&lt;Search>&lt;/Search>&lt;/button>
         &lt;/>
     )
 }
-export const UserBasic = ({ user, set_display_id,set_found}) => { // simple component to display user list and link to open these user
+export const UserBasic = ({ user, set_display_id, set_found }) => { // simple component to display user list and link to open these user
     const findID = () => {
         set_display_id(user.id)
         set_found(true)
     }
     return (
-        &lt;tr>
+        &lt;tr onClick={e => findID()}>
             &lt;td>{user.id}&lt;/td>
             &lt;td>{user.name}&lt;/td>
             &lt;td>{user.surname}&lt;/td>
             &lt;td>{user.email}&lt;/td>
-            &lt;button onClick={event => findID()}>&lt;DoorOpen>&lt;/DoorOpen>&lt;/button>
         &lt;/tr>
     )
 }</code></pre>
@@ -124,13 +124,13 @@ export const UserBasic = ({ user, set_display_id,set_found}) => { // simple comp
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddingMember_Button">AddingMember_Button</a></li><li><a href="global.html#Adding_Member">Adding_Member</a></li><li><a href="global.html#Adding_Subgroup">Adding_Subgroup</a></li><li><a href="global.html#Adding_Subgroup_Button">Adding_Subgroup_Button</a></li><li><a href="global.html#Adding_User_Button">Adding_User_Button</a></li><li><a href="global.html#CreateDelayer">CreateDelayer</a></li><li><a href="global.html#Create_Group">Create_Group</a></li><li><a href="global.html#Delete_Group">Delete_Group</a></li><li><a href="global.html#Display">Display</a></li><li><a href="global.html#Get_Chart">Get_Chart</a></li><li><a href="global.html#Get_Each_Node">Get_Each_Node</a></li><li><a href="global.html#Get_Hierarchy">Get_Hierarchy</a></li><li><a href="global.html#Get_Member_Row">Get_Member_Row</a></li><li><a href="global.html#Get_Node">Get_Node</a></li><li><a href="global.html#Get_Sub_Group_Row">Get_Sub_Group_Row</a></li><li><a href="global.html#GroupAsyncInsert">GroupAsyncInsert</a></li><li><a href="global.html#GroupAsyncUpdate">GroupAsyncUpdate</a></li><li><a href="global.html#GroupFetch">GroupFetch</a></li><li><a href="global.html#GroupFetchHelper">GroupFetchHelper</a></li><li><a href="global.html#GroupMemberAdd">GroupMemberAdd</a></li><li><a href="global.html#GroupQuery">GroupQuery</a></li><li><a href="global.html#GroupQueryJSON">GroupQueryJSON</a></li><li><a href="global.html#GroupTypePage">GroupTypePage</a></li><li><a href="global.html#GroupTypePageFetch">GroupTypePageFetch</a></li><li><a href="global.html#GroupTypePageJSON">GroupTypePageJSON</a></li><li><a href="global.html#GroupType_Select">GroupType_Select</a></li><li><a href="global.html#HeaderTextInput">HeaderTextInput</a></li><li><a href="global.html#Hierarchy_Update">Hierarchy_Update</a></li><li><a href="global.html#MembershipAsyncInsert">MembershipAsyncInsert</a></li><li><a href="global.html#MembershipInsert_SearchBar">MembershipInsert_SearchBar</a></li><li><a href="global.html#MovingMember">MovingMember</a></li><li><a href="global.html#Moving_Condition">Moving_Condition</a></li><li><a href="global.html#Moving_Member">Moving_Member</a></li><li><a href="global.html#Moving_Subgroup">Moving_Subgroup</a></li><li><a href="global.html#Remove_Member">Remove_Member</a></li><li><a href="global.html#Replace_Condition">Replace_Condition</a></li><li><a href="global.html#RoleQuery">RoleQuery</a></li><li><a href="global.html#RoleQueryJSON">RoleQueryJSON</a></li><li><a href="global.html#SearchBar">SearchBar</a></li><li><a href="global.html#Table_Display">Table_Display</a></li><li><a href="global.html#TextInput">TextInput</a></li><li><a href="global.html#TwoStateButton">TwoStateButton</a></li><li><a href="global.html#Update_Group">Update_Group</a></li><li><a href="global.html#Update_Member">Update_Member</a></li><li><a href="global.html#Updating_Subgroup">Updating_Subgroup</a></li><li><a href="global.html#UserBasic">UserBasic</a></li><li><a href="global.html#UserQuery">UserQuery</a></li><li><a href="global.html#UserQueryJSON">UserQueryJSON</a></li><li><a href="global.html#UserbyLetters">UserbyLetters</a></li><li><a href="global.html#UserbyLettersFetch">UserbyLettersFetch</a></li><li><a href="global.html#UserbyLettersJSON">UserbyLettersJSON</a></li><li><a href="global.html#authorizedFetch">authorizedFetch</a></li><li><a href="global.html#fetch_by_letters">fetch_by_letters</a></li><li><a href="global.html#groupMutationJSON">groupMutationJSON</a></li><li><a href="global.html#group_type_fetch">group_type_fetch</a></li><li><a href="global.html#groupinsertMutationJSON">groupinsertMutationJSON</a></li><li><a href="global.html#groupupdateMutationJSON">groupupdateMutationJSON</a></li><li><a href="global.html#membershipInsertJSON">membershipInsertJSON</a></li><li><a href="global.html#onClickDeleteGroup">onClickDeleteGroup</a></li><li><a href="global.html#onClickDeleteMember">onClickDeleteMember</a></li><li><a href="global.html#onMove">onMove</a></li><li><a href="global.html#onSubgroupAdd">onSubgroupAdd</a></li><li><a href="global.html#onUserAdd">onUserAdd</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddingMember_Button">AddingMember_Button</a></li><li><a href="global.html#AddingSubgroupButton">AddingSubgroupButton</a></li><li><a href="global.html#AddingUserButton">AddingUserButton</a></li><li><a href="global.html#Adding_Member">Adding_Member</a></li><li><a href="global.html#Adding_Subgroup">Adding_Subgroup</a></li><li><a href="global.html#CreateDelayer">CreateDelayer</a></li><li><a href="global.html#Create_Group">Create_Group</a></li><li><a href="global.html#DatePickerComponent">DatePickerComponent</a></li><li><a href="global.html#Delete_Group">Delete_Group</a></li><li><a href="global.html#Display">Display</a></li><li><a href="global.html#Get_Chart">Get_Chart</a></li><li><a href="global.html#Get_Each_Node">Get_Each_Node</a></li><li><a href="global.html#Get_Hierarchy">Get_Hierarchy</a></li><li><a href="global.html#Get_Member_Row">Get_Member_Row</a></li><li><a href="global.html#Get_Node">Get_Node</a></li><li><a href="global.html#Get_Sub_Group_Row">Get_Sub_Group_Row</a></li><li><a href="global.html#GroupAsyncInsert">GroupAsyncInsert</a></li><li><a href="global.html#GroupAsyncUpdate">GroupAsyncUpdate</a></li><li><a href="global.html#GroupFetch">GroupFetch</a></li><li><a href="global.html#GroupFetchHelper">GroupFetchHelper</a></li><li><a href="global.html#GroupMemberAdd">GroupMemberAdd</a></li><li><a href="global.html#GroupQuery">GroupQuery</a></li><li><a href="global.html#GroupQueryJSON">GroupQueryJSON</a></li><li><a href="global.html#GroupTypePage">GroupTypePage</a></li><li><a href="global.html#GroupTypePageFetch">GroupTypePageFetch</a></li><li><a href="global.html#GroupTypePageJSON">GroupTypePageJSON</a></li><li><a href="global.html#GroupType_Select">GroupType_Select</a></li><li><a href="global.html#HeaderTextInput">HeaderTextInput</a></li><li><a href="global.html#Hierarchy_Update">Hierarchy_Update</a></li><li><a href="global.html#MakeNewRole">MakeNewRole</a></li><li><a href="global.html#MembershipAsyncInsert">MembershipAsyncInsert</a></li><li><a href="global.html#MembershipAsyncUpdate">MembershipAsyncUpdate</a></li><li><a href="global.html#MembershipInsertSearchBar">MembershipInsertSearchBar</a></li><li><a href="global.html#MembershipInsert_SearchBar">MembershipInsert_SearchBar</a></li><li><a href="global.html#MovingMember">MovingMember</a></li><li><a href="global.html#Moving_Condition">Moving_Condition</a></li><li><a href="global.html#Moving_Subgroup">Moving_Subgroup</a></li><li><a href="global.html#Remove_Member">Remove_Member</a></li><li><a href="global.html#ReplaceCondition">ReplaceCondition</a></li><li><a href="global.html#RoleQuery">RoleQuery</a></li><li><a href="global.html#RoleQueryJSON">RoleQueryJSON</a></li><li><a href="global.html#Role_Select">Role_Select</a></li><li><a href="global.html#SearchBar">SearchBar</a></li><li><a href="global.html#SearchBarDisplay">SearchBarDisplay</a></li><li><a href="global.html#Table_Display">Table_Display</a></li><li><a href="global.html#TextInput">TextInput</a></li><li><a href="global.html#TwoStateButton">TwoStateButton</a></li><li><a href="global.html#Update_Group">Update_Group</a></li><li><a href="global.html#Update_Member">Update_Member</a></li><li><a href="global.html#Update_Role">Update_Role</a></li><li><a href="global.html#Update_User">Update_User</a></li><li><a href="global.html#Updating_Subgroup">Updating_Subgroup</a></li><li><a href="global.html#UserAsyncInsert">UserAsyncInsert</a></li><li><a href="global.html#UserAsyncUpdate">UserAsyncUpdate</a></li><li><a href="global.html#UserBasic">UserBasic</a></li><li><a href="global.html#UserFetch">UserFetch</a></li><li><a href="global.html#UserFetchHelper">UserFetchHelper</a></li><li><a href="global.html#UserQuery">UserQuery</a></li><li><a href="global.html#UserQueryJSON">UserQueryJSON</a></li><li><a href="global.html#UserbyLetters">UserbyLetters</a></li><li><a href="global.html#UserbyLettersFetch">UserbyLettersFetch</a></li><li><a href="global.html#UserbyLettersJSON">UserbyLettersJSON</a></li><li><a href="global.html#authorizedFetch">authorizedFetch</a></li><li><a href="global.html#bindGroupActions">bindGroupActions</a></li><li><a href="global.html#fetch_by_letters">fetch_by_letters</a></li><li><a href="global.html#groupMutationJSON">groupMutationJSON</a></li><li><a href="global.html#group_type_fetch">group_type_fetch</a></li><li><a href="global.html#groupinsertMutationJSON">groupinsertMutationJSON</a></li><li><a href="global.html#groupupdateMutationJSON">groupupdateMutationJSON</a></li><li><a href="global.html#membershipInsertJSON">membershipInsertJSON</a></li><li><a href="global.html#membershipUpdateJSON">membershipUpdateJSON</a></li><li><a href="global.html#onClickDeleteGroup">onClickDeleteGroup</a></li><li><a href="global.html#onClickDeleteMember">onClickDeleteMember</a></li><li><a href="global.html#onMove">onMove</a></li><li><a href="global.html#onRoleChange">onRoleChange</a></li><li><a href="global.html#onSubgroupAdd">onSubgroupAdd</a></li><li><a href="global.html#onUserAdd">onUserAdd</a></li><li><a href="global.html#userInsertMutationJSON">userInsertMutationJSON</a></li><li><a href="global.html#userUpdateMutationJSON">userUpdateMutationJSON</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Jul 02 2023 22:21:40 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Jul 03 2023 13:05:17 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

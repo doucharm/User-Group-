@@ -8,12 +8,12 @@ import { useSelector } from "react-redux"
  * @param {*} group The group we want to change its grouptype
  * @param {*} actions The actions needed to update that group in store and on server
  * @returns A Dropdown button to choose the new grouptype for our group from grouptype page
- */
+*/
 export const GroupType_Select = ({ group, actions }) => {
   const [group_type, set_group_type] = useState([]) //This use state set the group types with all of the group types from group type page to the group_type array
   useEffect(() => {
-    group_type_fetch(set_group_type)
-  }, set_group_type)
+    group_type_fetch(set_group_type);
+  }, []); // Wrap the set_group_type function inside an empty array
   const groups = useSelector((state) => state.groups);
   // The function below defines what would happen if you click on one of the dropdown button 
   const onGroupTypeInsert = async ({ group, grouptype }) => {

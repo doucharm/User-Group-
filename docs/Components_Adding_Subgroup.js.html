@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: Components/Display.js</title>
+    <title>JSDoc: Source: Components/Adding_Subgroup.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: Components/Display.js</h1>
+    <h1 class="page-title">Source: Components/Adding_Subgroup.js</h1>
 
     
 
@@ -26,74 +26,63 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Card_Display } from './Card_Display';
-import { useEffect , useState} from 'react';
-import { useSelector } from 'react-redux';
-import {  dispatch } from 'pages/Redux Store';
-import { UserDisplay } from './User_Display';
-import { Get_Hierarchy } from 'Data/Group_Hierarchy';
-import { HierarchyActions } from 'Reducers/Reducer Slice';
+            <pre class="prettyprint source linenums"><code>import { useState } from 'react';
+import { DatabaseFillAdd } from 'react-bootstrap-icons';
+import { TwoStateButton } from './Delete_Button';
 /**
- * This is the main function that decide which component will be shown based on the display_id.
- * @param {*} display_id variable id of entity which we want to display
- * @param {*} set_display_id react Hook of the display_id variable
- * @param {*} actions global actions
- * @returns a suitable display component based on the id inputed
+ * Pushing the new group onto the server
+ * @param {Object} group master group of the group that will be created
+ * @param {Object} actions actions what will be used when creating subgroup -> actions.onAddSubGroup
+ * @returns {Component} TwoState Button will be used here to hide details
  */
-export const Display =  ({ display_id, set_display_id,actions }) => {
-    let display = 0 // Local variables to avoid unnecessary fetch
-    const groups = useSelector((state) => state.groups);
-    const users = useSelector((state) => state.users);
-    
-    const group = groups[display_id];
-    const user = users[display_id];
-    const hierarchy=useSelector(state => state.hierarchy)
-    const [chart, set_chart] = useState(false)
-    // fetching necessary data from the store or if not available get it from server
-    useEffect(() => {
-        if (!group) {
-            actions.groupFetch(display_id).then(display = 0).catch(display = 1)
-        }
-    }, [display_id, group]);
-    useEffect(() => {
-        if (!user &amp;&amp; display === 1) {
-            actions.userFetch(display_id).finally(display = 0)
-        }
-    }, [display_id, user]);
-    useEffect(() => {
-       if(!chart)
-       {
-        Get_Hierarchy(display_id).then(res => dispatch(HierarchyActions.hierarchy_update(res)))
-        set_chart(true)
-       }
-    }, [display_id,hierarchy]);
+export const AddingSubgroupButton = ({ group, actions }) => {
+    const [new_sub, set_new_sub] = useState({ // Create a variable that takes the props id and name from the input below, this return the
+        id: "",                     // subgroup with the mastergroup id is the group we're in
+        name: "",
+        mastergroupId: group.id
+    })
+    const handleChange = (evt) => { // load the new_sub variable with data entered by the user
+        const { name, value } = evt.target;
+        set_new_sub((prevSub) => ({ ...prevSub, [name]: value }));
+    };
+    //Second state that allows us to insert the new sub with Save
+    const adding_sub = // input box for required information in order to create new group
+        &lt;>
+            &lt;label>New subgroup Id:&lt;input type="text" name="id" value={new_sub.id} placeholder='Enter new sub group id' onChange={handleChange} /> &lt;/label>
+            &lt;label>New subgroup name:&lt;input type="text" name="name" value={new_sub.name} placeholder='Enter new sub group name' onChange={handleChange} /> &lt;/label>
+            &lt;button className='btn btn-sm btn-success' onClick={() => onSubgroupAdd({ new_sub, group, actions })}>&lt;DatabaseFillAdd />&lt;/button>
+        &lt;/>
 
-    if (group &amp;&amp; set_chart) { // display the group and hierarchy chart
-        return (
-            &lt;>
-                &lt;button onClick={event => console.log(group)} >Get store &lt;/button>
-                &lt;Card_Display group={group} set_display_id={set_display_id} actions={actions} />
-            &lt;/>
-        );
+    return (
+        &lt;TwoStateButton icon={DatabaseFillAdd} sec_button={adding_sub} />
+    )
+}
 
-    }
-    else if (user) { //display the user 
-        return (
-            &lt;>
-                &lt;button onClick={event => console.log(user)} >Get store &lt;/button>
-                &lt;UserDisplay user={user} setUserId={set_display_id} actions={actions} />
-
-            &lt;/>
+/**
+ * This works as the onclick of our button above
+ * Pushing the new group onto the server
+ * @param {Object} new_sub the group that is going to be created
+ * @param {Object} group master group of the group that will be created
+ * @returns promise
+ */
+const onSubgroupAdd = ({ new_sub, group, actions }) => {
+    actions.groupAsyncInsert(new_sub) //Create a new group in the server
+        .then(resp => resp.json())
+        .then(
+            json => {
+                const msg = json.data.groupInsert.msg
+                if (msg === "fail") {
+                    console.log("Update failed")
+                } else {
+                    const new_subgroup = json.data.groupInsert.group
+                    actions.onAddSubGroup({ group, new_subgroup }) //Insert the new subgroup in store
+                }
+                return json
+            }
         )
-    } else {
-        return (
-            &lt;>
-                &lt;button onClick={event => console.log(group)} >Get store &lt;/button>
-                &lt;div>No matched ID found&lt;/div>
-            &lt;/>
-        )
-    }
-};</code></pre>
+}
+
+</code></pre>
         </article>
     </section>
 

@@ -51,7 +51,7 @@ export const AddingMember_Button = ({ user, group, actions }) => {
 
             actions.userAsyncUpdate(modify_user).then(actions.membershipAsyncInsert(payload)) // If not then we add it to the server and the store
         } else {
-            console.warn("existed") // We wont be alble to add the user once more if its already existed
+            window.alert('Existed!') // We wont be alble to add the user once more if its already existed
         }
 
     }
@@ -67,67 +67,74 @@ export const AddingMember_Button = ({ user, group, actions }) => {
  * @returns A table with a form in it, the rows would be the users we found with the letter provided on our form
  */
 export const MembershipInsert_SearchBar = ({ group, actions }) => {
-    const [inputId, setInputId] = useState(''); //Define the input for the search bar
-    const [users_list, set_users_list] = useState([]) //Convert users in store to array 
-    const users = useSelector((state) => state.users)
-    const user = users[inputId] //Get the user we need with the corresponding inputId
-
+    const [inputId, setInputId] = useState(''); // Define the input for the search bar
+    const [users_list, set_users_list] = useState([]); // Convert users in store to array
+    const users = useSelector((state) => state.users);
+    const user = users[inputId]; // Get the user we need with the corresponding inputId
+  
     const handleInputChange = (event) => {
-        setInputId(event.target.value) //Set the inputId to what we type on the search bar form 
-    }
+      setInputId(event.target.value); // Set the inputId to what we type on the search bar form
+    };
     const handleSubmit = (event) => {
-        event.preventDefault();
-        actions.userFetch(inputId) //Fetch the user by id inputId
-        fetch_by_letters(inputId, set_users_list) //Fetch the user by letter which is the inputId
-    }
-
-    // Down below we have 2 diffence interface, 1 for when you dont trigger the HandleSubmit and the other is to show all of the users with the relative letters
+      event.preventDefault();
+      actions.userFetch(inputId); // Fetch the user by id inputId
+      fetch_by_letters(inputId, set_users_list); // Fetch the user by letter which is the inputId
+    };
+  
+    // Down below we have 2 different interfaces, 1 for when you don't trigger the handleSubmit and the other is to show all of the users with the relative letters
     if (users_list.length === 0) {
-        return (
-            <>
-                <form method="GET" id="my_form" onSubmit={handleSubmit} ></form>
-                <table class="table table-sm table-info">
-                    <thead>
-                        <label htmlFor="Id" form='my_form'>Add new member:</label>
-                        <input
-                            form="my_form"
-                            id="Id"
-                            type="text"
-                            value={inputId}
-                            onChange={handleInputChange}
-                        />
-                        <button type="submit" title="Submit Form" form='my_form'><Search></Search></button>
-                    </thead>
-                </table>
-            </>
-        )
+      return (
+        <tr>
+        <td>
+          <form method="GET" id="my_form" onSubmit={handleSubmit}></form>
+          <label htmlFor="Id" form="my_form">
+            Add new member:
+          </label>
+          <input form="my_form" id="Id" type="text" value={inputId} onChange={handleInputChange} />
+          
+          <button type="submit" title="Submit Form" form="my_form">
+            <Search></Search>
+          </button>
+          
+          <table className="table table-sm table-info">
+            <thead></thead>
+          </table>
+        </td>
+        </tr>
+      );
     } else {
-        return (
-            <>
-                <form method="GET" id="my_form" onSubmit={handleSubmit} ></form>
-                <table class="table table-sm table-info">
-                    <caption>  Possible users with that name: </caption>
-                    <thead>
-                        <label htmlFor="Id" form='my_form'>Add new member:</label>
-                        <input
-                            form="my_form"
-                            id="Id"
-                            type="text"
-                            value={inputId}
-                            onChange={handleInputChange}
-                        />
-                        <button type="submit" title="Submit Form" form='my_form'><Search></Search></button>
-                        <br></br>
-                        <td>Insert</td>
-                    </thead>
-                    <tbody>
-                        {users_list?.map((user) => <UserBasic user={user} group={group} actions={actions} />)}
-                    </tbody>
-                </table>
-            </>
-        )
+      return (
+        <>
+        <tr>
+        <td>
+          <form method="GET" id="my_form" onSubmit={handleSubmit}></form>
+          <label htmlFor="Id" form="my_form">
+            Add new member:
+          </label>
+          <input form="my_form" id="Id" type="text" value={inputId} onChange={handleInputChange} />
+          <button type="submit" title="Submit Form" form="my_form">
+            <Search></Search>
+          </button>
+          <table className="table table-sm table-info">
+            <caption> Possible users with that name: </caption>
+            <thead>
+              <tr>
+                <th>Insert</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users_list?.map((user) => (
+                <UserBasic key ={user.id} user={user} group={group} actions={actions} />
+              ))}
+            </tbody>
+          </table>
+          </td>
+        </tr>
+        </>
+      );
     }
-}
+  };
+  
 /**
  * This function return a table that return a row of user that contains an add button to insert the user to the group we're seeing
  * @param {*} user The user we are showing
@@ -138,8 +145,9 @@ export const MembershipInsert_SearchBar = ({ group, actions }) => {
 const UserBasic = ({ user, group, actions }) => {
     return (
         <tr>
-            <td>{user.name} {user.surname}</td>
+            <td>{user.name} {user.surname}
             <AddingMember_Button user={user} group={group} actions={actions} />
+            </td>
         </tr>
     )
 }
