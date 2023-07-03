@@ -18,18 +18,33 @@ export const GroupType_Select = ({ group, actions }) => {
   // The function below defines what would happen if you click on one of the dropdown button 
   const onGroupTypeInsert = async ({ group, grouptype }) => {
     // This mutation requires the below props
-    const payload = {
-      name: group.name,
-      id: group.id,
-      lastchange: group.lastchange,
-      grouptypeId: grouptype.id,
-      valid: true,
-      mastergroupId: group.mastergroup.id
+    console.log(group)
+    if (group.mastergroup === null)
+    {
+      const payload = {
+        id: group.id,
+        lastchange: group.lastchange,
+        valid: true,
+        grouptypeId: grouptype.id,
+        name: group.name
+      }
+      await actions.groupNameAsyncUpdate(payload)
     }
-    await actions.groupAsyncUpdate(payload) // And finally we change the group type on server
-    const mastergroup = groups[group.mastergroup.id]
-    const fetchedItem = await actions.groupFetch(group.id);
-    actions.onUpdateSubGroup({ group: mastergroup, new_subgroup: fetchedItem.payload })
+    else {
+      const payload = {
+        name: group.name,
+        id: group.id,
+        lastchange: group.lastchange,
+        grouptypeId: grouptype.id,
+        valid: true,
+        mastergroupId: group.mastergroup.id
+      }
+      await actions.groupAsyncUpdate(payload) // And finally we change the group type on server
+      const mastergroup = groups[group.mastergroup.id]
+      const fetchedItem = await actions.groupFetch(group.id);
+      actions.onUpdateSubGroup({ group: mastergroup, new_subgroup: fetchedItem.payload })
+    }
+    
   }
   // Show the possible options for the group type once you press it
   return (
