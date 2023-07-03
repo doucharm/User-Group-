@@ -6,7 +6,8 @@ Příběh projektu USER GROUP
 
 •	10/4 První iterace projektu: Schopnost zobrazovat skupiny a členy a měnit název skupiny: Tato první iterace je nakódována v html a pouze pro některé základní funkce; data zatím nejsou brána v úvahu.
 
- 
+ ![image](https://github.com/doucharm/UserGroup/assets/115186767/1fd9c01e-9872-4810-a589-2771830eb740)
+
 První verze
 •	16/4 Druhá iterace: volba čistšího vzhledu a lepšího zobrazení funkcí.
 
@@ -31,6 +32,7 @@ První verze
 •	14/5: Přidejte komponenty User_Display, Search_Bar a přidejte upraveného uživatele na stránku uživatele na serveru.
 •	16/5: Přidání podskupin do úložiště: Přidaná skupina nemá žádnou atributy =>potřeba přidat později
 •	17/5: Přidat načítání uživatelů
+![image](https://github.com/doucharm/UserGroup/assets/115186767/47357366-066b-4958-812a-a0f03b242c03)
 
 •	18/5: Přidat membershipUpdate (spolupráce se serverem)
 
@@ -40,7 +42,9 @@ První verze
 
 •	24/5 Projektový den 2: Aplikace, které jsou v současné době schopné načítat data do úložiště a zobrazovat data ze serveru. Většina zamýšlených funkcí je dokončena, ale není optimalizována. Grafické zobrazení není apealing.
 •	*Zpětná vazba: některé vnořené funkce musí být samostatnými funkcemi -> je potřeba přesunout funkci mimo ostatní funkce a předat potřebné argumenty.
-  
+
+  ![image](https://github.com/doucharm/UserGroup/assets/115186767/ae1c8e49-27dc-451d-859b-bc4174e8e363)
+
 •	25/5: Aktualizace uživatele podle písmene a vytvoření nové funkční role select pro členy: Funkce Role-Select umožňuje vymění pouze Roletype, v budoučnosti je potřeba přidat ještě nástroj pro výmění další atributy role
 
 •	26/5: Dokončit vyhledávání uživatelů podle písmen a opravit chyby s vyhledávacím panelem
@@ -72,11 +76,14 @@ kvůli lepšímu rozboru kódu.
 •	=====
 •	8 dní pauza na zkoušky
 •	====
+![image](https://github.com/doucharm/UserGroup/assets/115186767/de83ba23-1ef9-4b30-8972-fa8398787b24)
 
 •	30/6->3/7: Celkové zlepšení kvality, oprava chyb a vyčištění kódu. Přidány komentáře a vygenerovány jsdoc dokumenty. 
 •	 
- 
- 
+ ![image](https://github.com/doucharm/UserGroup/assets/115186767/693a0ded-14b7-47b8-9642-26e042f69ad5)
+
+ ![image](https://github.com/doucharm/UserGroup/assets/115186767/ce0f579e-39a1-4b0c-b95b-71a55a25da32)
+
 Koneční produkt
 •	4/7: Prezentace projektu
 
