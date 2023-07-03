@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Reducers/GroupAsyncAction.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Reducers/GroupAsyncAction.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { authorizedFetch } from "Data/authorizedFetch";
+import { GroupActions } from "./Reducer Slice";
+import { GroupQuery } from "Data/GroupQuery";
+
+/**
+ * Ask for the item on server and adds it or update it in the store to the heap
+ * @param {*} id 
+ * @returns promise
+ */
+export const GroupFetchHelper = (id, query, resultselector, dispatch, getState) => {
+
+    const p = query(id)
+        .then(
+            response => response.json(),
+            error => error
+        )
+        .then(
+            json => resultselector(json),
+            error => error
+        )
+        .then(
+            json => dispatch(GroupActions.group_update(json)),
+            error => error
+        )
+    return p
+}
+
+/**
+* Fetch the group from server checks its type and asks once more for detailed data. Finally puts the result in the store.
+* @param {*} id 
+* @returns 
+*/
+export const GroupFetch = (id) => (dispatch, getState) => {
+    const groupSelector = (json) => json.data.groupById
+    const bodyfunc = async () => {
+        let groupData = await GroupFetchHelper(id, GroupQuery, groupSelector, dispatch, getState)
+        return groupData
+    }
+    return bodyfunc()
+}
+
+
+/**
+ * Mutation to insert a new group to the server, this requires a customized group as an input
+ * @param {*} group The input as the new group
+ * @returns The data we want to modify
+ */
+const groupinsertMutationJSON = (group) => {
+    return {
+        query: `mutation ($id: ID!, $name: String!, $mastergroupId: ID!) {
+            groupInsert(group: {id: $id, name: $name, mastergroupId: $mastergroupId}) {
+              msg
+              group {
+                lastchange
+                name
+                id
+                valid
+              }
+            }
+          }`,
+        variables: group
+    }
+}
+
+/**
+ * This function calls the authorizedFetch to update the group above to server
+ * @param {*} group The new group that we created
+ * @returns promise
+ */
+export const GroupAsyncInsert = (group) => (dispatch, getState) => {
+    // Fetch it to the server
+    return authorizedFetch('/gql', {
+        body: JSON.stringify(groupinsertMutationJSON(group)),
+    })
+}
+
+
+/**
+ * Mutation to modified an existed group
+ * @param {*} group The group with the modified props
+ * @returns data of the group with modified props
+ */
+const groupupdateMutationJSON = (group) => {
+    return {
+        query: `mutation ($id: ID!, $lastchange: DateTime!, $name: String!, $valid: Boolean!, $mastergroupId: ID!, $grouptypeId: ID!) {
+            groupUpdate(group: {id: $id, lastchange: $lastchange, name: $name, valid: $valid, mastergroupId: $mastergroupId, grouptypeId: $grouptypeId}) {
+              msg
+              id
+              group {
+                id
+                name
+                lastchange
+                valid
+                mastergroup {
+                    id
+                }
+                grouptype { 
+                    id
+                    nameEn
+                }
+                subgroups {
+                    id
+                    name
+                    valid
+                    lastchange
+                    mastergroup{
+                        id
+                    }
+                }
+                memberships {
+                    id
+                    lastchange
+                    valid
+                    group
+                    {
+                        id
+                    }
+                    user {
+                        id
+                        name
+                        surname
+                        email
+                        lastchange
+                        roles {
+                            lastchange
+                            id
+                            startdate
+                            enddate
+                            group
+                            {
+                                id
+                            }
+                            valid
+                            roletype {
+                            id
+                            name
+                            nameEn
+                            }
+                        }
+                    }
+                }
+              }
+            }
+          }`,
+        variables: group
+    };
+};
+
+/**
+ * Mutation to update group on server, we pass the neccessary params which is modified to this function
+ * @param {*} payload This contains the group we're modifying, its id, lastchange, name, valid, mastergroupId and the grouptypeId
+ * @returns promise
+ */
+export const GroupAsyncUpdate = ({ group, id, lastchange, name, valid, mastergroupId, grouptypeId }) => (dispatch, getState) => {
+    // Afterward, we update it to store
+    return authorizedFetch('/gql', {
+        body: JSON.stringify(groupupdateMutationJSON({ id, lastchange, name, valid, mastergroupId, grouptypeId })),
+    })
+        .then(resp => resp.json())
+        .then(json => {
+            console.log('JSON response:', json)
+            const msg = json.data.groupUpdate.msg;
+            if (msg === "fail") {
+                console.log("Update fail");
+            } else {
+                const newgroup = json.data.groupUpdate.group;
+                dispatch(GroupActions.group_update({ ...group, ...newgroup }));
+            }
+            return json;
+        })
+        .catch((error) => {
+            console.log('Error occurred:', error);
+        });
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddingMember_Button">AddingMember_Button</a></li><li><a href="global.html#Adding_Member">Adding_Member</a></li><li><a href="global.html#Adding_Subgroup">Adding_Subgroup</a></li><li><a href="global.html#Adding_Subgroup_Button">Adding_Subgroup_Button</a></li><li><a href="global.html#Adding_User_Button">Adding_User_Button</a></li><li><a href="global.html#CreateDelayer">CreateDelayer</a></li><li><a href="global.html#Create_Group">Create_Group</a></li><li><a href="global.html#Delete_Group">Delete_Group</a></li><li><a href="global.html#Display">Display</a></li><li><a href="global.html#Get_Chart">Get_Chart</a></li><li><a href="global.html#Get_Each_Node">Get_Each_Node</a></li><li><a href="global.html#Get_Hierarchy">Get_Hierarchy</a></li><li><a href="global.html#Get_Member_Row">Get_Member_Row</a></li><li><a href="global.html#Get_Node">Get_Node</a></li><li><a href="global.html#Get_Sub_Group_Row">Get_Sub_Group_Row</a></li><li><a href="global.html#GroupAsyncInsert">GroupAsyncInsert</a></li><li><a href="global.html#GroupAsyncUpdate">GroupAsyncUpdate</a></li><li><a href="global.html#GroupFetch">GroupFetch</a></li><li><a href="global.html#GroupFetchHelper">GroupFetchHelper</a></li><li><a href="global.html#GroupMemberAdd">GroupMemberAdd</a></li><li><a href="global.html#GroupQuery">GroupQuery</a></li><li><a href="global.html#GroupQueryJSON">GroupQueryJSON</a></li><li><a href="global.html#GroupTypePage">GroupTypePage</a></li><li><a href="global.html#GroupTypePageFetch">GroupTypePageFetch</a></li><li><a href="global.html#GroupTypePageJSON">GroupTypePageJSON</a></li><li><a href="global.html#GroupType_Select">GroupType_Select</a></li><li><a href="global.html#HeaderTextInput">HeaderTextInput</a></li><li><a href="global.html#Hierarchy_Update">Hierarchy_Update</a></li><li><a href="global.html#MembershipAsyncInsert">MembershipAsyncInsert</a></li><li><a href="global.html#MembershipInsert_SearchBar">MembershipInsert_SearchBar</a></li><li><a href="global.html#MovingMember">MovingMember</a></li><li><a href="global.html#Moving_Condition">Moving_Condition</a></li><li><a href="global.html#Moving_Member">Moving_Member</a></li><li><a href="global.html#Moving_Subgroup">Moving_Subgroup</a></li><li><a href="global.html#Remove_Member">Remove_Member</a></li><li><a href="global.html#Replace_Condition">Replace_Condition</a></li><li><a href="global.html#RoleQuery">RoleQuery</a></li><li><a href="global.html#RoleQueryJSON">RoleQueryJSON</a></li><li><a href="global.html#SearchBar">SearchBar</a></li><li><a href="global.html#Table_Display">Table_Display</a></li><li><a href="global.html#TextInput">TextInput</a></li><li><a href="global.html#TwoStateButton">TwoStateButton</a></li><li><a href="global.html#Update_Group">Update_Group</a></li><li><a href="global.html#Update_Member">Update_Member</a></li><li><a href="global.html#Updating_Subgroup">Updating_Subgroup</a></li><li><a href="global.html#UserBasic">UserBasic</a></li><li><a href="global.html#UserQuery">UserQuery</a></li><li><a href="global.html#UserQueryJSON">UserQueryJSON</a></li><li><a href="global.html#UserbyLetters">UserbyLetters</a></li><li><a href="global.html#UserbyLettersFetch">UserbyLettersFetch</a></li><li><a href="global.html#UserbyLettersJSON">UserbyLettersJSON</a></li><li><a href="global.html#authorizedFetch">authorizedFetch</a></li><li><a href="global.html#fetch_by_letters">fetch_by_letters</a></li><li><a href="global.html#groupMutationJSON">groupMutationJSON</a></li><li><a href="global.html#group_type_fetch">group_type_fetch</a></li><li><a href="global.html#groupinsertMutationJSON">groupinsertMutationJSON</a></li><li><a href="global.html#groupupdateMutationJSON">groupupdateMutationJSON</a></li><li><a href="global.html#membershipInsertJSON">membershipInsertJSON</a></li><li><a href="global.html#onClickDeleteGroup">onClickDeleteGroup</a></li><li><a href="global.html#onClickDeleteMember">onClickDeleteMember</a></li><li><a href="global.html#onMove">onMove</a></li><li><a href="global.html#onSubgroupAdd">onSubgroupAdd</a></li><li><a href="global.html#onUserAdd">onUserAdd</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Jul 02 2023 22:21:40 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,5 +1,9 @@
 import { authorizedFetch } from "./authorizedFetch"
-// This function asks for members with given id from sever
+/**
+ * This function asks for members with given id from sever
+ * @param {*} id 
+ * @returns the users with provided id
+ */
 export const UserQueryJSON = (id) => ({
     "query":
         `query ($id: ID!) {
@@ -113,7 +117,12 @@ export const UserQueryJSON = (id) => ({
         }`,
     "variables": { "id": id }
 })
-// And afterward fetch it from server using authorizedFetch and the newparams is the above query
+
+/**
+ * And afterward fetch it from server using authorizedFetch and the newparams is the above query
+ * @param {*} id 
+ * @returns promise
+ */
 export const UserQuery = (id) =>
     authorizedFetch('/gql', {
         body: JSON.stringify(UserQueryJSON(id)),

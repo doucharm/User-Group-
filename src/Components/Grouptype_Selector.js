@@ -3,7 +3,12 @@ import { DropdownButton } from "react-bootstrap"
 import { Dropdown } from "react-bootstrap"
 import { group_type_fetch } from "Data/GroupTypeQuery"
 import { useSelector } from "react-redux"
-//Drop down button on card header to change the group type of the current group
+/**
+ * Drop down button on card header to change the group type of the current group
+ * @param {*} group The group we want to change its grouptype
+ * @param {*} actions The actions needed to update that group in store and on server
+ * @returns A Dropdown button to choose the new grouptype for our group from grouptype page
+ */
 export const GroupType_Select = ({group,actions}) => {
   const [group_type, set_group_type] = useState([]) //This use state set the group types with all of the group types from group type page to the group_type array
   useEffect(() => {

@@ -39,6 +39,12 @@ export const GroupFetch = (id) => (dispatch, getState) => {
     return bodyfunc()
 }
 
+
+/**
+ * Mutation to insert a new group to the server, this requires a customized group as an input
+ * @param {*} group The input as the new group
+ * @returns The data we want to modify
+ */
 const groupinsertMutationJSON = (group) => {
     return {
         query: `mutation ($id: ID!, $name: String!, $mastergroupId: ID!) {
@@ -55,7 +61,12 @@ const groupinsertMutationJSON = (group) => {
         variables: group
     }
 }
-// Mutation to insert a new group to the server, this requires a customized group as an input
+
+/**
+ * This function calls the authorizedFetch to update the group above to server
+ * @param {*} group The new group that we created
+ * @returns promise
+ */
 export const GroupAsyncInsert = (group) => (dispatch, getState) => {
     // Fetch it to the server
     return authorizedFetch('/gql', {
@@ -64,7 +75,11 @@ export const GroupAsyncInsert = (group) => (dispatch, getState) => {
 }
 
 
-
+/**
+ * Mutation to modified an existed group
+ * @param {*} group The group with the modified props
+ * @returns data of the group with modified props
+ */
 const groupupdateMutationJSON = (group) => {
     return {
         query: `mutation ($id: ID!, $lastchange: DateTime!, $name: String!, $valid: Boolean!, $mastergroupId: ID!, $grouptypeId: ID!) {
@@ -130,7 +145,12 @@ const groupupdateMutationJSON = (group) => {
         variables: group
     };
 };
-// Mutation to update group on server, we pass the neccessary params which is modified to this function
+
+/**
+ * Mutation to update group on server, we pass the neccessary params which is modified to this function
+ * @param {*} payload This contains the group we're modifying, its id, lastchange, name, valid, mastergroupId and the grouptypeId
+ * @returns promise
+ */
 export const GroupAsyncUpdate = ({ group, id, lastchange, name, valid, mastergroupId, grouptypeId }) => (dispatch, getState) => {
     // Afterward, we update it to store
     return authorizedFetch('/gql', {

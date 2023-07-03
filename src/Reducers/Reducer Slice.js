@@ -7,7 +7,7 @@ import { MembershipAsyncUpdate, MembershipAsyncInsert } from "./MembershipAsyncA
 import { RoleAsyncInsert, RoleAsyncUpdate, RoleFetch, Role_Type_Insert } from "./RoleAsyncActions";
 import { UserAsyncInsert, UserAsyncUpdate, UserFetch } from "./UserAsyncActions";
 import { createSlice } from '@reduxjs/toolkit'
-// Where we keep all of the reducers for store, queries and mutations for sever
+
 export const GroupSlice = createSlice({
     name: 'groups',
     initialState: {},
@@ -65,6 +65,11 @@ export const UserSlice = createSlice(
 export const UserActions = UserSlice.actions
 export const UserReducer = UserSlice.reducer
 
+/**
+ * Where we keep all of the reducers for store, queries and mutations for sever
+ * @param {*} dispatch 
+ * @returns The store for actions in store and also on server
+ */
 export const bindGroupActions = (dispatch) => {
     return {
         onGroupUpdate: (g) => dispatch(GroupActions.group_update(g)),

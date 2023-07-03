@@ -1,8 +1,8 @@
 {
-  "name": "project_a",
+  "name": "mypackage",
   "version": "0.1.0",
-  "private": true,
-  "homepage": "/ui",
+  "private": false,
+  "homepage": "http:///ui",
   "proxy": "http://localhost:31180/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "5.2.3",
     "datepicker": "^0.0.0",
+    "my-package": "^0.0.0",
     "primereact": "^9.5.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.1.2",
@@ -24,11 +25,23 @@
     "uuid": "^9.0.0",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "jsdoc": "^4.0.2"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/doucharm/UserGroup.git"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "docs": "jsdoc -c jsdoc.json"
   },
   "eslintConfig": {
     "extends": [
@@ -47,5 +60,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "Process:",
+  "main": "index.js",
+  "author": "NhatDungHieu",
+  "license": "ISC"
 }

@@ -31,6 +31,7 @@ export const AddingSubgroupButton = ({ group, actions }) => {
 }
 
 /**
+ * This works as the onclick of our button above
  * Pushing the new group onto the server
  * @param {Object} new_sub the group that is going to be created
  * @param {Object} group master group of the group that will be created

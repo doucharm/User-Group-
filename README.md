@@ -36,6 +36,14 @@ Process:
 - 10/6: Small changes
 - 13/6: Delete subgroup
 - 14/6: Code clean-up, fix bug with creating new subgroup and add comments to some parts of the code
+- 15/6: Fix store of moving subgroups, bland chart show and adding comments
+- 16/6: Visual adjustment and adding comments
+- 17/6: Update User_Display and turn Delete button into 2-state button
+- 19/6: Updating subgroup to store, code clean-up and adding comments
+- 21/6: Update Add_User and Delete_Group, adding calender to select enddate for role using date-picker
+- 22/6: Visual update
+- 1/7: Update User_Display and fix bugs with Replace Button
+- 2/7: Fix bugs with enddate changes, subgroup delete, bugs with group type and add json doc comments to code
 
 Possible improvement:
 + More functional search bar : return result based on name or goal
