@@ -18,7 +18,7 @@ export const HeaderTextInput = ({ group, actions }) => {
             name: value
         }
         actions.groupNameAsyncUpdate(payload) //Update the group's name on sever
-            .then(json=>console.log("GroupNameInput", json.data.groupUpdate.msg))
+           
     }
     return (
         <TextInput id={group.id} value={group.name} placeholder={"Groups name"} onChange={onchange} />

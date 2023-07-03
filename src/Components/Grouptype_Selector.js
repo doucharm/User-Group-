@@ -26,8 +26,6 @@ export const GroupType_Select = ({ group, actions }) => {
       valid: true,
       mastergroupId: group.mastergroup.id
     }
-
-
     await actions.groupAsyncUpdate(payload) // And finally we change the group type on server
     const mastergroup = groups[group.mastergroup.id]
     const fetchedItem = await actions.groupFetch(group.id);

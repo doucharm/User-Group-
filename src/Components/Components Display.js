@@ -1,4 +1,4 @@
-import { EnvelopeOpen, DoorOpen } from "react-bootstrap-icons"
+import { EnvelopeOpen } from "react-bootstrap-icons"
 import { MembershipInsert_SearchBar } from "./Adding Member Button"
 import { AddingSubgroupButton } from "./Adding_Subgroup"
 import { DeleteButton } from "./Delete_Button"
