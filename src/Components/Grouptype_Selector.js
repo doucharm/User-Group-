@@ -18,7 +18,6 @@ export const GroupType_Select = ({ group, actions }) => {
   // The function below defines what would happen if you click on one of the dropdown button 
   const onGroupTypeInsert = async ({ group, grouptype }) => {
     // This mutation requires the below props
-    console.log(group)
     if (group.mastergroup === null)
     {
       const payload = {

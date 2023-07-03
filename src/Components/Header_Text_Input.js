@@ -9,7 +9,7 @@ import { TextInput } from "./Text_Input"
 export const HeaderTextInput = ({ group, actions }) => {
    
     const onchange = (value) => {
-        console.log(group)
+
         const payload = {
             id: group.id,
             lastchange: group.lastchange,

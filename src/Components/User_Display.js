@@ -26,9 +26,7 @@ export const UserDisplay = ({ user, setUserId, actions }) => {
 
     const onChangeInput = (field, value) => {
         const updatedUser = { ...user, [field]: value };
-        actions.userAsyncUpdate(updatedUser).then((json) =>
-            console.log("UserInput", json.data.userUpdate.msg)
-        );
+        actions.userAsyncUpdate(updatedUser)
     };
 
     return ( // Showing the information of user

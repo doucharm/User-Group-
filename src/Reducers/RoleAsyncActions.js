@@ -77,7 +77,6 @@ export const RoleAsyncInsert = (payload) => (dispatch, getState) => {
                 const new_role = json.data?.roleInsert?.role;
                 const new_user={...payload.membership.user,roles : payload.membership.user.roles.concat(new_role) }
                 const new_membership={...payload.membership,user:new_user}
-                console.log("new membership going into store",new_membership)
                 dispatch(GroupActions.memberUpdate({membership:new_membership,group:{id:new_membership.group.id}}))
             }
             return json;
@@ -164,7 +163,7 @@ const roletypeInsertJSON = (roletype) => {
       }
   }
 
-export const Role_Type_Insert = (payload) => 
+export const Role_Type_Insert = (payload) => (dispatch, getState) => 
 {
   authorizedFetch('/gql',{body: JSON.stringify(roletypeInsertJSON(payload))})
 }
