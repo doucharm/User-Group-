@@ -8,16 +8,15 @@ import { useSelector } from "react-redux"
  * @param {*} group The group we want to change its grouptype
  * @param {*} actions The actions needed to update that group in store and on server
  * @returns A Dropdown button to choose the new grouptype for our group from grouptype page
- */
-export const GroupType_Select = ({group,actions}) => {
+*/
+export const GroupType_Select = ({ group, actions }) => {
   const [group_type, set_group_type] = useState([]) //This use state set the group types with all of the group types from group type page to the group_type array
   useEffect(() => {
-    group_type_fetch(set_group_type) 
-  },set_group_type)
+    group_type_fetch(set_group_type);
+  }, []); // Wrap the set_group_type function inside an empty array
   const groups = useSelector((state) => state.groups);
   // The function below defines what would happen if you click on one of the dropdown button 
-  const onGroupTypeInsert = async ({group,grouptype}) =>
-  {
+  const onGroupTypeInsert = async ({ group, grouptype }) => {
     // This mutation requires the below props
     const payload = {
       name: group.name,
@@ -27,19 +26,17 @@ export const GroupType_Select = ({group,actions}) => {
       valid: true,
       mastergroupId: group.mastergroup.id
     }
-    
-    
+
+
     await actions.groupAsyncUpdate(payload) // And finally we change the group type on server
     const mastergroup = groups[group.mastergroup.id]
     const fetchedItem = await actions.groupFetch(group.id);
-    console.log(mastergroup)
-    console.log(fetchedItem)
-    actions.onUpdateSubGroup({group: mastergroup, new_subgroup: fetchedItem.payload})
+    actions.onUpdateSubGroup({ group: mastergroup, new_subgroup: fetchedItem.payload })
   }
-    // Show the possible options for the group type once you press it
+  // Show the possible options for the group type once you press it
   return (
-    <DropdownButton id="dropdown-basic-button" title={group.grouptype?.nameEn}>
-      {group_type?.map(grouptype=>(<Dropdown.Item onClick={() => onGroupTypeInsert({group,grouptype})} >{grouptype.nameEn}</Dropdown.Item>)     )}
+    <DropdownButton id="dropdown-basic-button" title={group?.grouptype?.nameEn ? group?.grouptype?.nameEn:"N/A"}>
+      {group_type?.map(grouptype => (<Dropdown.Item key={grouptype.id} onClick={() => onGroupTypeInsert({ group, grouptype })} >{grouptype.nameEn}</Dropdown.Item>))}
     </DropdownButton>
-    )
+  )
 }

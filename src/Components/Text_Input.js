@@ -8,7 +8,7 @@ import { useState, useCallback, useMemo } from "react"
  * @param {str} value value of input
  * @param {str} placeholder value of help if the text is not displayed
  * @param {(value) => void} onChange delayed callback notifying about the change
- * @returns 
+ * @returns input with delayer in it
  */
 export const TextInput = ({ id, value, onChange, placeholder }) => {
     const [localValue, setLocalValue] = useState(value)

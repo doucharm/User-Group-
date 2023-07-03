@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: Components/Display.js</title>
+    <title>JSDoc: Source: Reducers/Reducer Slice.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: Components/Display.js</h1>
+    <h1 class="page-title">Source: Reducers/Reducer Slice.js</h1>
 
     
 
@@ -26,74 +26,118 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Card_Display } from './Card_Display';
-import { useEffect , useState} from 'react';
-import { useSelector } from 'react-redux';
-import {  dispatch } from 'pages/Redux Store';
-import { UserDisplay } from './User_Display';
-import { Get_Hierarchy } from 'Data/Group_Hierarchy';
-import { HierarchyActions } from 'Reducers/Reducer Slice';
+            <pre class="prettyprint source linenums"><code>import { Create_Group, Delete_Group, Update_Group, Adding_Subgroup, Hierarchy_Update, Updating_Subgroup } from "./Group Reducer";
+import { Adding_Member, Remove_Member, Update_Member } from "./Member Reducer";
+import { Update_Role } from "./Role Reducer";
+import { Update_User } from "./User Reducer";
+import { GroupAsyncInsert, GroupFetch, GroupAsyncUpdate } from "./GroupAsyncAction";
+import { MembershipAsyncUpdate, MembershipAsyncInsert } from "./MembershipAsyncActions";
+import { RoleAsyncInsert, RoleAsyncUpdate, RoleFetch, Role_Type_Insert } from "./RoleAsyncActions";
+import { UserAsyncInsert, UserAsyncUpdate, UserFetch } from "./UserAsyncActions";
+import { createSlice } from '@reduxjs/toolkit'
+
+export const GroupSlice = createSlice({
+    name: 'groups',
+    initialState: {},
+    reducers: {
+        group_add: Create_Group,
+        group_delete: Delete_Group,
+        group_update: Update_Group,
+        group_add_sub: Adding_Subgroup,
+        group_update_sub: Updating_Subgroup,
+
+        memberAdd: Adding_Member,
+        memberRemove: Remove_Member,
+        memberUpdate: Update_Member,
+    }
+})
+export const GroupActions = GroupSlice.actions
+export const GroupReducer = GroupSlice.reducer
+
+export const RoleSlice = createSlice(
+    {
+        name: 'roles',
+        initialState: {},
+        reducers: {
+            roles_update: Update_Role
+        }
+    }
+)
+export const RoleActions = RoleSlice.actions
+export const RoleReducer = RoleSlice.reducer
+
+
+export const HierarchySlice = createSlice(
+    {
+        name: 'hierarchy',
+        initialState: {},
+        reducers: {
+            hierarchy_update: Hierarchy_Update
+        }
+    }
+)
+export const HierarchyActions = HierarchySlice.actions
+export const HierarchyReducer = HierarchySlice.reducer
+
+
+export const UserSlice = createSlice(
+    {
+        name: 'users',
+        initialState: {},
+        reducers: {
+            users_update: Update_User
+        }
+    }
+)
+export const UserActions = UserSlice.actions
+export const UserReducer = UserSlice.reducer
+
 /**
- * This is the main function that decide which component will be shown based on the display_id.
- * @param {*} display_id variable id of entity which we want to display
- * @param {*} set_display_id react Hook of the display_id variable
- * @param {*} actions global actions
- * @returns a suitable display component based on the id inputed
+ * Where we keep all of the reducers for store, queries and mutations for sever
+ * @param {*} dispatch 
+ * @returns The store for actions in store and also on server
  */
-export const Display =  ({ display_id, set_display_id,actions }) => {
-    let display = 0 // Local variables to avoid unnecessary fetch
-    const groups = useSelector((state) => state.groups);
-    const users = useSelector((state) => state.users);
-    
-    const group = groups[display_id];
-    const user = users[display_id];
-    const hierarchy=useSelector(state => state.hierarchy)
-    const [chart, set_chart] = useState(false)
-    // fetching necessary data from the store or if not available get it from server
-    useEffect(() => {
-        if (!group) {
-            actions.groupFetch(display_id).then(display = 0).catch(display = 1)
-        }
-    }, [display_id, group]);
-    useEffect(() => {
-        if (!user &amp;&amp; display === 1) {
-            actions.userFetch(display_id).finally(display = 0)
-        }
-    }, [display_id, user]);
-    useEffect(() => {
-       if(!chart)
-       {
-        Get_Hierarchy(display_id).then(res => dispatch(HierarchyActions.hierarchy_update(res)))
-        set_chart(true)
-       }
-    }, [display_id,hierarchy]);
+export const bindGroupActions = (dispatch) => {
+    return {
+        // actions regarding operations with group
+        onGroupUpdate: (g) => dispatch(GroupActions.group_update(g)),
+        onGroupAdd: (g) => dispatch(GroupActions.group_add(g)),
+        onGroupDelete: (g) => dispatch(GroupActions.group_delete(g)),
+        onAddSubGroup: ({ group, new_subgroup }) => dispatch(GroupActions.group_add_sub({ group, new_subgroup })),
+        onUpdateSubGroup: ({ group, new_subgroup }) => dispatch(GroupActions.group_update_sub({ group, new_subgroup })),
 
-    if (group &amp;&amp; set_chart) { // display the group and hierarchy chart
-        return (
-            &lt;>
-                &lt;button onClick={event => console.log(group)} >Get store &lt;/button>
-                &lt;Card_Display group={group} set_display_id={set_display_id} actions={actions} />
-            &lt;/>
-        );
+        //actions for modifying memberships of user in groups
+        onMemberAdd: ({ membership, group }) => dispatch(GroupActions.memberAdd({ membership, group })),
+        onMemberRemove: ({ group, membership }) => dispatch(GroupActions.memberRemove({ group, membership })),
+        onMemberUpdate: (payload) => dispatch(GroupActions.memberUpdate(payload)),
+        onMemberMoving: ({ old_group, new_group, moving_member }) => dispatch(GroupActions.memberMoving({ old_group, new_group, moving_member })),
 
+
+        onUpdateUser: (user) => dispatch(UserActions.users_update(user)),
+        groupFetch: (id) => dispatch(GroupFetch(id)),
+        groupAsyncUpdate: (group) => dispatch(GroupAsyncUpdate(group)),
+        groupAsyncInsert: (group) => dispatch(GroupAsyncInsert(group)),
+        
+        //editing user's information
+        userAsyncInsert: (user) => dispatch(UserAsyncInsert(user)),
+        userAsyncUpdate: (user) => dispatch(UserAsyncUpdate(user)),
+        userFetch: (id) => dispatch(UserFetch(id)),
+
+        //communicating with server regarding membership of user -> adding or removing
+        membershipAsyncInsert: (payload) => {dispatch(MembershipAsyncInsert(payload))},
+        membershipAsyncUpdate: (payload) => { dispatch(MembershipAsyncUpdate(payload)) },
+        
+        //actions for roles to communicate with the server
+        roleFetch: () => dispatch(RoleFetch()),
+        roleAsyncInsert: (payload) => {dispatch(RoleAsyncInsert(payload)) },
+        roleAsyncUpdate: (payload) => {dispatch(RoleAsyncUpdate(payload))},
+        roletype_insert: (payload) => { dispatch(Role_Type_Insert(payload)) },
+
+        //fetching hierarchy list of the entire organization
+        hierarchFetch: ({res}) => dispatch(Hierarchy_Update({res}))
     }
-    else if (user) { //display the user 
-        return (
-            &lt;>
-                &lt;button onClick={event => console.log(user)} >Get store &lt;/button>
-                &lt;UserDisplay user={user} setUserId={set_display_id} actions={actions} />
-
-            &lt;/>
-        )
-    } else {
-        return (
-            &lt;>
-                &lt;button onClick={event => console.log(group)} >Get store &lt;/button>
-                &lt;div>No matched ID found&lt;/div>
-            &lt;/>
-        )
-    }
-};</code></pre>
+}
+</code></pre>
         </article>
     </section>
 

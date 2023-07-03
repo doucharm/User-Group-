@@ -6,7 +6,6 @@
  * @returns state
  */
 export const Adding_Member = (state, action) => {
-    console.log(action.payload)
     const group = action.payload.group
     const membership = action.payload.membership
     const grouptake = state[group.id]
@@ -20,7 +19,6 @@ export const Adding_Member = (state, action) => {
  * @returns state
  */
 export const Remove_Member = (state, action) => {
-    console.log('reducer called', action.payload);
     const g = action.payload.group;
     const membership = action.payload.membership;
     const group = state[g.id];
@@ -44,7 +42,6 @@ export const Remove_Member = (state, action) => {
  * @returns state
  */
 export const Update_Member = (state, action) => {
-    console.log(action.payload)
     const g = action.payload.group
     const m = action.payload.membership
     const group = state[g.id]

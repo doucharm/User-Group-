@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { PersonAdd } from "react-bootstrap-icons";
-import { TwoStateButton } from "./Delete_Button";
 import { v1 } from 'uuid';
 /**
  * This button add a new user to the user's page on sever 
  * @param {*} actions The actions needed for the Adding user button to update our web in store and on sever
  * @returns A two-state button with the icon PersonAdd
  */
-export const Adding_User_Button = ({ actions }) => {
+export const AddingUserButton = ({ actions }) => {
     // Adding user button used for add new user to store and server with basic information: id, name , surname, email with two state
     const [new_user, set_new_user] = useState({
         id: v1(),
@@ -22,15 +21,17 @@ export const Adding_User_Button = ({ actions }) => {
             [name]: value
         }));
     }
-    const adding_user =
+    return (
         <>
-            <label>User's first name:<input type="text" name="name" value={new_user.name} placeholder='Enter user first name' onChange={handleChange} /> </label>
-            <label>User's surname:<input type="text" name="surname" value={new_user.surname} placeholder='Enter user surname' onChange={handleChange} /> </label>
-            <label>User's email address:<input type="text" name="email" value={new_user.email} placeholder='Enter user email' onChange={handleChange} /> </label>
+            <table>
+                <tr>
+                    <td><label>User's first name:<input type="text" name="name" value={new_user.name} placeholder='Enter user first name' onChange={handleChange} /> </label></td>
+                    <td><label>User's surname:<input type="text" name="surname" value={new_user.surname} placeholder='Enter user surname' onChange={handleChange} /> </label></td>
+                    <td><label>User's email address:<input type="text" name="email" value={new_user.email} placeholder='Enter user email' onChange={handleChange} /> </label></td>
+                </tr>
+            </table>
             <button className='btn btn-sm btn-primary' onClick={() => onUserAdd({ new_user, actions })}><PersonAdd></PersonAdd></button>
         </>
-    return (
-        <TwoStateButton icon={PersonAdd} sec_button={adding_user} />
     )
 }
 /**

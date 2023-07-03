@@ -15,6 +15,20 @@ export const UserQueryJSON = (id) => ({
                 lastchange
                 membership {
                   valid
+                  startdate
+                  enddate
+                  user {
+                    roles{
+                        lastchange
+                        id
+                        roletype{
+                            nameEn
+                        }
+                        group{
+                            id
+                        }
+                    }
+                  }
                   group {
                     name
                     id

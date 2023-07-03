@@ -28,7 +28,7 @@ export const GroupFetchHelper = (id, query, resultselector, dispatch, getState) 
 /**
 * Fetch the group from server checks its type and asks once more for detailed data. Finally puts the result in the store.
 * @param {*} id 
-* @returns 
+* @returns promise
 */
 export const GroupFetch = (id) => (dispatch, getState) => {
     const groupSelector = (json) => json.data.groupById
@@ -155,6 +155,95 @@ export const GroupAsyncUpdate = ({ group, id, lastchange, name, valid, mastergro
     // Afterward, we update it to store
     return authorizedFetch('/gql', {
         body: JSON.stringify(groupupdateMutationJSON({ id, lastchange, name, valid, mastergroupId, grouptypeId })),
+    })
+        .then(resp => resp.json())
+        .then(json => {
+            console.log('JSON response:', json)
+            const msg = json.data.groupUpdate.msg;
+            if (msg === "fail") {
+                console.log("Update fail");
+            } else {
+                const newgroup = json.data.groupUpdate.group;
+                dispatch(GroupActions.group_update({ ...group, ...newgroup }));
+            }
+            return json;
+        })
+        .catch((error) => {
+            console.log('Error occurred:', error);
+        });
+};
+
+
+const groupnameupdateMutationJSON = (group) => {
+    return {
+        query: `mutation ($id: ID!, $lastchange: DateTime!, $name: String!, $valid: Boolean!, $grouptypeId: ID!) {
+            groupUpdate(group: {id: $id, lastchange: $lastchange, name: $name, valid: $valid, grouptypeId: $grouptypeId}) {
+              msg
+              id
+              group {
+                id
+                name
+                lastchange
+                valid
+                mastergroup {
+                    id
+                }
+                grouptype { 
+                    id
+                    nameEn
+                }
+                subgroups {
+                    id
+                    name
+                    valid
+                    lastchange
+                    mastergroup{
+                        id
+                    }
+                }
+                memberships {
+                    id
+                    lastchange
+                    valid
+                    group
+                    {
+                        id
+                    }
+                    user {
+                        id
+                        name
+                        surname
+                        email
+                        lastchange
+                        roles {
+                            lastchange
+                            id
+                            startdate
+                            enddate
+                            group
+                            {
+                                id
+                            }
+                            valid
+                            roletype {
+                            id
+                            name
+                            nameEn
+                            }
+                        }
+                    }
+                }
+              }
+            }
+          }`,
+        variables: group
+    };
+};
+
+export const GroupNameAsyncUpdate = ({ group, id, lastchange, name, valid, grouptypeId }) => (dispatch, getState) => {
+    // Afterward, we update it to store
+    return authorizedFetch('/gql', {
+        body: JSON.stringify(groupnameupdateMutationJSON({ id, lastchange, name, valid, grouptypeId })),
     })
         .then(resp => resp.json())
         .then(json => {

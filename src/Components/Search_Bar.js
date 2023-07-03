@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { validate } from 'uuid'
 import { fetch_by_letters } from 'Data/UserByLetters';
-import { DoorOpen, Search } from 'react-bootstrap-icons';
+import { Search } from 'react-bootstrap-icons';
 import { Display } from './Display';
 /**
  * Search bar to handle search input.
  * @param {*} actions global actions
  * @returns an ID and it's hook will be passed on to process onto the display components or a list of possible users that match 
  */
-export const SearchBar = ({actions}) => {
+export const SearchBar = ({ actions }) => {
     const [display_id, set_display_id] = useState(null)
     const [foundID, set_found] = useState(false) // this variables decide wether to show list of users or display the ID selected
     const [inputId, setInputId] = useState('');
@@ -21,21 +21,38 @@ export const SearchBar = ({actions}) => {
         if (validate(inputId)) {
             set_display_id(inputId)
             set_found(true)
+<<<<<<< HEAD
         } else
         {
             fetch_by_letters(inputId,set_users_list)
             set_found(false) 
+=======
+        } else {
+            fetch_by_letters(inputId, set_users_list)
+            set_found(false)
+>>>>>>> 986abaa99174e66112d20266204a6d73d7f3b59b
         }
     }
     if (users_list.length > 0 && !foundID) { // return a list of users that match the phrase entered
         return (
             <>
                 <SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
-                <table class="table table-sm table-info">
+                <table className="table table-stripped table-bordered table-sm table-info table-responsive table-hover">
                     <caption>  Possible users with that name: </caption>
+<<<<<<< HEAD
                     <thead><td>ID</td><td>Name</td><td>Surname</td><td>Email</td></thead>
+=======
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+>>>>>>> 986abaa99174e66112d20266204a6d73d7f3b59b
                     <tbody>
-                        {users_list?.map((user) => <UserBasic key={user.id} user={user} set_display_id={set_display_id } set_found={set_found} />)}
+                        {users_list?.map((user) => <UserBasic key={user.id} user={user} set_display_id={set_display_id} set_found={set_found} />)}
                     </tbody>
                 </table>
             </>
@@ -57,16 +74,15 @@ export const SearchBar = ({actions}) => {
  * @param {string} inputID displaying the ID that's in the box
  * @returns {Component} an ID and it's hook will be passed on to process onto the display components or a list of possible users that match 
  */
-const SearchBarDisplay = ({inputId,handleInputChange,handleSubmit}) =>
-{
+const SearchBarDisplay = ({ inputId, handleInputChange, handleSubmit }) => {
     return (
         <>
-        <input className='input1' id="inputID" type='text' value={inputId} onChange={handleInputChange} />
-        <button className='button1' onClick={handleSubmit}><Search></Search></button>
+            <input className='input1' id="inputID" type='text' value={inputId} onChange={handleInputChange} />
+            <button className='button1' onClick={handleSubmit}><Search></Search></button>
         </>
     )
 }
-export const UserBasic = ({ user, set_display_id,set_found}) => { // simple component to display user list and link to open these user
+export const UserBasic = ({ user, set_display_id, set_found }) => { // simple component to display user list and link to open these user
     const findID = () => {
         set_display_id(user.id)
         set_found(true)
@@ -76,7 +92,7 @@ export const UserBasic = ({ user, set_display_id,set_found}) => { // simple comp
             <td>{user.id}</td>
             <td>{user.name}</td>
             <td>{user.surname}</td>
-            <td>{user.email}</td>         
+            <td>{user.email}</td>
         </tr>
     )
 }
