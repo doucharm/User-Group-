@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { ArrowLeftRight, Search } from 'react-bootstrap-icons';
 import { v1 } from 'uuid';
 import { fetch_by_letters } from 'Data/UserByLetters';
-import { useSelector } from 'react-redux';
 
 // Replace Button is a combination of Adding Member Button and Delete Button
 // It is used to replace a member of a group with another user
@@ -24,11 +23,11 @@ export const Replace_Button = ({ group, actions, membership }) => {
 };
 /**
  * This function does 2 main job: Remove the old user from the group and add a new ones in with the same role
- * @param {*} user The user we use to add to a group
- * @param {*} group The group we want to add that user to
- * @param {*} membership the membership of the old user with his role
- * @param {*} actions The actions needed to proceed with the button (both in store and on server)
- * @returns A two-state replace button
+ * @param {Object} user The user we use to add to a group
+ * @param {Object} group The group we want to add that user to
+ * @param {Object} membership the membership of the old user with his role
+ * @param {Object} actions The actions needed to proceed with the button (both in store and on server)
+ * @returns {JSX.Element} A two-state replace button
  */
 export const ReplaceCondition = ({ user, group, membership, actions }) => {
     const handleReplace = () => {
@@ -109,10 +108,10 @@ export const ReplaceCondition = ({ user, group, membership, actions }) => {
 
 /**
  * This is the display of a name search bar, we use this to find for the user we need to add it in to our group
- * @param {*} group The group we want to add that user to
- * @param {*} membership the membership with the row we want to assign that user to
- * @param {*} actions The actions needed to take the data on server and proceed with it
- * @returns A table with a form in it, the rows would be the users we found with the letter provided on our form
+ * @param {Object} group The group we want to add that user to
+ * @param {Object} membership the membership with the row we want to assign that user to
+ * @param {Object} actions The actions needed to take the data on server and proceed with it
+ * @returns {JSON.Element} A table with a form in it, the rows would be the users we found with the letter provided on our form
  */
 export const MembershipInsertSearchBar = ({ group, membership, actions }) => {
     const [inputId, setInputId] = useState(''); //Define the input for the search bar
@@ -182,11 +181,11 @@ export const MembershipInsertSearchBar = ({ group, membership, actions }) => {
 
 /**
  * This function return a table that return a row of user that contains an add button to insert the user to the group we're seeing
- * @param {*} user The user we are showing
- * @param {*} group The group we want to add that user to
- * @param {*} membership the membership with the row we want to assign that user to
- * @param {*} actions The actions needed in the Replace_Condition function
- * @returns Table rows in html form
+ * @param {Object} user The user we are showing
+ * @param {Object} group The group we want to add that user to
+ * @param {Object} membership the membership with the row we want to assign that user to
+ * @param {Object} actions The actions needed in the Replace_Condition function
+ * @returns {JSX.Element} Table rows in html form
  */
 const UserBasic = ({ user, group, membership, actions }) => {
 

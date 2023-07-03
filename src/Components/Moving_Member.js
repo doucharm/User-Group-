@@ -6,7 +6,7 @@ import {v1} from 'uuid'
  * Component for moving a member in a group to another group.
  * @param {Object} membership membership contain both current group and user ID
  * @param {Object} toggle_moving function that toggle the moving button
- * @param {*} actions global actions
+ * @param {Object} actions global actions
  * @returns {Component} component necessary for entering data
  */
 export const MovingMember = ({membership,actions}) =>
@@ -31,9 +31,9 @@ export const Moving_Member_Button =  ({membership, actions}) =>
 }
 /**
  * onMove function perform 2 actions: adding a user to a selected group and removing him at current group* removing both membership and current role
- * @param {*} membership membership contain both current group and user ID
- * @param {*} destination the group's ID that will receive the user
- * @param {*} actions global actions
+ * @param {Object} membership membership contain both current group and user ID
+ * @param {Object} destination the group's ID that will receive the user
+ * @param {Object} actions global actions
  */
 export const onMove = ({destination,membership,actions}) => // perform moving member by invaliding this membership and create a new valid membership in the intended destination
     {

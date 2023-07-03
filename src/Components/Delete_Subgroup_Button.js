@@ -3,9 +3,9 @@ import { Trash } from 'react-bootstrap-icons';
 
 /**
 * function to invalidate subgroup and all the membership,role that subgroup's having
-* @param {*} item subgroup to be invalidated
-* @param {*} group the group that has the subgroup
-* @param {*} actions global actions
+* @param {Object} item subgroup to be invalidated
+* @param {Object} group the group that has the subgroup
+* @param {Object} actions global actions
 */
 const onClickDeleteGroup = async ({ item, group, actions }) => { //The condition for delete the subgroup
     try {

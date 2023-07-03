@@ -5,8 +5,8 @@ import { Search } from 'react-bootstrap-icons';
 import { Display } from './Display';
 /**
  * Search bar to handle search input.
- * @param {*} actions global actions
- * @returns an ID and it's hook will be passed on to process onto the display components or a list of possible users that match 
+ * @param {Object} actions global actions
+ * @returns {JSX.Element} an ID and it's hook will be passed on to process onto the display components or a list of possible users that match 
  */
 export const SearchBar = ({ actions }) => {
     const [display_id, set_display_id] = useState(null)

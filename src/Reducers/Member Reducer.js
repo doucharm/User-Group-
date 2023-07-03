@@ -1,8 +1,8 @@
 
 /**
  * Adding a membership to a group. Requires 2 params as the payload, which are group and membership
- * @param {*} state all of the groups in store
- * @param {*} action contains all of the payload's details needed to modify our state
+ * @param {Object} state all of the groups in store
+ * @param {Object} action contains all of the payload's details needed to modify our state
  * @returns state
  */
 export const Adding_Member = (state, action) => {
@@ -14,8 +14,8 @@ export const Adding_Member = (state, action) => {
 }
 /**
  * Removing a member from a group by changing the membership's valid to false
- * @param {*} state all of the groups in store
- * @param {*} action contains all of the payload's details needed to modify our state
+ * @param {Object} state all of the groups in store
+ * @param {Object} action contains all of the payload's details needed to modify our state
  * @returns state
  */
 export const Remove_Member = (state, action) => {
@@ -37,8 +37,8 @@ export const Remove_Member = (state, action) => {
 
 /**
  * Update the membership of a member by spreading the old one with the updated values of the new one in the group's memberships
- * @param {*} state all of the groups in store
- * @param {*} action contains all of the payload's details needed to modify our state
+ * @param {Object} state all of the groups in store
+ * @param {Object} action contains all of the payload's details needed to modify our state
  * @returns state
  */
 export const Update_Member = (state, action) => {

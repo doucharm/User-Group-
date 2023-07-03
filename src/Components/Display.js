@@ -7,10 +7,10 @@ import { Get_Hierarchy } from 'Data/Group_Hierarchy';
 import { HierarchyActions } from 'Reducers/Reducer Slice';
 /**
  * This is the main function that decide which component will be shown based on the display_id.
- * @param {*} display_id variable id of entity which we want to display
- * @param {*} set_display_id react Hook of the display_id variable
- * @param {*} actions global actions
- * @returns a suitable display component based on the id inputed
+ * @param {Object} display_id variable id of entity which we want to display
+ * @param {Object} set_display_id react Hook of the display_id variable
+ * @param {Object} actions global actions
+ * @returns {JSX.Element} a suitable display component based on the id inputed
  */
 export const Display =  ({ display_id, set_display_id,actions }) => {
     let display = 0 // Local variables to avoid unnecessary fetch
