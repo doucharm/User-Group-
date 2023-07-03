@@ -1,4 +1,4 @@
-import { EnvelopeOpen } from "react-bootstrap-icons"
+import { EnvelopeOpen, DoorOpen } from "react-bootstrap-icons"
 import { MembershipInsert_SearchBar } from "./Adding Member Button"
 import { AddingSubgroupButton } from "./Adding_Subgroup"
 import { DeleteButton } from "./Delete_Button"
@@ -35,11 +35,12 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
                         <th>Delete</th>
                         <th>Replace</th>
                         <th>Move</th>
+                        <th>More</th>
                     </tr>
                 </thead>
                 <tbody>
                     <>
-                        {group?.memberships?.map(item => <Get_Member_Row key={item.id} group={group} membership={item} show_old_member={show_old_member} actions={actions} />)}
+                        {group?.memberships?.map(item => <Get_Member_Row key={item.id} group={group} membership={item} show_old_member={show_old_member} set_display_id={set_display_id} actions={actions} />)}
                         <tr><td><button onClick={event => set_show_member(!show_old_member)}>Toggle</button></td></tr>
                         <MembershipInsert_SearchBar group={group} actions={actions} />
                     </>
@@ -62,7 +63,7 @@ export const Table_Display = ({ group, set_display_id, actions }) => {
                 </thead>
                 <tbody>
                     <>
-                        {group?.subgroups?.map(item =>  <Get_Sub_Group_Row key={item.id} group={group} item={item} set_display_id={set_display_id} actions={actions} show_old_subgroup={show_old_subgroup} />)}
+                        {group?.subgroups?.map(item => <Get_Sub_Group_Row key={item.id} group={group} item={item} set_display_id={set_display_id} actions={actions} show_old_subgroup={show_old_subgroup} />)}
                         <tr><td><AddingSubgroupButton group={group} actions={actions} /></td></tr>
                         <tr><td><button onClick={() => set_show_subgroup(!show_old_subgroup)}>Show Old Subs</button></td></tr>
                     </>
@@ -112,7 +113,7 @@ const Get_Sub_Group_Row = ({ group, item, set_display_id, actions, show_old_subg
  * @param {Object} show_old_member Part of the use state to declare if we want to show the deleted memberships
  * @returns {JSX.Element} A row that has the membership's details
  */
-const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
+const Get_Member_Row = ({ group, membership, show_old_member, set_display_id, actions }) => {
 
 
     if (membership.valid) {
@@ -126,6 +127,7 @@ const Get_Member_Row = ({ group, membership, show_old_member, actions }) => {
                 <td><DeleteButton membership={membership} actions={actions} /></td>
                 <td><Replace_Button group={group} actions={actions} membership={membership}></Replace_Button></td>
                 <td><Moving_Member_Button membership={membership} actions={actions} /></td>
+                <td><button onClick={() => set_display_id(membership.user.id)}><DoorOpen /></button></td>
             </tr>
         )
     }

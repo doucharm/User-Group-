@@ -11,7 +11,6 @@ const onClickDeleteGroup = async ({ item, group, actions }) => { //The condition
     try {
         const fetchedItem = await actions.groupFetch(item.id); // get the wanted subgroup data
         const fetchedpayload = fetchedItem.payload // because the data is wrapped in payload so that we need to get their payload
-        console.log(fetchedpayload)
         const payload = {
             id: fetchedpayload.id,
             lastchange: fetchedpayload.lastchange,

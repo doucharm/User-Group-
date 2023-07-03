@@ -10,9 +10,9 @@ import { Display } from './Display';
  */
 export const SearchBar = ({ actions }) => {
     const [display_id, set_display_id] = useState(null)
-    const [foundID, set_found] = useState(false) // if entered information isn't in uuid form
+    const [foundID, set_found] = useState(false) // this variables decide wether to show list of users or display the ID selected
     const [inputId, setInputId] = useState('');
-    const [users_list, set_users_list] = useState([])
+    const [users_list, set_users_list] = useState([]) // list of user's that match the entered phrase
     const handleInputChange = (event) => {
         setInputId(event.target.value);
     };
@@ -26,20 +26,13 @@ export const SearchBar = ({ actions }) => {
             set_found(false)
         }
     }
-    if (users_list.length > 0 && !foundID) { // return a list of user that match the phrase entered
+    if (users_list.length > 0 && !foundID) { // return a list of users that match the phrase entered
         return (
             <>
                 <SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
                 <table className="table table-stripped table-bordered table-sm table-info table-responsive table-hover">
                     <caption>  Possible users with that name: </caption>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Surname</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><td>ID</td><td>Name</td><td>Surname</td><td>Email</td></tr></thead>
                     <tbody>
                         {users_list?.map((user) => <UserBasic key={user.id} user={user} set_display_id={set_display_id} set_found={set_found} />)}
                     </tbody>
@@ -53,10 +46,8 @@ export const SearchBar = ({ actions }) => {
                 <Display display_id={display_id} set_display_id={set_display_id} actions={actions} />
             </>
         )
-    } else {
-        return (
-            <SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
-        )
+    } else { // when no id is entered leave the ID box blank
+        return (<SearchBarDisplay inputId={inputId} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />)
     }
 
 };

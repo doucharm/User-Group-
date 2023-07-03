@@ -45,12 +45,14 @@ export const Delete_Group = (state, action) => {
  */
 export const Update_Group = (state, action) => {
     const newItem = action.payload;
-    const oldItem = state[newItem.id]
-    state[newItem.id] = { ...oldItem, ...newItem }
+    if (!newItem || newItem.id == null) {
+        return state;
+    }
+    const oldItem = state[newItem.id];
+    state[newItem.id] = { ...oldItem, ...newItem };
 
-    return state
-}
-
+    return state;
+};
 
 /**
  * This function require two params in payload which are the new_subgroup and the group we want to put it in
@@ -59,7 +61,7 @@ export const Update_Group = (state, action) => {
  * @returns state
  */
 export const Adding_Subgroup = (state, action) => {
-    let new_subgroup = action.payload.new_subgroup 
+    let new_subgroup = action.payload.new_subgroup
     const g = action.payload.group
     const group = state[g.id]
     if (group) {
@@ -80,11 +82,11 @@ export const Adding_Subgroup = (state, action) => {
  */
 
 export const Updating_Subgroup = (state, action) => {
-    let new_subgroup = action.payload.new_subgroup 
+    let new_subgroup = action.payload.new_subgroup
     const g = action.payload.group
     const group = state[g.id]
     const old_subgroup = group.subgroups.find(sub => sub.id === new_subgroup.id)
-    group.subgroups = group.subgroups.map(sub => sub.id === new_subgroup.id ? {...old_subgroup, ...new_subgroup}: sub)
+    group.subgroups = group.subgroups.map(sub => sub.id === new_subgroup.id ? { ...old_subgroup, ...new_subgroup } : sub)
     return state
 }
 
@@ -108,8 +110,7 @@ export const GroupMemberAdd = (state, action) => {
  * @param {Object} action contains all of the payload's details needed to modify our state
  * @returns state
  */
-export const Hierarchy_Update = (state,action) =>
-{
+export const Hierarchy_Update = (state, action) => {
     const newItem = action.payload;
     state = { ...state, ...newItem }
     return state

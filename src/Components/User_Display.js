@@ -4,6 +4,13 @@ import { AddingUserButton } from './Adding_User_Button';
 import { DoorOpen } from 'react-bootstrap-icons';
 import { Modal, Button } from 'react-bootstrap';
 
+/**
+ * This function shows the card display of the user
+ * @param {*} user The user we are showing
+ * @param {*} setUserId This is a part of the useState to change the user/group we are showing
+ * @param {*} actions Actions needed to update our user in store and on server
+ * @returns A card that displays user's information
+ */
 
 export const UserDisplay = ({ user, setUserId, actions }) => {
     // This component is used for displaying the information of user and changing the information of user
