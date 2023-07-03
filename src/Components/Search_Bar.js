@@ -10,7 +10,7 @@ import { Display } from './Display';
  */
 export const SearchBar = ({ actions }) => {
     const [display_id, set_display_id] = useState(null)
-    const [foundID, set_found] = useState(false)
+    const [foundID, set_found] = useState(false) // if entered information isn't in uuid form
     const [inputId, setInputId] = useState('');
     const [users_list, set_users_list] = useState([])
     const handleInputChange = (event) => {
@@ -38,7 +38,6 @@ export const SearchBar = ({ actions }) => {
                             <th>Name</th>
                             <th>Surname</th>
                             <th>Email</th>
-                            <th>Details</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,6 +60,11 @@ export const SearchBar = ({ actions }) => {
     }
 
 };
+/**
+ * Component SearchBar include a text input for information and a search button
+ * @param {string} inputID displaying the ID that's in the box
+ * @returns {Component} an ID and it's hook will be passed on to process onto the display components or a list of possible users that match 
+ */
 const SearchBarDisplay = ({ inputId, handleInputChange, handleSubmit }) => {
     return (
         <>
@@ -75,14 +79,11 @@ export const UserBasic = ({ user, set_display_id, set_found }) => { // simple co
         set_found(true)
     }
     return (
-        <tr>
+        <tr onClick={e => findID()}>
             <td>{user.id}</td>
             <td>{user.name}</td>
             <td>{user.surname}</td>
             <td>{user.email}</td>
-            <td>
-                <button onClick={event => findID()}><DoorOpen></DoorOpen></button>
-            </td>
         </tr>
     )
 }

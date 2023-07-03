@@ -73,7 +73,6 @@ export const Moving_Condition = ({ group, item, actions, destination }) => {
                 mastergroupId: item.mastergroup.id,
                 grouptypeId: item.grouptype.id
             };
-
             const payload_arrive = { // The moved subgroup with the new id in the destination group
                 id: v1(),
                 name: item.name,

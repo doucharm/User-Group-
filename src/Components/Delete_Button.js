@@ -27,7 +27,8 @@ export const TwoStateButton = ({ sec_button, icon: Icon }) => {
 };
 /**
 * function to invalidate membership and the role that membership/user're having
-* @param {*} membership membership to be invalidated
+* @param {Object} membership membership to be invalidated
+* @param {Object} actions using actions.membershipAsyncUpdate to update this membership
 */
 const onClickDeleteMember = ({ membership, actions }) => { // 
   const payload = {

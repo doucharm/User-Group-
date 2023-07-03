@@ -13,25 +13,6 @@ export const Adding_Member = (state, action) => {
     grouptake.memberships.push(membership) //Then we push that membership into the group's membership
     return state
 }
-
-
-/**
- * Moving a member from the old group to a new one. Change the valid of that membership in the old group to false and then push that membership to the new group's memberships
- * @param {*} state all of the groups in store
- * @param {*} action contains all of the payload's details needed to modify our state
- * @returns state
- */
-export const Moving_Member = (state,action) =>
-{
-    const {membership, from_group, to_group } = action.payload
-    const old_group= state[from_group.id]
-    const new_group= state[to_group.id]    
-    old_group.memberships = old_group.memberships?.map((m)=> m.id===membership.id ? {...m,valid:false}: m)
-    new_group.memberships.push(membership)
-    return state
-}
-
-
 /**
  * Removing a member from a group by changing the membership's valid to false
  * @param {*} state all of the groups in store
