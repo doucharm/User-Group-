@@ -1,7 +1,7 @@
 /**
  * Create delay,
  * @param {*} delay 
- * @returns 
+ * @returns delayedFunc
  */
 export const CreateDelayer = (delay=300) => {
     //local variables

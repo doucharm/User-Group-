@@ -3,7 +3,12 @@ import { UserActions } from "./Reducer Slice"
 import { UserQuery } from "Data/UserQuery";
 
 
-// Ask for the user on server and adds it or update it in the store
+
+/**
+ * sk for the user on server and adds it or update it in the store
+ * @param {*} id 
+ * @returns promise
+ */
 export const UserFetchHelper = (id, query, resultselector, dispatch, getState) => {
     const log = (text) => (p) => {
         console.log(text)
@@ -28,7 +33,12 @@ export const UserFetchHelper = (id, query, resultselector, dispatch, getState) =
         )
     return p
 }
-// Fetch the user from server. Finally puts the result in the store.
+
+/**
+ * Fetch the user from server. Finally puts the result in the store.
+ * @param {*} id The user's id
+ * @returns promise
+ */
 export const UserFetch = (id) => (dispatch, getState) => {
     const userSelector = (json) => json.data.userById
     const bodyfunc = async () => {
@@ -39,7 +49,12 @@ export const UserFetch = (id) => (dispatch, getState) => {
     return bodyfunc()
 }
 
-// This mutation will help to update a user to the server, it requires the input as a modified user
+
+/**
+ * This mutation will help to update a user to the server, it requires the input as a modified user
+ * @param {*} user The updated user
+ * @returns updated user on server
+ */
 const userUpdateMutationJSON = (user) => {
     return {
         query: `mutation($lastchange: DateTime!, $id: ID!, $email: String!, $name: String!, $surname: String!) {
@@ -60,6 +75,12 @@ const userUpdateMutationJSON = (user) => {
     }
 }
 
+
+/**
+ * This mutation will help to insert a user to the server, it requires the input as a new user
+ * @param {*} user The new user
+ * @returns updated user on server
+ */
 const userInsertMutationJSON = (user) => {
     return {
         query: `mutation ($id: ID!, $name: String!, $surname: String!,$email: String!) {
@@ -78,6 +99,11 @@ const userInsertMutationJSON = (user) => {
     }
 }
 
+/**
+ * This function fetch the userUpdateMutationJSON(user) with authorizedFetch and then declare what we do with it later
+ * @param {*} user The updated user
+ * @returns promise
+ */
 export const UserAsyncUpdate = (user) => (dispatch, getState) => {
 
     // Fetching it to server and then updating it to the store
@@ -99,7 +125,11 @@ export const UserAsyncUpdate = (user) => (dispatch, getState) => {
         )
 }
 
-// This mutation helps inserting a customized user to the user's page
+/**
+ * This function fetch the userInsertMutationJSON({ ...user }) with authorizedFetch 
+ * @param {*} user The new user
+ * @returns promise
+ */
 export const UserAsyncInsert = (user) => (dispatch, getState) => {
 
     // And finally fetching it to the server

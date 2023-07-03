@@ -1,5 +1,10 @@
-// This reducer helps to update an user into store after fetching it from the sever.
-// Afterward, we can easily call the user that holds the user id from the store
+
+/**
+ * This reducer helps to update an user into store after fetching it from the sever. Afterward, we can easily call the user that holds the user id from the store
+ * @param {*} state all of the users in store
+ * @param {*} action contains all of the payload's details needed to modify our state
+ * @returns state
+ */
 export const Update_User = (state, action) => {
     const newUser = action.payload;
     if (!newUser) {
